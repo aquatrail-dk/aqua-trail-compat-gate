@@ -92,8 +92,9 @@
 
   async function testPost() {
     setStatus('pending','POST IN CORSO');
-    const payload = {
-      message:'AQUA TRAIL GitHub Pages compatibility test',
+const payload = {
+  action:'write',
+  message:'AQUA TRAIL GitHub Pages compatibility test',
       origin:location.origin,
       userAgent:navigator.userAgent,
       clientTime:new Date().toISOString()
