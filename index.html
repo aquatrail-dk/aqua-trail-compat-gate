@@ -99,8 +99,8 @@ const payload = {
       userAgent:navigator.userAgent,
       clientTime:new Date().toISOString()
     };
-    const res = await fetch(endpoint(), {
-      method:'POST',
+const res = await fetch(endpoint() + '?action=write', {
+  method:'POST',
       credentials:'omit',
       redirect:'follow',
       cache:'no-store',
