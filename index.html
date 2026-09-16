@@ -101,13 +101,20 @@
     currentTestId = 'github-' + Date.now();
 
     const payload = {
+      action: 'write',
       testId: currentTestId,
       message: 'AQUA TRAIL GitHub Pages compatibility test',
       origin: location.origin,
       clientTime: new Date().toISOString()
     };
 
-    const res = await fetch(endpoint() + '?action=write', {
+    const writeUrl =
+      endpoint() +
+      '?action=write' +
+      '&testId=' + encodeURIComponent(currentTestId) +
+      '&message=' + encodeURIComponent('AQUA TRAIL GitHub Pages compatibility test');
+
+    const res = await fetch(writeUrl, {
       method:'POST',
       credentials:'omit',
       redirect:'follow',
