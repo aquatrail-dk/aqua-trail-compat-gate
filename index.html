@@ -27,7 +27,6 @@
   <p>Test isolato: <strong>GitHub Pages → Apps Script → Google Sheets</strong>.</p>
   <div class="note">
     Questo test NON usa il sito Aqua Trail reale e NON usa il database principale.
-    Inserisci l'URL <strong>/exec</strong> della Web App Apps Script quando sarà disponibile.
   </div>
 
   <label for="endpoint">URL Web App Apps Script</label>
@@ -72,18 +71,24 @@
   async function readJsonResponse(res) {
     const text = await res.text();
     let data;
-    try { data = JSON.parse(text); }
-    catch (_) {
+    try {
+      data = JSON.parse(text);
+    } catch (_) {
       throw new Error('Risposta non JSON (HTTP ' + res.status + '): ' + text.slice(0,500));
     }
-    if (!res.ok || !data.ok) throw new Error('HTTP/API FAIL: ' + JSON.stringify(data));
+    if (!res.ok || !data.ok) {
+      throw new Error('HTTP/API FAIL: ' + JSON.stringify(data));
+    }
     return data;
   }
 
   async function testGet() {
     setStatus('pending','GET IN CORSO');
     const res = await fetch(endpoint() + '?action=health&_=' + Date.now(), {
-      method:'GET', credentials:'omit', redirect:'follow', cache:'no-store'
+      method:'GET',
+      credentials:'omit',
+      redirect:'follow',
+      cache:'no-store'
     });
     const data = await readJsonResponse(res);
     show('GET PASS', data);
@@ -95,23 +100,21 @@
     setStatus('pending','POST IN CORSO');
     currentTestId = 'github-' + Date.now();
 
-    const body = new URLSearchParams({
+    const payload = {
       testId: currentTestId,
-      message: 'AQUA TRAIL GitHub Pages compatibility test'
-    });
+      message: 'AQUA TRAIL GitHub Pages compatibility test',
+      origin: location.origin,
+      clientTime: new Date().toISOString()
+    };
 
-    const res = await fetch(
-      endpoint() + '?action=write&testId=' + encodeURIComponent(currentTestId) +
-      '&message=' + encodeURIComponent('AQUA TRAIL GitHub Pages compatibility test'),
-      {
-        method:'POST',
-        credentials:'omit',
-        redirect:'follow',
-        cache:'no-store',
-        headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
-        body:body.toString()
-      }
-    );
+    const res = await fetch(endpoint() + '?action=write', {
+      method:'POST',
+      credentials:'omit',
+      redirect:'follow',
+      cache:'no-store',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify(payload)
+    });
 
     const data = await readJsonResponse(res);
     show('POST PASS', data);
@@ -123,7 +126,9 @@
     setStatus('pending','READBACK IN CORSO');
 
     let url = endpoint() + '?action=readback&_=' + Date.now();
-    if (currentTestId) url += '&testId=' + encodeURIComponent(currentTestId);
+    if (currentTestId) {
+      url += '&testId=' + encodeURIComponent(currentTestId);
+    }
 
     const res = await fetch(url, {
       method:'GET',
@@ -133,14 +138,20 @@
     });
 
     const data = await readJsonResponse(res);
+
+    if (currentTestId && !JSON.stringify(data).includes(currentTestId)) {
+      throw new Error('READBACK ricevuto, ma non contiene il testId appena scritto: ' + currentTestId);
+    }
+
     show('READBACK PASS', data);
     setStatus('pass','READBACK PASS');
     return data;
   }
 
   async function run(fn) {
-    try { return await fn(); }
-    catch (err) {
+    try {
+      return await fn();
+    } catch (err) {
       setStatus('fail','FAIL');
       show('FAIL',{message:err.message});
       throw err;
