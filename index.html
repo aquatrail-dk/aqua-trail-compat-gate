@@ -81,7 +81,7 @@
 
   async function testGet() {
     setStatus('pending','GET IN CORSO');
-    const res = await fetch(endpoint() + '?action=ping&_=' + Date.now(), {
+    const res = await fetch(endpoint() + '?action=health&_=' + Date.now(), {
       method:'GET', credentials:'omit', redirect:'follow', cache:'no-store'
     });
     const data = await readJsonResponse(res);
