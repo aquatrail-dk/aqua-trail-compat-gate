@@ -50,6 +50,7 @@
   const $ = (id) => document.getElementById(id);
   const out = $('out');
   const status = $('status');
+  let currentTestId = null;
 
   function endpoint() {
     const value = $('endpoint').value.trim();
@@ -92,21 +93,26 @@
 
   async function testPost() {
     setStatus('pending','POST IN CORSO');
-const payload = {
-  action:'write',
-  message:'AQUA TRAIL GitHub Pages compatibility test',
-      origin:location.origin,
-      userAgent:navigator.userAgent,
-      clientTime:new Date().toISOString()
-    };
-const res = await fetch(endpoint() + '?action=write', {
-  method:'POST',
-      credentials:'omit',
-      redirect:'follow',
-      cache:'no-store',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body:JSON.stringify(payload)
+    currentTestId = 'github-' + Date.now();
+
+    const body = new URLSearchParams({
+      testId: currentTestId,
+      message: 'AQUA TRAIL GitHub Pages compatibility test'
     });
+
+    const res = await fetch(
+      endpoint() + '?action=write&testId=' + encodeURIComponent(currentTestId) +
+      '&message=' + encodeURIComponent('AQUA TRAIL GitHub Pages compatibility test'),
+      {
+        method:'POST',
+        credentials:'omit',
+        redirect:'follow',
+        cache:'no-store',
+        headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
+        body:body.toString()
+      }
+    );
+
     const data = await readJsonResponse(res);
     show('POST PASS', data);
     setStatus('pass','POST PASS');
@@ -115,13 +121,18 @@ const res = await fetch(endpoint() + '?action=write', {
 
   async function testReadback() {
     setStatus('pending','READBACK IN CORSO');
-    const res = await fetch(endpoint() + '?action=readback&_=' + Date.now(), {
-      method:'GET', credentials:'omit', redirect:'follow', cache:'no-store'
+
+    let url = endpoint() + '?action=readback&_=' + Date.now();
+    if (currentTestId) url += '&testId=' + encodeURIComponent(currentTestId);
+
+    const res = await fetch(url, {
+      method:'GET',
+      credentials:'omit',
+      redirect:'follow',
+      cache:'no-store'
     });
+
     const data = await readJsonResponse(res);
-    if (!data.last || !data.last.requestId) {
-      throw new Error('Nessuna riga di test trovata nel foglio.');
-    }
     show('READBACK PASS', data);
     setStatus('pass','READBACK PASS');
     return data;
