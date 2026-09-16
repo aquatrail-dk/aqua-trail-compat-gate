@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Aqua Trail — Auth Compatibility Gate</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#102a43;background:#f4f8fb}
+    body{margin:0;padding:24px}
+    main{max-width:900px;margin:auto;background:#fff;border:1px solid #d9e2ec;border-radius:16px;padding:24px;box-shadow:0 8px 30px rgba(16,42,67,.08)}
+    h1{margin-top:0;font-size:1.5rem}
+    .note{background:#eef7ff;border-left:4px solid #2684ff;padding:12px 14px;border-radius:8px;margin:14px 0}
+    label{display:block;font-weight:700;margin:16px 0 6px}
+    input{width:100%;box-sizing:border-box;padding:12px;border:1px solid #bcccdc;border-radius:9px;font:inherit}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    button{border:0;border-radius:9px;padding:12px 16px;font-weight:800;cursor:pointer;background:#0b7285;color:#fff}
+    button.secondary{background:#486581}
+    button:disabled{opacity:.45;cursor:not-allowed}
+    #googleButton{margin-top:14px;min-height:44px}
+    .status{font-weight:800;margin-top:18px}
+    .pass{color:#087f5b}.fail{color:#c92a2a}.pending{color:#8d6e00}
+    pre{white-space:pre-wrap;word-break:break-word;background:#102a43;color:#e6fffa;padding:14px;border-radius:10px;min-height:220px}
+    small{color:#627d98}
+  </style>
+</head>
+<body>
+<main>
+  <h1>AQUA TRAIL — AUTH COMPATIBILITY GATE</h1>
+  <p>Test isolato di autenticazione Google e autorizzazioni server-side.</p>
+  <div class="note">Non usa il sito Aqua Trail reale e non usa il database principale.</div>
+
+  <label for="endpoint">URL Web App AUTH GATE Apps Script</label>
+  <input id="endpoint" type="url" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off">
+
+  <label for="clientId">Google OAuth Client ID</label>
+  <input id="clientId" type="text" placeholder="...apps.googleusercontent.com" autocomplete="off">
+
+  <div class="row">
+    <button id="initBtn">1. PREPARA LOGIN GOOGLE</button>
+    <button id="runBtn" disabled>2. ESEGUI AUTH GATE COMPLETO</button>
+    <button id="logoutBtn" class="secondary" disabled>LOGOUT TEST</button>
+  </div>
+
+  <div id="googleButton"></div>
+  <div id="status" class="status pending">STATO: NON ESEGUITO</div>
+  <pre id="out">Pronto.</pre>
+</main>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const out = $('out');
+  const status = $('status');
+  let idToken = null;
+  let gisInitialized = false;
+
+  function endpoint() {
+    const value = $('endpoint').value.trim().split('?')[0];
+    if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(value)) {
+      throw new Error('URL Apps Script /exec non valido.');
+    }
+    return value;
+  }
+
+  function clientId() {
+    const value = $('clientId').value.trim();
+    if (!/\.apps\.googleusercontent\.com$/.test(value)) {
+      throw new Error('Google OAuth Client ID non valido.');
+    }
+    return value;
+  }
+
+  function setStatus(kind, text) {
+    status.className = 'status ' + kind;
+    status.textContent = 'STATO: ' + text;
+  }
+
+  function show(title, data) {
+    out.textContent = title + '\n\n' + JSON.stringify(data, null, 2);
+  }
+
+  async function readJson(res) {
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch (_) { throw new Error('Risposta non JSON (HTTP ' + res.status + '): ' + text.slice(0,500)); }
+    return data;
+  }
+
+  async function health() {
+    const res = await fetch(endpoint() + '?action=authHealth&_=' + Date.now(), {
+      method:'GET', credentials:'omit', redirect:'follow', cache:'no-store'
+    });
+    const data = await readJson(res);
+    if (!res.ok || !data.ok) throw new Error('AUTH HEALTH FAIL: ' + JSON.stringify(data));
+    if (!data.clientConfigured) throw new Error('Backend non configurato: manca AUTH_GATE_CLIENT_ID.');
+    return data;
+  }
+
+  async function call(test, runId, token, extra={}) {
+    const payload = Object.assign({
+      action:'authGate',
+      test,
+      runId,
+      idToken: token || ''
+    }, extra);
+
+    const res = await fetch(endpoint(), {
+      method:'POST',
+      credentials:'omit',
+      redirect:'follow',
+      cache:'no-store',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify(payload)
+    });
+    return await readJson(res);
+  }
+
+  async function readback(runId) {
+    const res = await fetch(endpoint() + '?action=authReadback&runId=' + encodeURIComponent(runId) + '&_=' + Date.now(), {
+      method:'GET', credentials:'omit', redirect:'follow', cache:'no-store'
+    });
+    const data = await readJson(res);
+    if (!res.ok || !data.ok) throw new Error('AUTH READBACK FAIL: ' + JSON.stringify(data));
+    return data;
+  }
+
+  function expect(name, condition, data) {
+    return {test:name, pass:!!condition, data};
+  }
+
+  async function runGate() {
+    if (!idToken) throw new Error('Prima effettua il login Google.');
+    const runId = 'auth-' + Date.now();
+    setStatus('pending','AUTH GATE IN CORSO');
+
+    const results = [];
+    const h = await health();
+    results.push(expect('backend_health', h.ok && h.clientConfigured, h));
+
+    const unauth = await call('allowed', runId, '');
+    results.push(expect('unauthenticated_blocked',
+      unauth.ok === false && unauth.code === 'AUTH_REQUIRED', unauth));
+
+    const invalid = await call('allowed', runId, 'invalid-token-' + Date.now());
+    results.push(expect('invalid_token_blocked',
+      invalid.ok === false && invalid.code === 'INVALID_TOKEN', invalid));
+
+    const who = await call('whoami', runId, idToken);
+    results.push(expect('identity_server_verified',
+      who.ok === true && who.serverVerified === true && !!who.subject && !!who.email && who.role === 'AUTH_TEST_ADMIN', who));
+
+    const allowed = await call('allowed', runId, idToken);
+    results.push(expect('authorized_operation_allowed',
+      allowed.ok === true && allowed.role === 'AUTH_TEST_ADMIN', allowed));
+
+    const forbidden = await call('forbidden', runId, idToken);
+    results.push(expect('unauthorized_operation_blocked',
+      forbidden.ok === false && forbidden.code === 'FORBIDDEN' && forbidden.role === 'AUTH_TEST_ADMIN', forbidden));
+
+    const tamper = await call('tamper', runId, idToken, {claimedRole:'AUTH_TEST_SUPERADMIN'});
+    results.push(expect('role_tampering_blocked',
+      tamper.ok === false && tamper.code === 'FORBIDDEN' &&
+      tamper.role === 'AUTH_TEST_ADMIN' && tamper.claimedRoleIgnored === true, tamper));
+
+    const rb = await readback(runId);
+    const loggedTests = new Set((rb.rows || []).map(r => r.test));
+    const expectedLogs = ['allowed','whoami','forbidden','tamper'];
+    results.push(expect('backend_evidence',
+      rb.ok === true && expectedLogs.every(t => loggedTests.has(t)), rb));
+
+    const passCount = results.filter(r => r.pass).length;
+    const failCount = results.length - passCount;
+    const final = {
+      runId,
+      total: results.length,
+      pass: passCount,
+      fail: failCount,
+      authenticationGate: failCount === 0 ? 'PASS' : 'FAIL',
+      authorizationGate: failCount === 0 ? 'PASS' : 'FAIL',
+      results
+    };
+
+    show(failCount === 0 ? 'AUTH COMPATIBILITY GATE PASS' : 'AUTH COMPATIBILITY GATE FAIL', final);
+    setStatus(failCount === 0 ? 'pass' : 'fail',
+      failCount === 0 ? 'AUTHENTICATION + AUTHORIZATION PASS' : 'FAIL');
+    return final;
+  }
+
+  function handleCredentialResponse(response) {
+    if (!response || !response.credential) {
+      setStatus('fail','LOGIN GOOGLE FAIL');
+      return;
+    }
+    idToken = response.credential;
+    $('runBtn').disabled = false;
+    $('logoutBtn').disabled = false;
+    setStatus('pass','LOGIN GOOGLE OK — PRONTO PER IL GATE');
+    show('LOGIN GOOGLE OK',{credentialReceived:true});
+  }
+  window.handleCredentialResponse = handleCredentialResponse;
+
+  $('initBtn').onclick = () => {
+    try {
+      endpoint();
+      const cid = clientId();
+      if (!window.google || !google.accounts || !google.accounts.id) {
+        throw new Error('Libreria Google non ancora caricata. Attendi qualche secondo e riprova.');
+      }
+      if (!gisInitialized) {
+        google.accounts.id.initialize({
+          client_id: cid,
+          callback: handleCredentialResponse,
+          auto_select: false,
+          cancel_on_tap_outside: false
+        });
+        gisInitialized = true;
+      }
+      $('googleButton').innerHTML = '';
+      google.accounts.id.renderButton($('googleButton'), {
+        type:'standard',
+        theme:'outline',
+        size:'large',
+        text:'signin_with',
+        shape:'rectangular'
+      });
+      setStatus('pending','CLICCA ACCEDI CON GOOGLE');
+      show('LOGIN PRONTO',{origin:location.origin});
+    } catch (e) {
+      setStatus('fail','CONFIGURAZIONE LOGIN FAIL');
+      show('FAIL',{message:e.message});
+    }
+  };
+
+  $('runBtn').onclick = async () => {
+    try { await runGate(); }
+    catch (e) {
+      setStatus('fail','FAIL');
+      show('FAIL',{message:e.message});
+    }
+  };
+
+  $('logoutBtn').onclick = () => {
+    try { if (window.google?.accounts?.id) google.accounts.id.disableAutoSelect(); } catch (_) {}
+    idToken = null;
+    $('runBtn').disabled = true;
+    $('logoutBtn').disabled = true;
+    $('googleButton').innerHTML = '';
+    setStatus('pending','LOGOUT TEST — TOKEN RIMOSSO DALLA PAGINA');
+    show('LOGOUT TEST',{localCredentialCleared:true});
+  };
+})();
+</script>
+</body>
+</html>
