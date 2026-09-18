@@ -9,6 +9,21 @@ export class LiveProvider {
     if (!this.baseUrl) throw new Error("Backend LIVE non ancora configurato");
   }
 
+  async parseJson_(r, action) {
+    const text = await r.text();
+    try {
+      return JSON.parse(text);
+    } catch (_) {
+      const snippet = text.replace(/\s+/g, " ").slice(0, 180);
+      throw new Error(
+        "NON_JSON action=" + action +
+        " status=" + r.status +
+        " url=" + r.url +
+        " body=" + snippet
+      );
+    }
+  }
+
   async get(action, params) {
     this.ensureConfigured();
     const url = new URL(this.baseUrl);
@@ -17,8 +32,11 @@ export class LiveProvider {
     if (this.token) url.searchParams.set("token", this.token);
     Object.entries(params || {}).forEach(([k,v]) => url.searchParams.set(k, v));
     const r = await fetch(url.toString(), {method:"GET", redirect:"follow", cache:"no-store"});
-    const data = await r.json();
-    if (!data.ok) throw new Error(data.error && data.error.message ? data.error.message : "Errore API");
+    const data = await this.parseJson_(r, action);
+    if (!data.ok) throw new Error(
+      "API action=" + action + " " +
+      (data.error && data.error.message ? data.error.message : "Errore API")
+    );
     return data;
   }
 
@@ -32,8 +50,11 @@ export class LiveProvider {
       headers:{"Content-Type":"text/plain;charset=utf-8"},
       body:JSON.stringify(payload)
     });
-    const data = await r.json();
-    if (!data.ok) throw new Error(data.error && data.error.message ? data.error.message : "Errore API");
+    const data = await this.parseJson_(r, action);
+    if (!data.ok) throw new Error(
+      "API action=" + action + " " +
+      (data.error && data.error.message ? data.error.message : "Errore API")
+    );
     return data;
   }
 
