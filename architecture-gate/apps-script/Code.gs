@@ -1,5 +1,5 @@
 const ARCH = Object.freeze({
-  VERSION: 'arch-gate-0.2',
+  VERSION: 'arch-gate-0.3',
   SPREADSHEET_ID: '1XOqZaik3sK6tg-0bxSypkVmAgFVGGQISdr6uNndhM_0',
   SESSION_TTL: 3600
 });
@@ -65,6 +65,14 @@ function doPost(e) {
           session,
           String(body.event_id || '')
         )
+      });
+    }
+
+    if (action === 'event_bundle') {
+      const eventId = String(body.event_id || '');
+      return ok_({
+        event: getEvent_(session, eventId),
+        binomi: listPairs_(session, eventId)
       });
     }
 
