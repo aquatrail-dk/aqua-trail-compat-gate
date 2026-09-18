@@ -1,7 +1,7 @@
-import {ARCH_GATE_CONFIG} from "./config.js";
-import {AquaDataLayer} from "./data-layer.js";
-import {DemoProvider} from "./provider-demo.js";
-import {LiveProvider} from "./provider-live.js";
+import {ARCH_GATE_CONFIG} from "./config.js?v=20260918-0427";
+import {AquaDataLayer} from "./data-layer.js?v=20260918-0427";
+import {DemoProvider} from "./provider-demo.js?v=20260918-0427";
+import {LiveProvider} from "./provider-live.js?v=20260918-0427";
 
 const demo = new DemoProvider();
 const live = new LiveProvider(ARCH_GATE_CONFIG.backendUrl);
