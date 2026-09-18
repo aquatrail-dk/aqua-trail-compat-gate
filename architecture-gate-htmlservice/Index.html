@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Aqua Trail — HTMLService Gate</title>
+  <style>
+    :root{font-family:Arial,Helvetica,sans-serif;color:#16242b;background:#f3f7f8}
+    body{margin:0}.wrap{max-width:980px;margin:auto;padding:24px}
+    h1{margin:0 0 6px}.sub{margin:0 0 18px;color:#52636b}
+    .card{background:#fff;border:1px solid #dbe5e9;border-radius:12px;padding:16px;margin:14px 0}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .badge{display:inline-block;background:#eaf2f5;border-radius:999px;padding:5px 9px;font-size:12px}
+    input,button{font:inherit;padding:9px 10px;border:1px solid #b9c8ce;border-radius:8px}
+    button{cursor:pointer;background:#123f4a;color:#fff;border-color:#123f4a}
+    button.event{display:block;width:100%;text-align:left;margin:8px 0;background:#f7fafb;color:#16242b;border-color:#dbe5e9}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:8px;border-bottom:1px solid #e5ecef;text-align:left}
+    pre{white-space:pre-wrap;background:#0d1a20;color:#d8e8ed;padding:12px;border-radius:8px;min-height:140px}
+    .probe{display:flex;gap:8px;margin-top:14px}.probe input{flex:1}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Aqua Trail — HTMLService Gate</h1>
+  <p class="sub">Gate alternativo senza ContentService/fetch esterno. Comunicazione tramite google.script.run.</p>
+
+  <div class="card">
+    <div class="row">
+      <span>TRANSPORT <b class="badge">HTMLSERVICE_RPC</b></span>
+      <span>HEALTH <b class="badge" id="healthBadge">—</b></span>
+      <span>SESSIONE <b class="badge" id="sessionBadge">NESSUNA</b></span>
+      <button id="healthBtn">HEALTH</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>1. Login</h2>
+    <div class="row">
+      <input id="username" value="admin.test" placeholder="username">
+      <input id="password" value="aqua-admin-test-2026" type="password" placeholder="password">
+      <button id="loginBtn">LOGIN</button>
+      <button id="logoutBtn">LOGOUT</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2. Eventi</h2>
+    <button id="eventsBtn">CARICA EVENTI</button>
+    <div id="events"></div>
+  </div>
+
+  <div class="card">
+    <h2>3. Evento / Binomi / Scrittura</h2>
+    <div id="detail">Apri un evento.</div>
+  </div>
+
+  <div class="card">
+    <h2>Log Gate</h2>
+    <pre id="log"></pre>
+  </div>
+</div>
+
+<script>
+  const state = {
+    token: "",
+    selectedEvent: ""
+  };
+
+  const $ = id => document.getElementById(id);
+
+  function log(msg, obj) {
+    const line =
+      "[" + new Date().toLocaleTimeString() + "] " +
+      msg +
+      (obj ? " " + JSON.stringify(obj) : "");
+
+    $("log").textContent =
+      line + "\n" + $("log").textContent;
+  }
+
+  function callApi(action, payload) {
+    return new Promise((resolve, reject) => {
+      const req = Object.assign(
+        {
+          action: action,
+          token: state.token
+        },
+        payload || {}
+      );
+
+      google.script.run
+        .withSuccessHandler(result => {
+          if (!result || !result.ok) {
+            reject(
+              new Error(
+                result &&
+                result.error &&
+                result.error.message
+                  ? result.error.message
+                  : "Errore API"
+              )
+            );
+            return;
+          }
+
+          resolve(result);
+        })
+        .withFailureHandler(err => {
+          reject(
+            new Error(
+              err && err.message
+                ? err.message
+                : String(err)
+            )
+          );
+        })
+        .api(req);
+    });
+  }
+
+  async function health() {
+    try {
+      const r = await callApi("health");
+      $("healthBadge").textContent = r.data.status;
+      log("Health PASS", r.data);
+    } catch (e) {
+      $("healthBadge").textContent = "FAIL";
+      log("Health FAIL: " + e.message);
+    }
+  }
+
+  async function login() {
+    try {
+      const r = await callApi(
+        "login",
+        {
+          username: $("username").value.trim(),
+          password: $("password").value
+        }
+      );
+
+      state.token = r.data.token;
+
+      $("sessionBadge").textContent =
+        r.data.session.role +
+        " / " +
+        r.data.session.username;
+
+      log("Login PASS", r.data.session);
+
+    } catch (e) {
+      state.token = "";
+      $("sessionBadge").textContent = "NESSUNA";
+      log("Login FAIL: " + e.message);
+    }
+  }
+
+  async function logout() {
+    try {
+      if (state.token) {
+        await callApi("logout");
+      }
+
+      state.token = "";
+      state.selectedEvent = "";
+      $("sessionBadge").textContent = "NESSUNA";
+      $("events").innerHTML = "";
+      $("detail").innerHTML = "Apri un evento.";
+      log("Logout PASS");
+
+    } catch (e) {
+      log("Logout FAIL: " + e.message);
+    }
+  }
+
+  async function loadEvents() {
+    try {
+      const r = await callApi("events");
+      $("events").innerHTML = "";
+
+      r.data.events.forEach(ev => {
+        const b = document.createElement("button");
+        b.className = "event";
+        b.textContent =
+          ev.data +
+          " — " +
+          ev.titolo +
+          " [" +
+          ev.event_id +
+          "]";
+
+        b.onclick = () => openEvent(ev.event_id);
+
+        $("events").appendChild(b);
+      });
+
+      log("Eventi caricati: " + r.data.events.length);
+
+    } catch (e) {
+      log("EVENTI FAIL: " + e.message);
+    }
+  }
+
+  async function openEvent(eventId) {
+    try {
+      const r = await callApi(
+        "event_bundle",
+        { event_id: eventId }
+      );
+
+      state.selectedEvent = eventId;
+
+      const rows = r.data.binomi
+        .map(p =>
+          "<tr><td>" + p.binomio_id +
+          "</td><td>" + p.conduttore +
+          "</td><td>" + p.cane +
+          "</td><td>" + p.categoria +
+          "</td></tr>"
+        )
+        .join("");
+
+      $("detail").innerHTML =
+        "<h3>" + r.data.event.titolo + "</h3>" +
+        "<p><strong>event_id:</strong> " +
+        eventId +
+        "</p>" +
+        "<table><thead><tr>" +
+        "<th>ID</th><th>Conduttore</th><th>Cane</th><th>Categoria</th>" +
+        "</tr></thead><tbody>" +
+        rows +
+        "</tbody></table>" +
+        "<div class=\"probe\">" +
+        "<input id=\"probeValue\" value=\"probe-" + Date.now() + "\">" +
+        "<button id=\"probeBtn\">SCRIVI PROBE</button>" +
+        "</div>";
+
+      $("probeBtn").onclick = writeProbe;
+
+      log(
+        "Evento aperto: " +
+        eventId +
+        "; binomi=" +
+        r.data.binomi.length
+      );
+
+    } catch (e) {
+      log("EVENTO FAIL: " + e.message);
+    }
+  }
+
+  async function writeProbe() {
+    try {
+      const r = await callApi(
+        "write_probe",
+        {
+          event_id: state.selectedEvent,
+          value: $("probeValue").value
+        }
+      );
+
+      log("WRITE PASS", r.data.write);
+
+    } catch (e) {
+      log("WRITE FAIL: " + e.message);
+    }
+  }
+
+  $("healthBtn").onclick = health;
+  $("loginBtn").onclick = login;
+  $("logoutBtn").onclick = logout;
+  $("eventsBtn").onclick = loadEvents;
+
+  health();
+</script>
+</body>
+</html>
