@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aqua Trail — Architecture Gate</title>
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="wrap">
+  <h1>Aqua Trail — Architecture Gate</h1>
+  <p class="sub">Miniatura tecnica isolata: stessa UI, provider DEMO/LIVE intercambiabili.</p>
+
+  <div class="card">
+    <div class="row">
+      <label>Modalità <select id="mode"><option value="demo">DEMO</option><option value="live">LIVE</option></select></label>
+      <span>MODE <b class="badge" id="modeBadge"></b></span>
+      <span>API <b class="badge" id="apiBadge"></b></span>
+      <span>HEALTH <b class="badge" id="healthBadge">—</b></span>
+      <span>SESSIONE <b class="badge" id="sessionBadge">NESSUNA</b></span>
+      <button id="healthBtn">HEALTH</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>1. Login</h2>
+    <div class="row">
+      <input id="username" value="admin.test" placeholder="username">
+      <input id="password" value="demo" type="password" placeholder="password">
+      <button id="loginBtn">LOGIN</button>
+      <button id="logoutBtn">LOGOUT</button>
+    </div>
+    <p>DEMO: <code>admin.test / demo</code> oppure <code>giudice.test / demo</code>. LIVE userà password definite nelle Script Properties.</p>
+  </div>
+
+  <div class="card">
+    <h2>2. Eventi</h2>
+    <button id="eventsBtn">CARICA EVENTI</button>
+    <div id="events"></div>
+  </div>
+
+  <div class="card">
+    <h2>3. Evento / Binomi / Scrittura</h2>
+    <div id="detail">Apri un evento.</div>
+  </div>
+
+  <div class="card">
+    <h2>Log Gate</h2>
+    <pre id="log"></pre>
+  </div>
+</div>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
