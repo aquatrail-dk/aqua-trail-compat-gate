@@ -1,7 +1,7 @@
 import {ARCH_GATE_CONFIG} from "./config.js?v=20260918-0427";
-import {AquaDataLayer} from "./data-layer.js?v=20260918-0427";
-import {DemoProvider} from "./provider-demo.js?v=20260918-0427";
-import {LiveProvider} from "./provider-live.js?v=20260918-0431";
+import {AquaDataLayer} from "./data-layer.js?v=20260918-0447";
+import {DemoProvider} from "./provider-demo.js?v=20260918-0447";
+import {LiveProvider} from "./provider-live.js?v=20260918-0447";
 
 const demo = new DemoProvider();
 const live = new LiveProvider(ARCH_GATE_CONFIG.backendUrl);
@@ -84,17 +84,16 @@ async function loadEvents() {
 
 async function openEvent(eventId) {
   try {
-    const ev = await data.getEvent(eventId);
-    const pairs = await data.listPairs(eventId);
+    const bundle = await data.getEventBundle(eventId);
     state.selectedEvent = eventId;
-    const rows = pairs.data.binomi.map(p => "<tr><td>" + p.binomio_id + "</td><td>" + p.conduttore + "</td><td>" + p.cane + "</td><td>" + p.categoria + "</td></tr>").join("");
+    const rows = bundle.data.binomi.map(p => "<tr><td>" + p.binomio_id + "</td><td>" + p.conduttore + "</td><td>" + p.cane + "</td><td>" + p.categoria + "</td></tr>").join("");
     $("detail").innerHTML =
-      "<h3>" + ev.data.event.titolo + "</h3>" +
+      "<h3>" + bundle.data.event.titolo + "</h3>" +
       "<p><strong>event_id:</strong> " + eventId + "</p>" +
       "<table><thead><tr><th>ID</th><th>Conduttore</th><th>Cane</th><th>Categoria</th></tr></thead><tbody>" + rows + "</tbody></table>" +
       "<div class=\"probe\"><input id=\"probeValue\" value=\"probe-" + Date.now() + "\"><button id=\"probeBtn\">SCRIVI PROBE</button></div>";
     $("probeBtn").onclick = writeProbe;
-    log("Evento aperto: " + eventId + "; binomi=" + pairs.data.binomi.length);
+    log("Evento aperto: " + eventId + "; binomi=" + bundle.data.binomi.length + "; bundle=1 request");
   } catch (e) { log("EVENTO FAIL: " + e.message); }
 }
 
