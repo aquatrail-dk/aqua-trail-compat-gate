@@ -155,6 +155,13 @@ export class LiveProvider {
     );
   }
 
+  getEventBundle(eventId) {
+    return this.post(
+      "event_bundle",
+      { event_id: eventId }
+    );
+  }
+
   writeProbe(eventId, value) {
     return this.post(
       "write_probe",
