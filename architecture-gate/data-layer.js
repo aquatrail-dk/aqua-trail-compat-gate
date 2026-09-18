@@ -14,5 +14,6 @@ export class AquaDataLayer {
   listEvents() { return this.provider.listEvents(); }
   getEvent(eventId) { return this.provider.getEvent(eventId); }
   listPairs(eventId) { return this.provider.listPairs(eventId); }
+  getEventBundle(eventId) { return this.provider.getEventBundle(eventId); }
   writeProbe(eventId, value) { return this.provider.writeProbe(eventId, value); }
 }
