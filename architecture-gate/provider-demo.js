@@ -64,6 +64,12 @@ export class DemoProvider {
     return {ok:true, data:{binomi:PAIRS.filter(x => x.event_id === eventId)}};
   }
 
+  async getEventBundle(eventId) {
+    const event = (await this.getEvent(eventId)).data.event;
+    const binomi = (await this.listPairs(eventId)).data.binomi;
+    return {ok:true, data:{event, binomi}};
+  }
+
   async writeProbe(eventId, value) {
     const s = this.requireSession();
     if (s.role === "GIUDICE" && s.event_id !== eventId) throw new Error("Evento fuori scope GIUDICE");
