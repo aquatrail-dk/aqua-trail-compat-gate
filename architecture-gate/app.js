@@ -15,15 +15,23 @@ function log(msg, obj) {
   $("log").textContent = line + "\n" + $("log").textContent;
 }
 
+function resetProviderSessions_() {
+  demo.current = null;
+  live.token = "";
+  live.current = null;
+  $("sessionBadge").textContent = "NESSUNA";
+}
+
 function setMode(mode) {
   state.mode = mode;
   state.selectedEvent = "";
+  resetProviderSessions_();
   data.setProvider(mode === "live" ? live : demo);
   $("modeBadge").textContent = mode.toUpperCase();
   $("apiBadge").textContent = mode === "live" ? (ARCH_GATE_CONFIG.backendUrl ? "CONFIGURATA" : "NON CONFIGURATA") : "N/A";
   $("events").innerHTML = "";
   $("detail").innerHTML = "";
-  log("Provider attivo: " + mode.toUpperCase());
+  log("Provider attivo: " + mode.toUpperCase() + " — sessione locale azzerata");
 }
 
 async function refreshHealth() {
@@ -42,7 +50,10 @@ async function login() {
     const r = await data.login($("username").value.trim(), $("password").value);
     $("sessionBadge").textContent = r.data.session.role + " / " + r.data.session.username;
     log("Login PASS", r.data.session);
-  } catch (e) { log("Login FAIL: " + e.message); }
+  } catch (e) {
+    $("sessionBadge").textContent = "NESSUNA";
+    log("Login FAIL: " + e.message);
+  }
 }
 
 async function logout() {
@@ -51,6 +62,7 @@ async function logout() {
     $("sessionBadge").textContent = "NESSUNA";
     $("events").innerHTML = "";
     $("detail").innerHTML = "";
+    state.selectedEvent = "";
     log("Logout PASS");
   } catch (e) { log("Logout FAIL: " + e.message); }
 }
