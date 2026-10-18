@@ -1,7 +1,7 @@
 {
   "release": "Aqua Trail BETA blocco 1.8.5",
   "marker": "AQUA_TRAIL_BETA_BLOCCO_1_8_5_WEB_CONFORMANCE",
-  "generated_at": "2026-10-18T14:17:56.921Z",
+  "generated_at": "2026-10-18T21:16:16.730Z",
   "files": [
     {
       "path": "BUILD_INFO.env",
@@ -17,7 +17,7 @@
     },
     {
       "path": "accesso-riservato.html",
-      "sha256": "d6b5bc3a1a0e64904446710902b65f18d4479a9651d334d2e49a46c39530d91c"
+      "sha256": "e019bbdce5210d268253ceffb338fe843d56894c07a898488c109acc35c48e79"
     },
     {
       "path": "assets/aaron-profile.png",
@@ -33,7 +33,7 @@
     },
     {
       "path": "assets/common.js",
-      "sha256": "0ed7dfb19fbf41e4b1037688122ea4fb7974363eed1981f858637f106022be92"
+      "sha256": "31ce3fcf3f24841ed86d42afe53ea2632d8dfd4c475a0e7f947366b65abd56e7"
     },
     {
       "path": "assets/content-utils.js",
@@ -73,11 +73,11 @@
     },
     {
       "path": "assets/event-live.js",
-      "sha256": "82d88f8cb414a71af705d51ab657b0588ebc89d33fb4e2a4385ba9562ddd66a9"
+      "sha256": "b5de45080afa5b0715a0a621e71d4dcc0370c4fe673febdf7e5db0da2a5a98eb"
     },
     {
       "path": "assets/event-public.js",
-      "sha256": "0a268f06812bf908f32e4f67b1180728deda65dfeef2a174a08ee101b04f2755"
+      "sha256": "330f248c11884fc0b2338748f6ca21f27643c908957ebf9f97fb5c9042e089f6"
     },
     {
       "path": "assets/gallery-db.js",
@@ -85,7 +85,7 @@
     },
     {
       "path": "assets/gallery.js",
-      "sha256": "ce6529040025e32d4fdac17e89b48d4677373033309904c959f7b70ff28805c5"
+      "sha256": "a0f8f4b311db29ea14c8b57baff59dbf9cbbc4e8c0def58be3d389b5c184508c"
     },
     {
       "path": "assets/gallery/gara/01_allenamento_acquatico_tra_cane_e_atleta.webp",
@@ -369,35 +369,35 @@
     },
     {
       "path": "assets/results.js",
-      "sha256": "0665ae5af75f8b0648be4f4cfce549adebe72403fa045c5d54d3a122b35faff3"
+      "sha256": "c24d1625284cf109862859ca5709cc732856f45711abfff2057d3c45a252a4de"
     },
     {
       "path": "assets/season.js",
-      "sha256": "9580e80e324aa7218a10e7c431b853a6fe263cba82442f55ef3667d4aabea795"
+      "sha256": "8b68b461a49eca161fc4f1da1e5717370ff3a7f24df90ff3564a02b8cfbc9f11"
     },
     {
       "path": "assets/styles.css",
-      "sha256": "ee9dd60c49f5560b6815861ebb9bd11d3c87d3c15f1d094db1df7ffc712a1bfd"
+      "sha256": "54e66a9430295312d0e701da92f33631d296f47a11d1993717dd08e9d3bd660c"
     },
     {
       "path": "binomi.html",
-      "sha256": "a0b605ae6ac5403cc5d506bd7eeff999f2a6b6d9b89b5e52af8e500b9f91a1b9"
+      "sha256": "29d9691eff3c73e27af09f3a78576db830d6568f8f6ed863f476e4f5b5d7174f"
     },
     {
       "path": "binomio.html",
-      "sha256": "d554b23fa3b281ad63bd173f179a9780face7280059ef0333a5f0d488b7d9c06"
+      "sha256": "afdff209288921fe84d6485ef037bda0a39cf12a5ed4ddbbf5ba0d288241e7d9"
     },
     {
       "path": "classifica.html",
-      "sha256": "c77c5c3e09ff8ac34fa31ca302f1f6ceba5af8d19d09c92ff40fa8eb5a71c6e0"
+      "sha256": "402462e3ad5e0e5aca6bc58370d102b4f1ae912e2a59f872da9dd7dfbcde59ad"
     },
     {
       "path": "contatti.html",
-      "sha256": "52d9f1e6427ed7ca6b9d6074681d833c34caf0f329a0d97989b8ce56c9a08ccf"
+      "sha256": "cbf76bd45ce013907a68c9fe8fe364049ff5738df5a6b2248a8fc9b45f225f71"
     },
     {
       "path": "data/runtime-config.js",
-      "sha256": "a545544d6c52250b4ac69c77d89e3b3dee4081fb5e95c6173a2b3021054747b2"
+      "sha256": "9cb965aa1403b51865ac92877514e3b54dfb26fba21e43f4aa5ff707a9bf4398"
     },
     {
       "path": "docs/Regolamento_Tecnico_Ufficiale_Aqua_Trail.pdf",
@@ -429,27 +429,31 @@
     },
     {
       "path": "documento-evento.html",
-      "sha256": "2c637b866230f33ae627b13899d4d68d189917b08fed1db5f998c01ed61da5fa"
+      "sha256": "c29ad0a4bd71e7a2a66767bd4764eb6f4fd9174014c6cd1f78d2dada842df209"
     },
     {
       "path": "evento.html",
-      "sha256": "535abb13270c2ad4cc2e55afc88538bb2c200d867e10c78274d5f15f86c6f5de"
+      "sha256": "8387598ff596592dfa446858e7fa9513747a58bb6cf6abb90ecab5bf4c19320b"
     },
     {
       "path": "gallery.html",
-      "sha256": "fe14b8c35b9bc44d98c9bdfd151144553ccedba6f2057ca9361f6c3924c718a6"
+      "sha256": "96a3fe68cf0510aa786d61a9dfc2e21e22247db9542a607305e13c3ac9d3b10d"
     },
     {
       "path": "gare.html",
-      "sha256": "e86077954f8423968c8a6c966df562030aeea727cb16df4ae7a32e6167bd6f66"
+      "sha256": "003d8cca2c31c357ffb19c3334871138afea8ff98299139ec51452187abae158"
     },
     {
       "path": "index.html",
-      "sha256": "a008e17fb01e7d2a6e85426b1ce15f9d970f6b1220a30e631b683740ca1b8e61"
+      "sha256": "bbd38d6949b19377ad218403c5083c87c961c7c3fdb111f922f581d92dbd55da"
     },
     {
       "path": "regolamento.html",
-      "sha256": "b66cd0bb6045f775be7457c1903e49c62e9279e796caef5288b348d5ef158754"
+      "sha256": "8fb4dfa4494841b344c073300665a8771a1a53b04b192ad7cb06e599eeb5b20c"
+    },
+    {
+      "path": "robots.txt",
+      "sha256": "8549f2c36317d3efd9aef75cf88b25f26383e549ffc8d3a23f7319fbfbde1494"
     },
     {
       "path": "staff/BUILD_INFO.env",
@@ -481,7 +485,7 @@
     },
     {
       "path": "staff/assets/admin-dashboard.js",
-      "sha256": "e60ab7037ea184d1e5986d0617d06d507e8d1ce02b8ac207f99133f3feb240e7"
+      "sha256": "c80846569ddd95ac42973d12d9e748a6cd1a479e02a6df533997bdbb10db4d77"
     },
     {
       "path": "staff/assets/app-bootstrap.js",
@@ -1021,7 +1025,7 @@
     },
     {
       "path": "staff/data/runtime-config.js",
-      "sha256": "aa96e1b580d75e98d0d8aa61c72305bd803ff7394e7e633b1c65194723bfd91b"
+      "sha256": "21cb1f7879e7a341a58f6b9ad885409fde7d4be7c856bd21b0efa55da0cba4bd"
     },
     {
       "path": "staff/evento-admin.html",

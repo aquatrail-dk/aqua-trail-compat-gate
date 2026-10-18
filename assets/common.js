@@ -4,7 +4,7 @@ ATApp.onReady(()=>{
   if(window.ATStore){try{const wc=ATStore.workspace();document.documentElement.dataset.workspace=wc.mode;document.body.dataset.workspace=wc.mode;let bar=document.querySelector('.workspace-global-banner');if(!bar){bar=document.createElement('div');bar.className='workspace-global-banner';document.body.prepend(bar)}bar.classList.toggle('demo',wc.mode==='DEMO');bar.classList.toggle('real',wc.mode==='REAL');bar.innerHTML=wc.mode==='DEMO'?'<strong>🧪 AMBIENTE DEMO</strong><span>Dati di simulazione, formazione e debug. Nessun dato ufficiale REAL è visibile.</span>':'<strong>AMBIENTE REAL</strong><span>Dati ufficiali Aqua Trail. I dati DEMO sono completamente esclusi.</span>';}catch(_){}}
   if(location.protocol==='file:'){const w=document.createElement('div');w.className='file-protocol-warning';w.innerHTML='<b>ATTENZIONE · apertura diretta file://</b> — Chiudi questa pagina e usa <b>AVVIA_WINDOWS.bat</b> oppure <b>AVVIA_MAC.command</b>.';document.body.prepend(w);}
   const b=document.querySelector('.menu'),n=document.querySelector('.navlinks');
-  if(b&&n)b.addEventListener('click',()=>n.classList.toggle('open'));
+  if(b&&n){const publicNav=document.body?.dataset?.admin!=='1'&&document.body?.dataset?.judge!=='1';if(publicNav){if(!n.id)n.id='public-navigation';const isOpen=n.classList.contains('open');b.setAttribute('aria-controls',n.id);b.setAttribute('aria-expanded',String(isOpen));b.setAttribute('aria-label',isOpen?'Chiudi menu':'Apri menu')}b.addEventListener('click',()=>{const open=n.classList.toggle('open');if(publicNav){b.setAttribute('aria-expanded',String(open));b.setAttribute('aria-label',open?'Chiudi menu':'Apri menu')}})}
   document.querySelectorAll('.admin-header .brand-copy>span:not(.build-badge)').forEach(el=>{el.textContent='Aqua Trail® · '+window.AQUATRAIL_BUILD.label;});
   document.querySelectorAll('.build-kicker').forEach(el=>{el.textContent=window.AQUATRAIL_BUILD.label;});
   document.querySelectorAll('.header .brand-copy').forEach(host=>{if(host.querySelector('.build-badge'))return;const b=document.createElement('span');b.className='build-badge';b.textContent=window.AQUATRAIL_BUILD.label;b.title=`Build: ${window.AQUATRAIL_BUILD.full} · ${window.AQUATRAIL_BUILD.date}`;b.setAttribute('aria-label',`Versione ${window.AQUATRAIL_BUILD.label}`);host.appendChild(b);});
@@ -83,7 +83,7 @@ ATApp.onReady(()=>{
   };
   document.querySelectorAll('.table-wrap,.data-table-wrap').forEach(enhanceTable);
   // Riduci il rischio di menu lasciati aperti dopo un cambio di larghezza.
-  window.addEventListener('resize',()=>{if(innerWidth>1050)document.querySelectorAll('.admin-navlinks.open,.navlinks.open').forEach(n=>n.classList.remove('open'))},{passive:true});
+  window.addEventListener('resize',()=>{if(innerWidth>1050)document.querySelectorAll('.admin-navlinks.open,.navlinks.open').forEach(n=>{n.classList.remove('open');const m=n.parentElement?.querySelector('.menu');if(m&&document.body?.dataset?.admin!=='1'&&document.body?.dataset?.judge!=='1'){m.setAttribute('aria-expanded','false');m.setAttribute('aria-label','Apri menu')}})},{passive:true});
 });
 
 
