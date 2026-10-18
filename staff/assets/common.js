@@ -48,7 +48,7 @@ ATApp.onReady(()=>{
 window.addEventListener('pageshow',()=>{
   if(!window.ATStore)return;
   const protectedPage=document.body?.dataset?.admin==='1'||document.body?.dataset?.judge==='1';
-  if(protectedPage&&!ATStore.session())location.replace('accesso-riservato.html?expired=1');
+  if(protectedPage&&!ATStore.session())location.replace('../accesso-riservato.html?expired=1');
 });
 
 // V.0.9_BETA_ONLINE — navigazione tabelle larghe + controlli layout.

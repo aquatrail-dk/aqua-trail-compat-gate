@@ -539,8 +539,8 @@
     importRecoveryBundle,
     session(){if(onlineApiActive())return clone(dataApi().sessionData());if(!localAuthorityAllowed())return null;try{const s=JSON.parse(sessionStorage.getItem(SESSION)||'null');if(!s)return null;const c=workspaceConfig();if(Number(s.workspace_epoch||0)!==Number(c.epoch)||normalizeWorkspace(s.workspace)!==normalizeWorkspace(c.mode)){clearBrowserAuth();return null}return s}catch(e){return null}},
     login(username,password){if(onlineApiActive())throw onlineCommandError('LOGIN');assertLocalAuthority('LOGIN LOCALE');const a=this.admin(),u=String(username||'').trim().toLowerCase();const acc=(a.offline_accounts||[]).find(x=>String(x.username||'').toLowerCase()===u&&String(x.password??'')===String(password??''));if(!acc||acc.enabled===false)return null;this.saveAdmin(a);const c=workspaceConfig(),s={username:acc.username,role:acc.role,judge_id:acc.judge_id||null,center_id:acc.center_id||null,event_id:acc.event_id||null,owner:acc.owner||null,capabilities:clone(acc.capabilities||{}),force_password_change:!!acc.force_password_change,login_at:now(),authority:'OFFLINE_LOCAL',workspace:c.mode,workspace_epoch:c.epoch};sessionStorage.setItem(SESSION,JSON.stringify(s));return s;},
-    logout(){clearBrowserAuth();if(onlineApiActive()){const p=dataApi().logout();Promise.resolve(p).finally(()=>{clearBrowserAuth();location.replace('login-admin.html?logout=1')});return p}location.replace('accesso-riservato.html?logout=1');},
-    requireSession(){const s=this.session();if(!s)location.href='accesso-riservato.html';return s;},
+    logout(){clearBrowserAuth();if(onlineApiActive()){const p=dataApi().logout();Promise.resolve(p).finally(()=>{clearBrowserAuth();location.replace('login-admin.html?logout=1')});return p}location.replace('../accesso-riservato.html?logout=1');},
+    requireSession(){const s=this.session();if(!s)location.href='../accesso-riservato.html';return s;},
     requireAdmin(){const s=this.requireSession();if(!s)return null;if(s.role==='GIUDICE'){location.href='gara-giudice.html';return null;}if(s.role==='CENTRO_ASSOCIATO'){location.href='centro-evento.html';return null;}if(s.role==='FRONT_OFFICE'){location.href='frontoffice.html';return null;}return s;},
     isSuperAdmin(){return this.session()?.role==='SUPERADMIN';},
     isFrontOffice(){return this.session()?.role==='FRONT_OFFICE';},
@@ -596,5 +596,5 @@
     fmtDate(d){if(!d)return '—';return new Date(d+'T12:00:00').toLocaleDateString('it-IT');},
     fmtMoney(n){return `€ ${Number(n||0).toFixed(2)}`;}
   };
-  try{window.addEventListener('storage',ev=>{if(ev.key===WORKSPACE_KEY&&sessionStorage.getItem(SESSION)){clearBrowserAuth();location.replace('accesso-riservato.html?workspace_changed=1')}})}catch(_){}
+  try{window.addEventListener('storage',ev=>{if(ev.key===WORKSPACE_KEY&&sessionStorage.getItem(SESSION)){clearBrowserAuth();location.replace('../accesso-riservato.html?workspace_changed=1')}})}catch(_){}
 })();

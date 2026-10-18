@@ -1,7 +1,7 @@
 {
   "release": "Aqua Trail BETA blocco 1.8.5",
   "marker": "AQUA_TRAIL_BETA_BLOCCO_1_8_5_WEB_CONFORMANCE",
-  "generated_at": "2026-09-27T22:59:13.207Z",
+  "generated_at": "2026-10-18T13:49:05.067Z",
   "files": [
     {
       "path": "BUILD_INFO.env",
@@ -509,7 +509,7 @@
     },
     {
       "path": "staff/assets/common.js",
-      "sha256": "0ed7dfb19fbf41e4b1037688122ea4fb7974363eed1981f858637f106022be92"
+      "sha256": "dc18e90a6648a7764065b5af1ba285a18343f779a1ffa54ceab18d37973e6c31"
     },
     {
       "path": "staff/assets/content-utils.js",
@@ -965,7 +965,7 @@
     },
     {
       "path": "staff/assets/store.js",
-      "sha256": "9e0d29483b751345f263c12fd11baf62aa036510ac9009a19d190d93bd3d7cd4"
+      "sha256": "97ea021425afc53c3fa2214b569d5ecd34b3ff292c7a85031555b1f33886b19e"
     },
     {
       "path": "staff/assets/styles.css",
@@ -973,7 +973,7 @@
     },
     {
       "path": "staff/assets/superadmin.js",
-      "sha256": "32a85957148db6bd93d065982177507edba9af1979243fbe72db420dc55c0bfa"
+      "sha256": "2934372626f99d058999409625b57de3b664d39737ac7933a379e2914e7dd749"
     },
     {
       "path": "staff/assets/web-conformance.js",
