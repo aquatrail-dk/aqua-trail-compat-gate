@@ -45,10 +45,12 @@ ATApp.onReady(()=>{
 });
 
 // BLOCCO 1.7 — revoca sessione anche su pagine ripristinate da back-forward cache.
-window.addEventListener('pageshow',()=>{
+window.addEventListener('pageshow',async()=>{
   if(!window.ATStore)return;
   const protectedPage=document.body?.dataset?.admin==='1'||document.body?.dataset?.judge==='1';
-  if(protectedPage&&!ATStore.session())location.replace('../accesso-riservato.html?expired=1');
+  if(!protectedPage)return;
+  try{if(window.ATApp?.ready)await window.ATApp.ready;}catch(_){}
+  if(!ATStore.session())location.replace('../accesso-riservato.html?expired=1');
 });
 
 // V.0.9_BETA_ONLINE — navigazione tabelle larghe + controlli layout.
