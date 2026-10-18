@@ -635,3 +635,13 @@ dialog.app-dialog .panel{box-shadow:0 24px 70px rgba(0,0,0,.28)}
 /* 1.8.4 — workspace globale DEMO / REAL */
 .workspace-global-banner{display:flex;gap:12px;align-items:center;justify-content:center;padding:8px 16px;font-size:13px;font-weight:600;position:relative;z-index:50;border-bottom:1px solid rgba(255,255,255,.12)}
 .workspace-global-banner.demo{background:#4b3510;color:#fff3c4}.workspace-global-banner.real{background:#163d2a;color:#dcffe9}.workspace-global-banner span{font-weight:500;opacity:.9}.workspace-control-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.workspace-control-panel .stat{min-width:0}.workspace-control-panel #saWorkspaceMode{font-size:1.35rem}.demo-mark{display:inline-flex;align-items:center;justify-content:center;margin-left:.35rem;font-size:.85em;vertical-align:middle} @media(max-width:760px){.workspace-global-banner{align-items:flex-start;flex-direction:column;gap:2px}.workspace-control-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+
+/* Public site bootstrap status */
+.public-bootstrap-loading{position:sticky;top:0;z-index:99998;display:flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:8px 16px;background:#063a5b;color:#fff;font-size:13px;font-weight:800;border-bottom:1px solid #4dd5df;box-shadow:0 3px 12px rgba(4,37,56,.16)}
+.public-bootstrap-spinner{width:17px;height:17px;flex:none;border:2px solid rgba(255,255,255,.42);border-top-color:#fff;border-radius:50%;animation:publicBootstrapSpin .8s linear infinite}
+.public-bootstrap-track{display:block;width:min(22vw,150px);height:4px;overflow:hidden;border-radius:99px;background:rgba(255,255,255,.25)}
+.public-bootstrap-track i{display:block;width:38%;height:100%;border-radius:inherit;background:#65e3e5;animation:publicBootstrapProgress 1.25s ease-in-out infinite}
+@keyframes publicBootstrapSpin{to{transform:rotate(360deg)}}
+@keyframes publicBootstrapProgress{0%{transform:translateX(-120%)}100%{transform:translateX(340%)}}
+@media(prefers-reduced-motion:reduce){.public-bootstrap-spinner,.public-bootstrap-track i{animation:none}.public-bootstrap-track i{width:100%}}

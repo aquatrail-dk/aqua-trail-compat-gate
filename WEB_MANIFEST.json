@@ -1,7 +1,7 @@
 {
   "release": "Aqua Trail BETA blocco 1.8.5",
   "marker": "AQUA_TRAIL_BETA_BLOCCO_1_8_5_WEB_CONFORMANCE",
-  "generated_at": "2026-10-18T21:19:36.410Z",
+  "generated_at": "2026-10-18T21:29:30.973Z",
   "files": [
     {
       "path": "BUILD_INFO.env",
@@ -25,7 +25,7 @@
     },
     {
       "path": "assets/app-bootstrap.js",
-      "sha256": "49c752499667fd3e0aea522e754fb3e68a01d22be3100c97c701d5c29b350a83"
+      "sha256": "f56f98899c87a4c884d79256b853304639d60712c34e937b3866c68842146b67"
     },
     {
       "path": "assets/build-info.js",
@@ -78,14 +78,6 @@
     {
       "path": "assets/event-public.js",
       "sha256": "330f248c11884fc0b2338748f6ca21f27643c908957ebf9f97fb5c9042e089f6"
-    },
-    {
-      "path": "assets/gallery-db.js",
-      "sha256": "7724a9ccd0b644cbb251b54dea121e396f65defd80062fbb11333fd1eb218bdf"
-    },
-    {
-      "path": "assets/gallery.js",
-      "sha256": "a0f8f4b311db29ea14c8b57baff59dbf9cbbc4e8c0def58be3d389b5c184508c"
     },
     {
       "path": "assets/gallery/gara/01_allenamento_acquatico_tra_cane_e_atleta.webp",
@@ -260,6 +252,14 @@
       "sha256": "005976a1af0e6a5f2624bfcb67847516cc86edcc25368fc4f943b3feed01b525"
     },
     {
+      "path": "assets/gallery-db.js",
+      "sha256": "7724a9ccd0b644cbb251b54dea121e396f65defd80062fbb11333fd1eb218bdf"
+    },
+    {
+      "path": "assets/gallery.js",
+      "sha256": "a0f8f4b311db29ea14c8b57baff59dbf9cbbc4e8c0def58be3d389b5c184508c"
+    },
+    {
       "path": "assets/guide/boa-percorso-aqua-trail.png",
       "sha256": "75ce6323c318cb3d9c55203f1dc24ba7148a7866b1eac66fe39724778fc228ec"
     },
@@ -377,7 +377,7 @@
     },
     {
       "path": "assets/styles.css",
-      "sha256": "54e66a9430295312d0e701da92f33631d296f47a11d1993717dd08e9d3bd660c"
+      "sha256": "ddcee9afd6405043d6f7216985dc7c30c635137a440d43e6d16338c432be024c"
     },
     {
       "path": "binomi.html",
@@ -580,18 +580,6 @@
       "sha256": "2b74b078d972c5412d76a862b13ac233891c69b92b34a9943407e8d00e8de773"
     },
     {
-      "path": "staff/assets/gallery-admin.js",
-      "sha256": "8b7c443333c57be07b3293f090a29743aa96604556828593593f671a72c47a3d"
-    },
-    {
-      "path": "staff/assets/gallery-db.js",
-      "sha256": "7724a9ccd0b644cbb251b54dea121e396f65defd80062fbb11333fd1eb218bdf"
-    },
-    {
-      "path": "staff/assets/gallery.js",
-      "sha256": "ce6529040025e32d4fdac17e89b48d4677373033309904c959f7b70ff28805c5"
-    },
-    {
       "path": "staff/assets/gallery/gara/01_allenamento_acquatico_tra_cane_e_atleta.webp",
       "sha256": "8675a6cada4e6e36c3bbae4db860d016dbcdf51bcf48fd73e38d4de1f74c3146"
     },
@@ -764,6 +752,18 @@
       "sha256": "005976a1af0e6a5f2624bfcb67847516cc86edcc25368fc4f943b3feed01b525"
     },
     {
+      "path": "staff/assets/gallery-admin.js",
+      "sha256": "8b7c443333c57be07b3293f090a29743aa96604556828593593f671a72c47a3d"
+    },
+    {
+      "path": "staff/assets/gallery-db.js",
+      "sha256": "7724a9ccd0b644cbb251b54dea121e396f65defd80062fbb11333fd1eb218bdf"
+    },
+    {
+      "path": "staff/assets/gallery.js",
+      "sha256": "ce6529040025e32d4fdac17e89b48d4677373033309904c959f7b70ff28805c5"
+    },
+    {
       "path": "staff/assets/guide/boa-percorso-aqua-trail.png",
       "sha256": "75ce6323c318cb3d9c55203f1dc24ba7148a7866b1eac66fe39724778fc228ec"
     },
@@ -784,10 +784,6 @@
       "sha256": "702f890e201b4a5945eb5c89dac743d92aae15ad58fff9e984320770ac9b5508"
     },
     {
-      "path": "staff/assets/judges-admin.js",
-      "sha256": "79bd295ff26f71df6a4b57df7696c00a1e3450afc1e22c4d2abe7cdb4bcd4800"
-    },
-    {
       "path": "staff/assets/judges/ajeje-brazorf.webp",
       "sha256": "aba695fb22aef836e2e094f75b90648e2a77c9aecf8888e654bcdadf2be16e2f"
     },
@@ -798,6 +794,10 @@
     {
       "path": "staff/assets/judges/valeria-di-bartolomeo.webp",
       "sha256": "0c30c741e3227eb10b7d230527bf8f0ecfc8cac295b127f9f3d64ee8dcb534f6"
+    },
+    {
+      "path": "staff/assets/judges-admin.js",
+      "sha256": "79bd295ff26f71df6a4b57df7696c00a1e3450afc1e22c4d2abe7cdb4bcd4800"
     },
     {
       "path": "staff/assets/live-news-admin.js",
@@ -830,10 +830,6 @@
     {
       "path": "staff/assets/pair-detail-admin.js",
       "sha256": "fcc8db0750cfbc6cb6d44b691950ecf3bed593536a3adc6dcdf6d6fe9b9199ec"
-    },
-    {
-      "path": "staff/assets/pairs-admin.js",
-      "sha256": "1e5384a756210e3726023e836062e3e4fe0f769c3c07878ce8b08c85ad286a82"
     },
     {
       "path": "staff/assets/pairs/b011-alexio-lucilla.webp",
@@ -870,6 +866,10 @@
     {
       "path": "staff/assets/pairs/b019-enrico-marea.webp",
       "sha256": "65fa39e11e08be9ff0ed18f8f300253327e52408abb47d3ce218ae8158434da9"
+    },
+    {
+      "path": "staff/assets/pairs-admin.js",
+      "sha256": "1e5384a756210e3726023e836062e3e4fe0f769c3c07878ce8b08c85ad286a82"
     },
     {
       "path": "staff/assets/participants-print.js",
