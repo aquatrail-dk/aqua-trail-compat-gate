@@ -1,0 +1,1 @@
+ATApp.onReady(()=>{const A=ATStore.admin(),b=document.querySelector('#auditRows');b.innerHTML='';(A.audit||[]).forEach(x=>b.insertAdjacentHTML('beforeend',`<tr><td>${x.timestamp||''}</td><td>${x.user||''}</td><td>${x.action||''}</td><td>${x.object||''}</td><td><small>${x.before||''}</small></td><td><small>${x.after||''}</small></td><td>${x.reason||''}</td></tr>`));});

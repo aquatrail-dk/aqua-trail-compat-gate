@@ -1,0 +1,12 @@
+window.AQUATRAIL_RUNTIME={
+  build_marker:window.AQUATRAIL_BUILD?.marker||null,
+  build_release:window.AQUATRAIL_BUILD?.release||null,
+  mode:'ONLINE_PUBLIC',
+  audience:'PUBLIC',
+  deploy_artifact:'WEB_CONFORMANCE_1_8_5',
+  allow_client_authority:false,
+  backend_authoritative:true,
+  preregistration_enabled:false,
+  api_base_url:'__SET_APPS_SCRIPT_WEB_APP_URL__',
+  online_contract:'ONLINE_COMPATIBILITY_CONTRACT_1_8_5.json'
+};

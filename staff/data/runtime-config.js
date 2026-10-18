@@ -1,0 +1,20 @@
+window.AQUATRAIL_RUNTIME={
+  build_marker:window.AQUATRAIL_BUILD?.marker||null,
+  build_release:window.AQUATRAIL_BUILD?.release||null,
+  mode:'ONLINE_STAFF',
+  audience:'STAFF',
+  deploy_artifact:'WEB_CONFORMANCE_1_8_5',
+  allow_client_authority:false,
+  embedded_demo_private_data:false,
+  staff_online_enabled:true,
+  backend_authoritative:true,
+  storage_adapter:'AT_DATA_API_V1_8_5',
+  auth_adapter:'APPS_SCRIPT_OPAQUE_SESSION_V1',
+  data_api_adapter:'ATDataAPI_V1_8_5',
+  api_base_url:'__SET_APPS_SCRIPT_WEB_APP_URL__',
+  online_contract:'ONLINE_COMPATIBILITY_CONTRACT_1_8_5.json',
+  staff_login_url:'login-admin.html',
+  browser_uploads_enabled:false,
+  bulk_import_enabled:false,
+  generic_force_patch_enabled:false
+};

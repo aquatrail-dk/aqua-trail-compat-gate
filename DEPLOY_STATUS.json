@@ -1,0 +1,22 @@
+{
+  "release": "Aqua Trail BETA blocco 1.8.5",
+  "marker": "AQUA_TRAIL_BETA_BLOCCO_1_8_5_WEB_CONFORMANCE",
+  "deployable_to_github_pages": true,
+  "contains_private_seed_data": false,
+  "web_conformance": true,
+  "backend_versioned": true,
+  "operational": false,
+  "operational_when": [
+    "Apps Script backend bound to definitive Sheets schema",
+    "api_base_url configured",
+    "login/public_bundle/staff_bundle verified",
+    "critical domain commands verified multi-device",
+    "Safety Gate server-side verified"
+  ],
+  "deferred": [
+    "browser uploads",
+    "bulk import/backup",
+    "generic force patch"
+  ],
+  "status": "WEB_CONFORMANCE_READY_FOR_BACKEND_BINDING"
+}

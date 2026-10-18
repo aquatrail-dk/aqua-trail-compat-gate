@@ -1,0 +1,1115 @@
+{
+  "release": "Aqua Trail BETA blocco 1.8.5",
+  "marker": "AQUA_TRAIL_BETA_BLOCCO_1_8_5_WEB_CONFORMANCE",
+  "generated_at": "2026-09-27T22:59:13.207Z",
+  "files": [
+    {
+      "path": "BUILD_INFO.env",
+      "sha256": "859e6830ed6dced69d01076f5a9d34e70d17c3c7a7912515a00742a9fe70162f"
+    },
+    {
+      "path": "DEPLOY_STATUS.json",
+      "sha256": "d7bbec2855c7298fb869c278fd832907f445fc3c48340f7ee0e70c6eaceedb7b"
+    },
+    {
+      "path": "ONLINE_COMPATIBILITY_CONTRACT_1_8_5.json",
+      "sha256": "f8ef51e085b607aeb849075b3f91621f5bb1b6459580dcdb3731bf09629ef6d5"
+    },
+    {
+      "path": "accesso-riservato.html",
+      "sha256": "d6b5bc3a1a0e64904446710902b65f18d4479a9651d334d2e49a46c39530d91c"
+    },
+    {
+      "path": "assets/aaron-profile.png",
+      "sha256": "11625aa01253de4790dda4c7ed94643cebd4f0b4cf2dd28f095661b80014e8a8"
+    },
+    {
+      "path": "assets/app-bootstrap.js",
+      "sha256": "49c752499667fd3e0aea522e754fb3e68a01d22be3100c97c701d5c29b350a83"
+    },
+    {
+      "path": "assets/build-info.js",
+      "sha256": "283193495f4347663dc73094e82a235bf192772a5c2e1230f43f850dc0b5d20f"
+    },
+    {
+      "path": "assets/common.js",
+      "sha256": "0ed7dfb19fbf41e4b1037688122ea4fb7974363eed1981f858637f106022be92"
+    },
+    {
+      "path": "assets/content-utils.js",
+      "sha256": "ca579dd5c6dab82f45f9679cf156fee0fd51aefb360d0e364a34568103ab83b4"
+    },
+    {
+      "path": "assets/data-api-adapter.js",
+      "sha256": "deb9475cd41361fc2deac694d7e8eeb1d444af75468b2fc2de61dacab63c0410"
+    },
+    {
+      "path": "assets/event-demo/cane-giallo-bistrot-menu-ai.webp",
+      "sha256": "59ed8b0541727753e47e8a0b48cb5f3ea5a44bb88a69dc29f5f8bb7e01fad55b"
+    },
+    {
+      "path": "assets/event-demo/cane-giallo-bistrot-menu-reale.webp",
+      "sha256": "5db7d09a86832f09e0ca94fb8a4fc506d2bdb46f1c6219be63e2e6518ed8539c"
+    },
+    {
+      "path": "assets/event-demo/gamba-di-legno-omaggio.webp",
+      "sha256": "3ad098a162ff818e42192e1de7b7c323dca6f70fe2a208cb516de06e188b3985"
+    },
+    {
+      "path": "assets/event-demo/golden-is-better-programma-ai.webp",
+      "sha256": "a98a0f494fa8fa240dc8082d2ac203feaef04434234fa6ca8f306709e063d7da"
+    },
+    {
+      "path": "assets/event-demo/tre-uomini-partecipazione.webp",
+      "sha256": "321ce074f0fa0230254f0320ee6834545da4c56bb5872a5b205fecb286d61807"
+    },
+    {
+      "path": "assets/event-document-viewer.js",
+      "sha256": "7f5afc2301e9790ee8fed64e61894befc78197b19d67763fff0515e369a76327"
+    },
+    {
+      "path": "assets/event-documents.js",
+      "sha256": "0bd5b6ba8d721d2abe37b11e26a84fc044d466b12353dd6410630c907bb4f49b"
+    },
+    {
+      "path": "assets/event-live.js",
+      "sha256": "82d88f8cb414a71af705d51ab657b0588ebc89d33fb4e2a4385ba9562ddd66a9"
+    },
+    {
+      "path": "assets/event-public.js",
+      "sha256": "0a268f06812bf908f32e4f67b1180728deda65dfeef2a174a08ee101b04f2755"
+    },
+    {
+      "path": "assets/gallery-db.js",
+      "sha256": "7724a9ccd0b644cbb251b54dea121e396f65defd80062fbb11333fd1eb218bdf"
+    },
+    {
+      "path": "assets/gallery.js",
+      "sha256": "ce6529040025e32d4fdac17e89b48d4677373033309904c959f7b70ff28805c5"
+    },
+    {
+      "path": "assets/gallery/gara/01_allenamento_acquatico_tra_cane_e_atleta.webp",
+      "sha256": "8675a6cada4e6e36c3bbae4db860d016dbcdf51bcf48fd73e38d4de1f74c3146"
+    },
+    {
+      "path": "assets/gallery/gara/02_boxer_e_atleta_tra_gli_spruzzi.webp",
+      "sha256": "a05b0f2190f0e3483890a5c86f894160917bda3ae76683cdcd0ae8df1574bab1"
+    },
+    {
+      "path": "assets/gallery/gara/03_cane_e_atleta_nel_percorso_d_acqua.webp",
+      "sha256": "3928f3329f418f6c0c2f9edbd6c6bee7e7f9257cbc3d8fadf5f5b541bd439fbc"
+    },
+    {
+      "path": "assets/gallery/gara/04_corsa_acquatica_tra_cane_e_atleta.webp",
+      "sha256": "4f85e0647e9be696a80ab4331a5c3419906176e973f0e3fbe4fc27704cbd2270"
+    },
+    {
+      "path": "assets/gallery/gara/05_gara_01.webp",
+      "sha256": "868ec437accd26806ae55e10bb6ab0606861646156aa45de77691a1f65814d67"
+    },
+    {
+      "path": "assets/gallery/gara/06_gara_02.webp",
+      "sha256": "b645e785d8defff4d484d8bf6ee15a04204cfba9d8c5e2e7dc5e4c4179e39bb9"
+    },
+    {
+      "path": "assets/gallery/gara/07_gara_03.webp",
+      "sha256": "a0675877eddda2c8f5f8e867305f343c6adf992a49951705f35cdf143a3083c0"
+    },
+    {
+      "path": "assets/gallery/gara/08_gara_di_nuoto_per_cane_e_atleta.webp",
+      "sha256": "db1fe6128bf23c35450e8f94f4358602857f6a267804ca47c8bcf93fcfce003b"
+    },
+    {
+      "path": "assets/gallery/gara/09_nuoto_dinamico_tra_cane_e_atleta.webp",
+      "sha256": "0dbaa5834e88810a024af1097385809471a5ebeb6cb70138a632792272c3a8f4"
+    },
+    {
+      "path": "assets/gallery/gara/10_sfida_acquatica_tra_atleta_e_pastore_tedesco.webp",
+      "sha256": "14594f15e21f14cd64322b5d843b79b685819042b2b72f6d76b401148c76a252"
+    },
+    {
+      "path": "assets/gallery/generale/01_allestimento_aqua_trail_per_sport_cinofilo_acquati.webp",
+      "sha256": "005976a1af0e6a5f2624bfcb67847516cc86edcc25368fc4f943b3feed01b525"
+    },
+    {
+      "path": "assets/gallery/generale/02_cani_in_corsa_al_festival_aqua_trail.webp",
+      "sha256": "9d5cd029458b133938795a06db9b290ce73d6af82cffc179bd0fb11e14d5603c"
+    },
+    {
+      "path": "assets/gallery/generale/03_celebrazione_aqua_trail_con_cane_e_medaglie.webp",
+      "sha256": "d5ccb39fa2c0ae4590b7b121775e934570bbc3f72c2811df8073f11b8782b101"
+    },
+    {
+      "path": "assets/gallery/generale/04_chiosco_aqua_trail_a_bordo_piscina.webp",
+      "sha256": "7036542562561821da27775361b7a0be2f9c3c2e396a363fe03f2cba9c1bb446"
+    },
+    {
+      "path": "assets/gallery/generale/05_coppia_e_golden_retriever_all_aqua_trail.webp",
+      "sha256": "05e015e852c2348f8d71d5ecb29a9a8686ce8242bb23e3f99a8ae5f1845d5acb"
+    },
+    {
+      "path": "assets/gallery/generale/06_coppia_e_labrador_all_aqua_trail.webp",
+      "sha256": "731a14e1cffe4fa3e2094cfb8497fbbec7dddf037e3a8e9764d491575c752edc"
+    },
+    {
+      "path": "assets/gallery/generale/07_festa_aqua_trail_tra_cani_e_sorrisi.webp",
+      "sha256": "f216e80207b2bc5a8daaa1e268762c259207b28f4fde49120b05641b60b9a762"
+    },
+    {
+      "path": "assets/gallery/generale/08_festa_estiva_a_bordo_piscina_con_cani.webp",
+      "sha256": "b7417f3d0fa3392debcf68c38efc74d069b1890fe12a4836d19e20e06f7b8f23"
+    },
+    {
+      "path": "assets/gallery/generale/09_gara_aqua_trail_tra_cani_e_sorrisi.webp",
+      "sha256": "1bb248aa03c4e3937810a108289ed84cd0d7d9ec0c286a9a1c35c2ead82178c6"
+    },
+    {
+      "path": "assets/gallery/generale/10_gioia_a_bordo_piscina_con_cani.webp",
+      "sha256": "14594f15e21f14cd64322b5d843b79b685819042b2b72f6d76b401148c76a252"
+    },
+    {
+      "path": "assets/gallery/generale/11_golden_retriever_all_aqua_trail.webp",
+      "sha256": "9e6c120282f67c3ae16d57283f24c55a8252bd645282ab495b3ec86eb860f0b3"
+    },
+    {
+      "path": "assets/gallery/generale/12_labrador_felice_all_evento_aqua_trail.webp",
+      "sha256": "0dbf494fc87e71453db409c8c63866f9bea4bad06c81c466912f00867e61b162"
+    },
+    {
+      "path": "assets/gallery/generale/13_lavaggio_canino_aqua_trail_in_piscina.webp",
+      "sha256": "f6c5a03723b9d5b3e3d1733be8d15eb85415bb9dc308fb3a54a67934874e8345"
+    },
+    {
+      "path": "assets/gallery/generale/14_relax_a_bordo_piscina_con_il_golden_retriever.webp",
+      "sha256": "43e63134c51aa03b1743918b758ca9f5139853fe6281743f7c76f76a2899c88a"
+    },
+    {
+      "path": "assets/gallery/generale/15_relax_al_bordo_piscina_con_il_cane.webp",
+      "sha256": "e6bd5971922fae3b57ae29a468d8ce15fbf4adccbc3f68ffbac537eb55245d1c"
+    },
+    {
+      "path": "assets/gallery/generale/16_relax_di_lusso_a_bordo_piscina.webp",
+      "sha256": "01f01ba591ff2ef3b98cf8a3b5890705b6ba55faf9de4f930688056d00fae521"
+    },
+    {
+      "path": "assets/gallery/generale/17_relax_estivo_tra_amici_a_bordo_piscina.webp",
+      "sha256": "8f258b6d4254dcc2095b87a1658d1664f6d5919bbe49009a091521ac8859e8cf"
+    },
+    {
+      "path": "assets/gallery/generale/18_relax_in_piscina_con_boxer.webp",
+      "sha256": "37d0907ba51f2310597e6557407b06168fb127aa4b163d96eead53b1e3d25131"
+    },
+    {
+      "path": "assets/gallery/generale/19_relax_in_piscina_con_labrador_nero.webp",
+      "sha256": "013fc100d1c4a208927521557d92f46f3b01df30775e78223881501e44529c15"
+    },
+    {
+      "path": "assets/gallery/generale/20_relaxing_giornata_in_piscina_con_un_amico_fidato.webp",
+      "sha256": "3fb72f625bce0621cc20d16637120b2b7cfc2aaec2bfe035e80404d5e5b626f6"
+    },
+    {
+      "path": "assets/gallery/generale/21_rifugio_estivo_tra_piscina_e_montagne.webp",
+      "sha256": "cdb507a19f0a55ed04e886dbd47e2aa310f002aa79bfebf4bec1fa9271cbc014"
+    },
+    {
+      "path": "assets/gallery/generale/22_risultati_aqua_trail_a_bordo_piscina.webp",
+      "sha256": "c9e3086f541568d037f87761f62ea428d1839295bbe0312aa001ee3ab464c1c8"
+    },
+    {
+      "path": "assets/gallery/generale/23_staff_al_tavolo_di_gara_aqua_trail.webp",
+      "sha256": "8ba1641bbb2542dd3379ae735f7bd5cfa08ecdfcb946d0e1c16a81a144664437"
+    },
+    {
+      "path": "assets/gallery/podio/01_trionfo_canino_sul_podio_acquatico.webp",
+      "sha256": "70623b2f26d51d6faebd160f94dd41fac3e2f8e504ad168f8cf62e090cdf1428"
+    },
+    {
+      "path": "assets/gallery/podio/02_medaglia_d_oro_primo_piano.webp",
+      "sha256": "3a0ba8f059de15a72a809a5d88d5571a1ef6e3f7a4a4adcda406f4640b0a614b"
+    },
+    {
+      "path": "assets/gallery/podio/03_consegna_medaglia_a_bordo_piscina.webp",
+      "sha256": "a1504f47a2e2f6f3e949113e87dba97aa0293f65fea73525340cde9a905bf32d"
+    },
+    {
+      "path": "assets/gallery/podio/04_giovane_conduttrice_e_cane_premiato.webp",
+      "sha256": "4cbc658f92f70161cce6782d675ff4c3e7aba5c5750185cbedc46eb97c8210a4"
+    },
+    {
+      "path": "assets/gallery/podio/05_risultati_e_premiazioni.webp",
+      "sha256": "2e680000db8d480a8831d74a48dc89d5ed28f77d1d04e36bbf08f241ceb20327"
+    },
+    {
+      "path": "assets/gallery/podio/06_momenti_della_premiazione.webp",
+      "sha256": "4e49a845c9e7c1eae6c0e232faf3006d197c0572b3159e43e3942bf70eaa0b6d"
+    },
+    {
+      "path": "assets/gallery/podio/07_medaglie_e_festeggiamenti.webp",
+      "sha256": "d5ccb39fa2c0ae4590b7b121775e934570bbc3f72c2811df8073f11b8782b101"
+    },
+    {
+      "path": "assets/gallery/podio/08_tabellone_risultati.webp",
+      "sha256": "c9e3086f541568d037f87761f62ea428d1839295bbe0312aa001ee3ab464c1c8"
+    },
+    {
+      "path": "assets/gallery/podio/09_staff_premiazione.webp",
+      "sha256": "8ba1641bbb2542dd3379ae735f7bd5cfa08ecdfcb946d0e1c16a81a144664437"
+    },
+    {
+      "path": "assets/gallery/podio/10_allestimento_area_premiazione.webp",
+      "sha256": "005976a1af0e6a5f2624bfcb67847516cc86edcc25368fc4f943b3feed01b525"
+    },
+    {
+      "path": "assets/guide/boa-percorso-aqua-trail.png",
+      "sha256": "75ce6323c318cb3d9c55203f1dc24ba7148a7866b1eac66fe39724778fc228ec"
+    },
+    {
+      "path": "assets/guide/slalom-aqua-trail.png",
+      "sha256": "813536b369ad826cb0e2b3f11f422f70f1aa8d01673ac496af7241a0da53ebd5"
+    },
+    {
+      "path": "assets/guide/tunnel-aqua-trail.png",
+      "sha256": "9cccac3c28283689d6cf1cc8d9950b98e7fe70c89ffc8e589de89b7e117880a8"
+    },
+    {
+      "path": "assets/judges/ajeje-brazorf.webp",
+      "sha256": "aba695fb22aef836e2e094f75b90648e2a77c9aecf8888e654bcdadf2be16e2f"
+    },
+    {
+      "path": "assets/judges/amodio-sarcinella.webp",
+      "sha256": "11ffdbd214a6c2345f434fbf5a79666bb115b7b1eaeb88cbc3cf8d6e76611927"
+    },
+    {
+      "path": "assets/judges/valeria-di-bartolomeo.webp",
+      "sha256": "0c30c741e3227eb10b7d230527bf8f0ecfc8cac295b127f9f3d64ee8dcb534f6"
+    },
+    {
+      "path": "assets/logo-aquatrail.jpg",
+      "sha256": "d798921e346713a1f118fd945937badfa795b7fdd41b8af6a1ed2cf3ffd17d40"
+    },
+    {
+      "path": "assets/logo-dk.png",
+      "sha256": "f1f0b2a65d3cb5e75e7c21f782fd789de8a96211ca6351610a7a4773271a25bc"
+    },
+    {
+      "path": "assets/media-contract.js",
+      "sha256": "74204ccc58b8594305f7a6c712296e4a1ed5905b5b12017910c3ce37a2d59965"
+    },
+    {
+      "path": "assets/pairs/b011-alexio-lucilla.webp",
+      "sha256": "8344bbf0863e9b2c5168ca512baf748f8596b5f966eeea7c20c24860f6f0769d"
+    },
+    {
+      "path": "assets/pairs/b012-alexandra-trolletta.webp",
+      "sha256": "105f09a949a94788859e9ef13cb7517faa0411f0658d68ba1bf54e574fdd0f5f"
+    },
+    {
+      "path": "assets/pairs/b013-brigyda-fortunato.webp",
+      "sha256": "63afdd3a4163b1e3b3643a001b7444a0c336a8419ba3457a74e9bdf39acf92fc"
+    },
+    {
+      "path": "assets/pairs/b014-johanna-caiak.webp",
+      "sha256": "819a442f7d0e2be4486a7bd206e7179871ba7b5d1810aa0580406cfd517b31cb"
+    },
+    {
+      "path": "assets/pairs/b015-stephen-anfeta.webp",
+      "sha256": "011be4033cb5a1ef2d77ee1ce8829e708e7f082f530b575908495b4fcbcc3e56"
+    },
+    {
+      "path": "assets/pairs/b016-martina-splash.webp",
+      "sha256": "4d6e7497d96c9d572ccb0099352f79d1f789c247f00bac88b9cd2d654ca3ca2b"
+    },
+    {
+      "path": "assets/pairs/b017-davide-numa.webp",
+      "sha256": "066dd0997f10795af38af6b0fe5fae5d9f107707d77a05a3d9b6379c80ee8da6"
+    },
+    {
+      "path": "assets/pairs/b018-chiara-bolla.webp",
+      "sha256": "fff173bef76297abeaba0c31fb65659c3ae6a5227033789b143034d4012d7abd"
+    },
+    {
+      "path": "assets/pairs/b019-enrico-marea.webp",
+      "sha256": "65fa39e11e08be9ff0ed18f8f300253327e52408abb47d3ce218ae8158434da9"
+    },
+    {
+      "path": "assets/posters/aqua-trail-sunset-07-settembre-2026.webp",
+      "sha256": "10721f98e39a4e2d59b46ca9f237c44eea00f17e4ed1124f43113f069acb3d57"
+    },
+    {
+      "path": "assets/posters/bau-bau-trial-test-20-agosto-2026.png",
+      "sha256": "8ca95789c3877b9c6b919a16f3aac0730500428d18fa7ad5eda33cc30762ed9c"
+    },
+    {
+      "path": "assets/posters/evento-demo-1-settembre.webp",
+      "sha256": "4ed9d34920b968979fb49737389ad2c93d008afcb00349c84c01602a608e7eeb"
+    },
+    {
+      "path": "assets/posters/quattro-zampe-e-una-boa-10-dicembre-2026.png",
+      "sha256": "4cd6f9ac599f1ed9f214ebf602376d261b2977f43a24a0eaac6a9c37016d92c6"
+    },
+    {
+      "path": "assets/posters/simulation-real-14-agosto-2026.png",
+      "sha256": "e377512583b77c3c6caf7a5aac43bd72d1e1d116bc1bc134c72e7d2fca4d1021"
+    },
+    {
+      "path": "assets/posters/tre-uomini-e-una-piscina-19-settembre-2026.webp",
+      "sha256": "84fa3ca4cdb557124ca15212397d81530129ef3dfe1154daf680f52ddae5cfaa"
+    },
+    {
+      "path": "assets/posters/ultimo-appuntamento-aqua-trail-14-agosto-2026.jpg",
+      "sha256": "9f44a3c4ce2c4bf2a29acb980cdcd0dd6f1b173018c7e907859ed0443d014887"
+    },
+    {
+      "path": "assets/public-store.js",
+      "sha256": "f569754bf1e5666ac11e26a1b222306b1e6a7f3785ddcafd33676403128207d3"
+    },
+    {
+      "path": "assets/publication.js",
+      "sha256": "a2ed861a8ee4ca6c48a866c4e9e4a5de234a91d5702e0f699a61b083d6ee5351"
+    },
+    {
+      "path": "assets/results.js",
+      "sha256": "0665ae5af75f8b0648be4f4cfce549adebe72403fa045c5d54d3a122b35faff3"
+    },
+    {
+      "path": "assets/season.js",
+      "sha256": "9580e80e324aa7218a10e7c431b853a6fe263cba82442f55ef3667d4aabea795"
+    },
+    {
+      "path": "assets/styles.css",
+      "sha256": "ee9dd60c49f5560b6815861ebb9bd11d3c87d3c15f1d094db1df7ffc712a1bfd"
+    },
+    {
+      "path": "binomi.html",
+      "sha256": "a0b605ae6ac5403cc5d506bd7eeff999f2a6b6d9b89b5e52af8e500b9f91a1b9"
+    },
+    {
+      "path": "binomio.html",
+      "sha256": "d554b23fa3b281ad63bd173f179a9780face7280059ef0333a5f0d488b7d9c06"
+    },
+    {
+      "path": "classifica.html",
+      "sha256": "c77c5c3e09ff8ac34fa31ca302f1f6ceba5af8d19d09c92ff40fa8eb5a71c6e0"
+    },
+    {
+      "path": "contatti.html",
+      "sha256": "52d9f1e6427ed7ca6b9d6074681d833c34caf0f329a0d97989b8ce56c9a08ccf"
+    },
+    {
+      "path": "data/runtime-config.js",
+      "sha256": "a545544d6c52250b4ac69c77d89e3b3dee4081fb5e95c6173a2b3021054747b2"
+    },
+    {
+      "path": "docs/Regolamento_Tecnico_Ufficiale_Aqua_Trail.pdf",
+      "sha256": "5c3228952df625aec8a9570db46322411813f11e4ee247489e01d4f0ca2882a1"
+    },
+    {
+      "path": "docs/Vediamo_meglio_come_funziona_Aqua_Trail.pdf",
+      "sha256": "e3ce90184d964eb3538ae11a98d3cdc5492ed02ffedb8549edf9022fca6de7c3"
+    },
+    {
+      "path": "docs/cane-giallo-bistrot-menu-01-settembre-2026.pdf",
+      "sha256": "034f993671304d4ca4dc0ae82cbdd443f8e1d88a5ed5a57e4793bad185e5740b"
+    },
+    {
+      "path": "docs/cane-giallo-bistrot-menu-demo.pdf",
+      "sha256": "840269d4e7abb5c7d0ce34ccaa582edab8f0cfd9d300b0fabbf1f64750dd8b70"
+    },
+    {
+      "path": "docs/dk-1789606102330-program-importato.pdf",
+      "sha256": "b860de248c6e3cab9997f55391a95d0010bed0f22050d6543ebe249328fb83ec"
+    },
+    {
+      "path": "docs/golden-is-better-programma-01-settembre-2026.pdf",
+      "sha256": "3c81b15b8808b2f6f54d4840ba1c85d77189f6b761b7429fc862f28264ac385d"
+    },
+    {
+      "path": "docs/simulation-real-programma-14-agosto-2026.pdf",
+      "sha256": "14d16bd6fe93a484b4d210a65a188e856aa07582ca200253a5de388b47446055"
+    },
+    {
+      "path": "documento-evento.html",
+      "sha256": "2c637b866230f33ae627b13899d4d68d189917b08fed1db5f998c01ed61da5fa"
+    },
+    {
+      "path": "evento.html",
+      "sha256": "535abb13270c2ad4cc2e55afc88538bb2c200d867e10c78274d5f15f86c6f5de"
+    },
+    {
+      "path": "gallery.html",
+      "sha256": "fe14b8c35b9bc44d98c9bdfd151144553ccedba6f2057ca9361f6c3924c718a6"
+    },
+    {
+      "path": "gare.html",
+      "sha256": "e86077954f8423968c8a6c966df562030aeea727cb16df4ae7a32e6167bd6f66"
+    },
+    {
+      "path": "index.html",
+      "sha256": "a008e17fb01e7d2a6e85426b1ce15f9d970f6b1220a30e631b683740ca1b8e61"
+    },
+    {
+      "path": "regolamento.html",
+      "sha256": "b66cd0bb6045f775be7457c1903e49c62e9279e796caef5288b348d5ef158754"
+    },
+    {
+      "path": "staff/BUILD_INFO.env",
+      "sha256": "859e6830ed6dced69d01076f5a9d34e70d17c3c7a7912515a00742a9fe70162f"
+    },
+    {
+      "path": "staff/DEPLOY_STATUS.json",
+      "sha256": "d7bbec2855c7298fb869c278fd832907f445fc3c48340f7ee0e70c6eaceedb7b"
+    },
+    {
+      "path": "staff/ONLINE_COMPATIBILITY_CONTRACT_1_8_5.json",
+      "sha256": "f8ef51e085b607aeb849075b3f91621f5bb1b6459580dcdb3731bf09629ef6d5"
+    },
+    {
+      "path": "staff/admin.html",
+      "sha256": "982d66c3a7eb68c97a26ee8e0c37e96da37407b0a908754b1a793788aade044b"
+    },
+    {
+      "path": "staff/assets/aaron-profile.png",
+      "sha256": "11625aa01253de4790dda4c7ed94643cebd4f0b4cf2dd28f095661b80014e8a8"
+    },
+    {
+      "path": "staff/assets/accounting-admin.js",
+      "sha256": "783e8cd9d83461e165dc1dfaefe06d40c8f3c39297c163f9e13b3b8ea77de2a0"
+    },
+    {
+      "path": "staff/assets/admin-dashboard.js",
+      "sha256": "e60ab7037ea184d1e5986d0617d06d507e8d1ce02b8ac207f99133f3feb240e7"
+    },
+    {
+      "path": "staff/assets/app-bootstrap.js",
+      "sha256": "49c752499667fd3e0aea522e754fb3e68a01d22be3100c97c701d5c29b350a83"
+    },
+    {
+      "path": "staff/assets/audit-admin.js",
+      "sha256": "8c4b3dd60f4b64ef0274a48fbe1fae664b65f42edc3ae82450b80ec5cf3b198d"
+    },
+    {
+      "path": "staff/assets/build-info.js",
+      "sha256": "283193495f4347663dc73094e82a235bf192772a5c2e1230f43f850dc0b5d20f"
+    },
+    {
+      "path": "staff/assets/center-portal.js",
+      "sha256": "c7479f155127f09f3fdcaf0084231d13cf14df05d0aa8c39083ee194ded36261"
+    },
+    {
+      "path": "staff/assets/centers-admin.js",
+      "sha256": "211c34c02323e8fbd7c122c9dca4dc3d7e6a66f927bfde8884e7aec6d3fa34b8"
+    },
+    {
+      "path": "staff/assets/checkin-admin.js",
+      "sha256": "20e65d04fbe21d76c7ed583c764c3ed28e2550a60b32c5611bfd8f3df41b8059"
+    },
+    {
+      "path": "staff/assets/classification-admin.js",
+      "sha256": "241d7ef9641a3c83b85928d6ffe75ca89e98e35cbbf24f36a50df732aabea94e"
+    },
+    {
+      "path": "staff/assets/common.js",
+      "sha256": "0ed7dfb19fbf41e4b1037688122ea4fb7974363eed1981f858637f106022be92"
+    },
+    {
+      "path": "staff/assets/content-utils.js",
+      "sha256": "ca579dd5c6dab82f45f9679cf156fee0fd51aefb360d0e364a34568103ab83b4"
+    },
+    {
+      "path": "staff/assets/data-api-adapter.js",
+      "sha256": "deb9475cd41361fc2deac694d7e8eeb1d444af75468b2fc2de61dacab63c0410"
+    },
+    {
+      "path": "staff/assets/event-admin.js",
+      "sha256": "43bdb6cbaf1803b1aa19bf57caf890220b2bdcad11016afd05b76f8196c79c3b"
+    },
+    {
+      "path": "staff/assets/event-demo/cane-giallo-bistrot-menu-ai.webp",
+      "sha256": "59ed8b0541727753e47e8a0b48cb5f3ea5a44bb88a69dc29f5f8bb7e01fad55b"
+    },
+    {
+      "path": "staff/assets/event-demo/cane-giallo-bistrot-menu-reale.webp",
+      "sha256": "5db7d09a86832f09e0ca94fb8a4fc506d2bdb46f1c6219be63e2e6518ed8539c"
+    },
+    {
+      "path": "staff/assets/event-demo/gamba-di-legno-omaggio.webp",
+      "sha256": "3ad098a162ff818e42192e1de7b7c323dca6f70fe2a208cb516de06e188b3985"
+    },
+    {
+      "path": "staff/assets/event-demo/golden-is-better-programma-ai.webp",
+      "sha256": "a98a0f494fa8fa240dc8082d2ac203feaef04434234fa6ca8f306709e063d7da"
+    },
+    {
+      "path": "staff/assets/event-demo/tre-uomini-partecipazione.webp",
+      "sha256": "321ce074f0fa0230254f0320ee6834545da4c56bb5872a5b205fecb286d61807"
+    },
+    {
+      "path": "staff/assets/event-document-viewer.js",
+      "sha256": "7f5afc2301e9790ee8fed64e61894befc78197b19d67763fff0515e369a76327"
+    },
+    {
+      "path": "staff/assets/event-documents.js",
+      "sha256": "0bd5b6ba8d721d2abe37b11e26a84fc044d466b12353dd6410630c907bb4f49b"
+    },
+    {
+      "path": "staff/assets/event-live.js",
+      "sha256": "82d88f8cb414a71af705d51ab657b0588ebc89d33fb4e2a4385ba9562ddd66a9"
+    },
+    {
+      "path": "staff/assets/event-public.js",
+      "sha256": "0a268f06812bf908f32e4f67b1180728deda65dfeef2a174a08ee101b04f2755"
+    },
+    {
+      "path": "staff/assets/event-wizard.js",
+      "sha256": "b73a436b7bf3e87d7952245697345794a52958412fab2b2184eb636fa3c586d8"
+    },
+    {
+      "path": "staff/assets/frontoffice-access-admin.js",
+      "sha256": "312176676327d0e6aa039db07ba23ec4595940b2d62428182cfb7b80a1edaa0f"
+    },
+    {
+      "path": "staff/assets/frontoffice.js",
+      "sha256": "2b74b078d972c5412d76a862b13ac233891c69b92b34a9943407e8d00e8de773"
+    },
+    {
+      "path": "staff/assets/gallery-admin.js",
+      "sha256": "8b7c443333c57be07b3293f090a29743aa96604556828593593f671a72c47a3d"
+    },
+    {
+      "path": "staff/assets/gallery-db.js",
+      "sha256": "7724a9ccd0b644cbb251b54dea121e396f65defd80062fbb11333fd1eb218bdf"
+    },
+    {
+      "path": "staff/assets/gallery.js",
+      "sha256": "ce6529040025e32d4fdac17e89b48d4677373033309904c959f7b70ff28805c5"
+    },
+    {
+      "path": "staff/assets/gallery/gara/01_allenamento_acquatico_tra_cane_e_atleta.webp",
+      "sha256": "8675a6cada4e6e36c3bbae4db860d016dbcdf51bcf48fd73e38d4de1f74c3146"
+    },
+    {
+      "path": "staff/assets/gallery/gara/02_boxer_e_atleta_tra_gli_spruzzi.webp",
+      "sha256": "a05b0f2190f0e3483890a5c86f894160917bda3ae76683cdcd0ae8df1574bab1"
+    },
+    {
+      "path": "staff/assets/gallery/gara/03_cane_e_atleta_nel_percorso_d_acqua.webp",
+      "sha256": "3928f3329f418f6c0c2f9edbd6c6bee7e7f9257cbc3d8fadf5f5b541bd439fbc"
+    },
+    {
+      "path": "staff/assets/gallery/gara/04_corsa_acquatica_tra_cane_e_atleta.webp",
+      "sha256": "4f85e0647e9be696a80ab4331a5c3419906176e973f0e3fbe4fc27704cbd2270"
+    },
+    {
+      "path": "staff/assets/gallery/gara/05_gara_01.webp",
+      "sha256": "868ec437accd26806ae55e10bb6ab0606861646156aa45de77691a1f65814d67"
+    },
+    {
+      "path": "staff/assets/gallery/gara/06_gara_02.webp",
+      "sha256": "b645e785d8defff4d484d8bf6ee15a04204cfba9d8c5e2e7dc5e4c4179e39bb9"
+    },
+    {
+      "path": "staff/assets/gallery/gara/07_gara_03.webp",
+      "sha256": "a0675877eddda2c8f5f8e867305f343c6adf992a49951705f35cdf143a3083c0"
+    },
+    {
+      "path": "staff/assets/gallery/gara/08_gara_di_nuoto_per_cane_e_atleta.webp",
+      "sha256": "db1fe6128bf23c35450e8f94f4358602857f6a267804ca47c8bcf93fcfce003b"
+    },
+    {
+      "path": "staff/assets/gallery/gara/09_nuoto_dinamico_tra_cane_e_atleta.webp",
+      "sha256": "0dbaa5834e88810a024af1097385809471a5ebeb6cb70138a632792272c3a8f4"
+    },
+    {
+      "path": "staff/assets/gallery/gara/10_sfida_acquatica_tra_atleta_e_pastore_tedesco.webp",
+      "sha256": "14594f15e21f14cd64322b5d843b79b685819042b2b72f6d76b401148c76a252"
+    },
+    {
+      "path": "staff/assets/gallery/generale/01_allestimento_aqua_trail_per_sport_cinofilo_acquati.webp",
+      "sha256": "005976a1af0e6a5f2624bfcb67847516cc86edcc25368fc4f943b3feed01b525"
+    },
+    {
+      "path": "staff/assets/gallery/generale/02_cani_in_corsa_al_festival_aqua_trail.webp",
+      "sha256": "9d5cd029458b133938795a06db9b290ce73d6af82cffc179bd0fb11e14d5603c"
+    },
+    {
+      "path": "staff/assets/gallery/generale/03_celebrazione_aqua_trail_con_cane_e_medaglie.webp",
+      "sha256": "d5ccb39fa2c0ae4590b7b121775e934570bbc3f72c2811df8073f11b8782b101"
+    },
+    {
+      "path": "staff/assets/gallery/generale/04_chiosco_aqua_trail_a_bordo_piscina.webp",
+      "sha256": "7036542562561821da27775361b7a0be2f9c3c2e396a363fe03f2cba9c1bb446"
+    },
+    {
+      "path": "staff/assets/gallery/generale/05_coppia_e_golden_retriever_all_aqua_trail.webp",
+      "sha256": "05e015e852c2348f8d71d5ecb29a9a8686ce8242bb23e3f99a8ae5f1845d5acb"
+    },
+    {
+      "path": "staff/assets/gallery/generale/06_coppia_e_labrador_all_aqua_trail.webp",
+      "sha256": "731a14e1cffe4fa3e2094cfb8497fbbec7dddf037e3a8e9764d491575c752edc"
+    },
+    {
+      "path": "staff/assets/gallery/generale/07_festa_aqua_trail_tra_cani_e_sorrisi.webp",
+      "sha256": "f216e80207b2bc5a8daaa1e268762c259207b28f4fde49120b05641b60b9a762"
+    },
+    {
+      "path": "staff/assets/gallery/generale/08_festa_estiva_a_bordo_piscina_con_cani.webp",
+      "sha256": "b7417f3d0fa3392debcf68c38efc74d069b1890fe12a4836d19e20e06f7b8f23"
+    },
+    {
+      "path": "staff/assets/gallery/generale/09_gara_aqua_trail_tra_cani_e_sorrisi.webp",
+      "sha256": "1bb248aa03c4e3937810a108289ed84cd0d7d9ec0c286a9a1c35c2ead82178c6"
+    },
+    {
+      "path": "staff/assets/gallery/generale/10_gioia_a_bordo_piscina_con_cani.webp",
+      "sha256": "14594f15e21f14cd64322b5d843b79b685819042b2b72f6d76b401148c76a252"
+    },
+    {
+      "path": "staff/assets/gallery/generale/11_golden_retriever_all_aqua_trail.webp",
+      "sha256": "9e6c120282f67c3ae16d57283f24c55a8252bd645282ab495b3ec86eb860f0b3"
+    },
+    {
+      "path": "staff/assets/gallery/generale/12_labrador_felice_all_evento_aqua_trail.webp",
+      "sha256": "0dbf494fc87e71453db409c8c63866f9bea4bad06c81c466912f00867e61b162"
+    },
+    {
+      "path": "staff/assets/gallery/generale/13_lavaggio_canino_aqua_trail_in_piscina.webp",
+      "sha256": "f6c5a03723b9d5b3e3d1733be8d15eb85415bb9dc308fb3a54a67934874e8345"
+    },
+    {
+      "path": "staff/assets/gallery/generale/14_relax_a_bordo_piscina_con_il_golden_retriever.webp",
+      "sha256": "43e63134c51aa03b1743918b758ca9f5139853fe6281743f7c76f76a2899c88a"
+    },
+    {
+      "path": "staff/assets/gallery/generale/15_relax_al_bordo_piscina_con_il_cane.webp",
+      "sha256": "e6bd5971922fae3b57ae29a468d8ce15fbf4adccbc3f68ffbac537eb55245d1c"
+    },
+    {
+      "path": "staff/assets/gallery/generale/16_relax_di_lusso_a_bordo_piscina.webp",
+      "sha256": "01f01ba591ff2ef3b98cf8a3b5890705b6ba55faf9de4f930688056d00fae521"
+    },
+    {
+      "path": "staff/assets/gallery/generale/17_relax_estivo_tra_amici_a_bordo_piscina.webp",
+      "sha256": "8f258b6d4254dcc2095b87a1658d1664f6d5919bbe49009a091521ac8859e8cf"
+    },
+    {
+      "path": "staff/assets/gallery/generale/18_relax_in_piscina_con_boxer.webp",
+      "sha256": "37d0907ba51f2310597e6557407b06168fb127aa4b163d96eead53b1e3d25131"
+    },
+    {
+      "path": "staff/assets/gallery/generale/19_relax_in_piscina_con_labrador_nero.webp",
+      "sha256": "013fc100d1c4a208927521557d92f46f3b01df30775e78223881501e44529c15"
+    },
+    {
+      "path": "staff/assets/gallery/generale/20_relaxing_giornata_in_piscina_con_un_amico_fidato.webp",
+      "sha256": "3fb72f625bce0621cc20d16637120b2b7cfc2aaec2bfe035e80404d5e5b626f6"
+    },
+    {
+      "path": "staff/assets/gallery/generale/21_rifugio_estivo_tra_piscina_e_montagne.webp",
+      "sha256": "cdb507a19f0a55ed04e886dbd47e2aa310f002aa79bfebf4bec1fa9271cbc014"
+    },
+    {
+      "path": "staff/assets/gallery/generale/22_risultati_aqua_trail_a_bordo_piscina.webp",
+      "sha256": "c9e3086f541568d037f87761f62ea428d1839295bbe0312aa001ee3ab464c1c8"
+    },
+    {
+      "path": "staff/assets/gallery/generale/23_staff_al_tavolo_di_gara_aqua_trail.webp",
+      "sha256": "8ba1641bbb2542dd3379ae735f7bd5cfa08ecdfcb946d0e1c16a81a144664437"
+    },
+    {
+      "path": "staff/assets/gallery/podio/01_trionfo_canino_sul_podio_acquatico.webp",
+      "sha256": "70623b2f26d51d6faebd160f94dd41fac3e2f8e504ad168f8cf62e090cdf1428"
+    },
+    {
+      "path": "staff/assets/gallery/podio/02_medaglia_d_oro_primo_piano.webp",
+      "sha256": "3a0ba8f059de15a72a809a5d88d5571a1ef6e3f7a4a4adcda406f4640b0a614b"
+    },
+    {
+      "path": "staff/assets/gallery/podio/03_consegna_medaglia_a_bordo_piscina.webp",
+      "sha256": "a1504f47a2e2f6f3e949113e87dba97aa0293f65fea73525340cde9a905bf32d"
+    },
+    {
+      "path": "staff/assets/gallery/podio/04_giovane_conduttrice_e_cane_premiato.webp",
+      "sha256": "4cbc658f92f70161cce6782d675ff4c3e7aba5c5750185cbedc46eb97c8210a4"
+    },
+    {
+      "path": "staff/assets/gallery/podio/05_risultati_e_premiazioni.webp",
+      "sha256": "2e680000db8d480a8831d74a48dc89d5ed28f77d1d04e36bbf08f241ceb20327"
+    },
+    {
+      "path": "staff/assets/gallery/podio/06_momenti_della_premiazione.webp",
+      "sha256": "4e49a845c9e7c1eae6c0e232faf3006d197c0572b3159e43e3942bf70eaa0b6d"
+    },
+    {
+      "path": "staff/assets/gallery/podio/07_medaglie_e_festeggiamenti.webp",
+      "sha256": "d5ccb39fa2c0ae4590b7b121775e934570bbc3f72c2811df8073f11b8782b101"
+    },
+    {
+      "path": "staff/assets/gallery/podio/08_tabellone_risultati.webp",
+      "sha256": "c9e3086f541568d037f87761f62ea428d1839295bbe0312aa001ee3ab464c1c8"
+    },
+    {
+      "path": "staff/assets/gallery/podio/09_staff_premiazione.webp",
+      "sha256": "8ba1641bbb2542dd3379ae735f7bd5cfa08ecdfcb946d0e1c16a81a144664437"
+    },
+    {
+      "path": "staff/assets/gallery/podio/10_allestimento_area_premiazione.webp",
+      "sha256": "005976a1af0e6a5f2624bfcb67847516cc86edcc25368fc4f943b3feed01b525"
+    },
+    {
+      "path": "staff/assets/guide/boa-percorso-aqua-trail.png",
+      "sha256": "75ce6323c318cb3d9c55203f1dc24ba7148a7866b1eac66fe39724778fc228ec"
+    },
+    {
+      "path": "staff/assets/guide/slalom-aqua-trail.png",
+      "sha256": "813536b369ad826cb0e2b3f11f422f70f1aa8d01673ac496af7241a0da53ebd5"
+    },
+    {
+      "path": "staff/assets/guide/tunnel-aqua-trail.png",
+      "sha256": "9cccac3c28283689d6cf1cc8d9950b98e7fe70c89ffc8e589de89b7e117880a8"
+    },
+    {
+      "path": "staff/assets/image-utils.js",
+      "sha256": "ec07aa17b4312d348ab6355e863f7c9aaccf9a3f508172bb8befd893eb739e9d"
+    },
+    {
+      "path": "staff/assets/judge-race.js",
+      "sha256": "702f890e201b4a5945eb5c89dac743d92aae15ad58fff9e984320770ac9b5508"
+    },
+    {
+      "path": "staff/assets/judges-admin.js",
+      "sha256": "79bd295ff26f71df6a4b57df7696c00a1e3450afc1e22c4d2abe7cdb4bcd4800"
+    },
+    {
+      "path": "staff/assets/judges/ajeje-brazorf.webp",
+      "sha256": "aba695fb22aef836e2e094f75b90648e2a77c9aecf8888e654bcdadf2be16e2f"
+    },
+    {
+      "path": "staff/assets/judges/amodio-sarcinella.webp",
+      "sha256": "11ffdbd214a6c2345f434fbf5a79666bb115b7b1eaeb88cbc3cf8d6e76611927"
+    },
+    {
+      "path": "staff/assets/judges/valeria-di-bartolomeo.webp",
+      "sha256": "0c30c741e3227eb10b7d230527bf8f0ecfc8cac295b127f9f3d64ee8dcb534f6"
+    },
+    {
+      "path": "staff/assets/live-news-admin.js",
+      "sha256": "0aeab5f1d11eb39c076619b632b069322eb947e397f3fa1da2b8dd4c11f0fff9"
+    },
+    {
+      "path": "staff/assets/logo-aquatrail.jpg",
+      "sha256": "d798921e346713a1f118fd945937badfa795b7fdd41b8af6a1ed2cf3ffd17d40"
+    },
+    {
+      "path": "staff/assets/logo-dk.png",
+      "sha256": "f1f0b2a65d3cb5e75e7c21f782fd789de8a96211ca6351610a7a4773271a25bc"
+    },
+    {
+      "path": "staff/assets/mail-service.js",
+      "sha256": "0b519e328144d3a36ed58229f2d69384ca356863c29566b364589c537993a359"
+    },
+    {
+      "path": "staff/assets/media-contract.js",
+      "sha256": "74204ccc58b8594305f7a6c712296e4a1ed5905b5b12017910c3ce37a2d59965"
+    },
+    {
+      "path": "staff/assets/membership-card.js",
+      "sha256": "3fc143d1b20aa4aa7bfbd230acaa3689a804bf5a63596fd52f79c17257e6aeb5"
+    },
+    {
+      "path": "staff/assets/membership-verify.js",
+      "sha256": "5c9b85816bbdca3b5362c901f6b81686f910336e6d2d060e85d8a47391ae7751"
+    },
+    {
+      "path": "staff/assets/pair-detail-admin.js",
+      "sha256": "fcc8db0750cfbc6cb6d44b691950ecf3bed593536a3adc6dcdf6d6fe9b9199ec"
+    },
+    {
+      "path": "staff/assets/pairs-admin.js",
+      "sha256": "1e5384a756210e3726023e836062e3e4fe0f769c3c07878ce8b08c85ad286a82"
+    },
+    {
+      "path": "staff/assets/pairs/b011-alexio-lucilla.webp",
+      "sha256": "8344bbf0863e9b2c5168ca512baf748f8596b5f966eeea7c20c24860f6f0769d"
+    },
+    {
+      "path": "staff/assets/pairs/b012-alexandra-trolletta.webp",
+      "sha256": "105f09a949a94788859e9ef13cb7517faa0411f0658d68ba1bf54e574fdd0f5f"
+    },
+    {
+      "path": "staff/assets/pairs/b013-brigyda-fortunato.webp",
+      "sha256": "63afdd3a4163b1e3b3643a001b7444a0c336a8419ba3457a74e9bdf39acf92fc"
+    },
+    {
+      "path": "staff/assets/pairs/b014-johanna-caiak.webp",
+      "sha256": "819a442f7d0e2be4486a7bd206e7179871ba7b5d1810aa0580406cfd517b31cb"
+    },
+    {
+      "path": "staff/assets/pairs/b015-stephen-anfeta.webp",
+      "sha256": "011be4033cb5a1ef2d77ee1ce8829e708e7f082f530b575908495b4fcbcc3e56"
+    },
+    {
+      "path": "staff/assets/pairs/b016-martina-splash.webp",
+      "sha256": "4d6e7497d96c9d572ccb0099352f79d1f789c247f00bac88b9cd2d654ca3ca2b"
+    },
+    {
+      "path": "staff/assets/pairs/b017-davide-numa.webp",
+      "sha256": "066dd0997f10795af38af6b0fe5fae5d9f107707d77a05a3d9b6379c80ee8da6"
+    },
+    {
+      "path": "staff/assets/pairs/b018-chiara-bolla.webp",
+      "sha256": "fff173bef76297abeaba0c31fb65659c3ae6a5227033789b143034d4012d7abd"
+    },
+    {
+      "path": "staff/assets/pairs/b019-enrico-marea.webp",
+      "sha256": "65fa39e11e08be9ff0ed18f8f300253327e52408abb47d3ce218ae8158434da9"
+    },
+    {
+      "path": "staff/assets/participants-print.js",
+      "sha256": "7af2d74e3ff8c8c1d8d11748f10fc167e0f749e18f94cd8b37bb2715a7d3976e"
+    },
+    {
+      "path": "staff/assets/posters/aqua-trail-sunset-07-settembre-2026.webp",
+      "sha256": "10721f98e39a4e2d59b46ca9f237c44eea00f17e4ed1124f43113f069acb3d57"
+    },
+    {
+      "path": "staff/assets/posters/bau-bau-trial-test-20-agosto-2026.png",
+      "sha256": "8ca95789c3877b9c6b919a16f3aac0730500428d18fa7ad5eda33cc30762ed9c"
+    },
+    {
+      "path": "staff/assets/posters/evento-demo-1-settembre.webp",
+      "sha256": "4ed9d34920b968979fb49737389ad2c93d008afcb00349c84c01602a608e7eeb"
+    },
+    {
+      "path": "staff/assets/posters/quattro-zampe-e-una-boa-10-dicembre-2026.png",
+      "sha256": "4cd6f9ac599f1ed9f214ebf602376d261b2977f43a24a0eaac6a9c37016d92c6"
+    },
+    {
+      "path": "staff/assets/posters/simulation-real-14-agosto-2026.png",
+      "sha256": "e377512583b77c3c6caf7a5aac43bd72d1e1d116bc1bc134c72e7d2fca4d1021"
+    },
+    {
+      "path": "staff/assets/posters/tre-uomini-e-una-piscina-19-settembre-2026.webp",
+      "sha256": "84fa3ca4cdb557124ca15212397d81530129ef3dfe1154daf680f52ddae5cfaa"
+    },
+    {
+      "path": "staff/assets/posters/ultimo-appuntamento-aqua-trail-14-agosto-2026.jpg",
+      "sha256": "9f44a3c4ce2c4bf2a29acb980cdcd0dd6f1b173018c7e907859ed0443d014887"
+    },
+    {
+      "path": "staff/assets/preregistration.js",
+      "sha256": "be9c2fc748a648faec872c1690324c8d06d21b447eb18f91a7377c107fba86f3"
+    },
+    {
+      "path": "staff/assets/preregistrations-admin.js",
+      "sha256": "868a0780bdccff7cde6c1fc95dbdb2779dbbe52244ca8fdbb28cd4100ef953ae"
+    },
+    {
+      "path": "staff/assets/public-store.js",
+      "sha256": "f569754bf1e5666ac11e26a1b222306b1e6a7f3785ddcafd33676403128207d3"
+    },
+    {
+      "path": "staff/assets/publication.js",
+      "sha256": "a2ed861a8ee4ca6c48a866c4e9e4a5de234a91d5702e0f699a61b083d6ee5351"
+    },
+    {
+      "path": "staff/assets/qr-local.js",
+      "sha256": "604e8efa4ad69266d773cdbb4874f9f113107656c0c7dbb0734b54282a599dcd"
+    },
+    {
+      "path": "staff/assets/race-admin.js",
+      "sha256": "868fd477beff8f75a3eac6a7d43af64525db981d87a12d62e4e307159ffc450e"
+    },
+    {
+      "path": "staff/assets/race-archive-admin.js",
+      "sha256": "58a9194ed740cd2ff3c380c17be33e32b1b1f9e0c9f31e6276f685da4446e0da"
+    },
+    {
+      "path": "staff/assets/race-control-admin.js",
+      "sha256": "e8bb4c034bc4aa758504a5c268e45d3c400bf8c2f2c7d472b1fafae3266d393c"
+    },
+    {
+      "path": "staff/assets/race-core.js",
+      "sha256": "4fa002d61fb03e3718ec865883a9e9837ce176452984287fb5ee94791cfeaad3"
+    },
+    {
+      "path": "staff/assets/race-results-print.js",
+      "sha256": "431c2f30a4dcac54c74b465a4422e60fc99f3976d561d7969a86b02299afe224"
+    },
+    {
+      "path": "staff/assets/race-review-state.js",
+      "sha256": "4012beb3ebdce0ef575a94a1754c410f4bce583ea5b7d5db2aaff490bf407b93"
+    },
+    {
+      "path": "staff/assets/registrations-admin.js",
+      "sha256": "66869fc07ca4afa4db200c8b60162ccce712a889f6d21cb2719f3e8b708639e8"
+    },
+    {
+      "path": "staff/assets/results.js",
+      "sha256": "0665ae5af75f8b0648be4f4cfce549adebe72403fa045c5d54d3a122b35faff3"
+    },
+    {
+      "path": "staff/assets/season.js",
+      "sha256": "9580e80e324aa7218a10e7c431b853a6fe263cba82442f55ef3667d4aabea795"
+    },
+    {
+      "path": "staff/assets/settings-admin.js",
+      "sha256": "379d840b96bf4ce2c1f04f26fc42da545ab4b7bea8d95e1cbfc2684e3bdbe516"
+    },
+    {
+      "path": "staff/assets/start-order-admin.js",
+      "sha256": "6a2a88c6be6b85acbf18e13d9de1a20b3536d78195b80cb25871ef92f64acc9a"
+    },
+    {
+      "path": "staff/assets/start-order-print.js",
+      "sha256": "6d930e1db028e2941698d85d03f63381a421cd2e3f1e7943244592a78522ff0b"
+    },
+    {
+      "path": "staff/assets/store.js",
+      "sha256": "9e0d29483b751345f263c12fd11baf62aa036510ac9009a19d190d93bd3d7cd4"
+    },
+    {
+      "path": "staff/assets/styles.css",
+      "sha256": "ee9dd60c49f5560b6815861ebb9bd11d3c87d3c15f1d094db1df7ffc712a1bfd"
+    },
+    {
+      "path": "staff/assets/superadmin.js",
+      "sha256": "32a85957148db6bd93d065982177507edba9af1979243fbe72db420dc55c0bfa"
+    },
+    {
+      "path": "staff/assets/web-conformance.js",
+      "sha256": "c75f8b715a1cbf68a7bb5fec25f022dd164655ae52d1cf088dc538e21f8c35d8"
+    },
+    {
+      "path": "staff/audit-admin.html",
+      "sha256": "22c89587fb334e41fd6f89bd698a9fc1a8282300001d36819aeabc9cf610dee0"
+    },
+    {
+      "path": "staff/binomi-admin.html",
+      "sha256": "1b3605782490e0ab0a1394bdfe99ffd0dc243fbb4e5a87535b4b6e07fc5b616d"
+    },
+    {
+      "path": "staff/binomio-admin.html",
+      "sha256": "b1dd3d5eb7b25dbd6de1527611d0f8792fb3e4f3661d14d32f0cb7c8ae4c73fd"
+    },
+    {
+      "path": "staff/cambio-password.html",
+      "sha256": "e7f7bf9549b5066a6347db4e1513ebe76ccb61af90e9c55e3a666484c972531b"
+    },
+    {
+      "path": "staff/centri-associati-admin.html",
+      "sha256": "203d74810e83b3b78b5fd36e198436c75ac948d7ac3770c7836848f993e1a56d"
+    },
+    {
+      "path": "staff/centro-evento.html",
+      "sha256": "74c6011b7abfb31d833704cdda73ec6a734bf127c8b50a380d2d362eedfdf3e7"
+    },
+    {
+      "path": "staff/checkin-admin.html",
+      "sha256": "912153715bf90d294328b5d851b6887d5ac6995d04e839f084f47a74e95f787b"
+    },
+    {
+      "path": "staff/classifica-admin.html",
+      "sha256": "96db6c40c20c687c666bce9cad1a94106e14aca4bb7b53a6a3d3ce852024e7ca"
+    },
+    {
+      "path": "staff/contabilita-admin.html",
+      "sha256": "1f8902fda5cc72f9d5c1f3e04a9ca8e72eaf84b68639f197b77e9c5a4d62c984"
+    },
+    {
+      "path": "staff/data/runtime-config.js",
+      "sha256": "aa96e1b580d75e98d0d8aa61c72305bd803ff7394e7e633b1c65194723bfd91b"
+    },
+    {
+      "path": "staff/evento-admin.html",
+      "sha256": "efe85a928b835b784d3fbf79225ce7e9e6e2709ddf7122ffe50e164cd7701527"
+    },
+    {
+      "path": "staff/frontoffice-accessi-admin.html",
+      "sha256": "5b88d057380e6738dbc20185bae19b104f5cf62342256de167e1185afd1aa057"
+    },
+    {
+      "path": "staff/frontoffice.html",
+      "sha256": "338622529a06b3b9768ed25a9309d44005225b675ff35dbc741b5ad7c3e2c9f7"
+    },
+    {
+      "path": "staff/gallery-admin.html",
+      "sha256": "b5b4656d06f81933c1585e0c7b396ce1360df8459328dac9680d2695be92ed77"
+    },
+    {
+      "path": "staff/gara-admin.html",
+      "sha256": "fb7621dfe853b01a3c2d8848d8d6d3d4f3d2694e3f05f79fe7b38472f731cbf2"
+    },
+    {
+      "path": "staff/gara-giudice.html",
+      "sha256": "050e850b9c0309a5e83a8aea12504e0e7aaf36d11fd5887a72226900610c2c2b"
+    },
+    {
+      "path": "staff/giudici-admin.html",
+      "sha256": "0ace495f1a40c0de9409d85a29ec0360efeb043873e4a9d4e7d4ebf59b11ab2d"
+    },
+    {
+      "path": "staff/impostazioni-admin.html",
+      "sha256": "9d6b05e7c5b0e1b2631cb0e8f285f15195e93c2b5641c17221772cdba442b34e"
+    },
+    {
+      "path": "staff/index.html",
+      "sha256": "a5707cafa0ad02ed47bb14802bbee6e113d1445ffb06ffbc47ce1a3f7a18715a"
+    },
+    {
+      "path": "staff/iscrizioni-admin.html",
+      "sha256": "a4dc4ba924c2491cce80305197e8fcf6b4a5055776281ec8f5f3d401813f3f5d"
+    },
+    {
+      "path": "staff/login-admin.html",
+      "sha256": "e640479b1a86a0221a2f6b42f049c8f3c70c48773fc96a14790fab52a022ed79"
+    },
+    {
+      "path": "staff/membership-card-duplex-pdf.html",
+      "sha256": "04dca688f6bc3a41aec4da39a42276aa1438255dc2a7eb706c46433436a046d2"
+    },
+    {
+      "path": "staff/membership-card-pdf.html",
+      "sha256": "58bff222cf5c17e77e926c6760953236c7d798d1c6b3bf1de66626a183fc0ebe"
+    },
+    {
+      "path": "staff/membership-card.html",
+      "sha256": "1c7298a93f2a42f83004dc8cb92657fdcc8a3cced8cd4f5d0bb265c596e65042"
+    },
+    {
+      "path": "staff/news-evento-admin.html",
+      "sha256": "f2f24871367a65523e8f3c70be25ca953b0ddccc976e925445cb94beef4ea9fc"
+    },
+    {
+      "path": "staff/nuovo-evento-admin.html",
+      "sha256": "5222fa2cc37c8d72a5cb44cd9d78867b3871ab0de9b913934db469b852606894"
+    },
+    {
+      "path": "staff/ordine-gara-admin.html",
+      "sha256": "cf0de0f0d0a616633e6d019acd8234289d26b5d1f2af022257be4af268a49bca"
+    },
+    {
+      "path": "staff/ordine-gara-pdf.html",
+      "sha256": "26050afca06b06df7ca64672bfe0c62fc021fb51776b5cb37867b81198b2d12e"
+    },
+    {
+      "path": "staff/partecipanti-gara-pdf.html",
+      "sha256": "05fc1ba0984dfb494448bed2fed669d3cb4c994d49be50ea77060e82d68a1727"
+    },
+    {
+      "path": "staff/preregistrazioni-admin.html",
+      "sha256": "42e234ee88bf5e182fa9e08be5abe712f10469744dd0abed95755fd9ffacee14"
+    },
+    {
+      "path": "staff/race-control-admin.html",
+      "sha256": "9f8b083a2a5e7fccec6fcad5ac03d1bd34d8406e098e8f30ff0d414b672fbcc4"
+    },
+    {
+      "path": "staff/risultati-gara-pdf.html",
+      "sha256": "3fdd6381866b0c427c3b119d89867dcbda8aeeda328cefdef1d0d6699dd75869"
+    },
+    {
+      "path": "staff/superadmin.html",
+      "sha256": "e761ee1274ae0b3ef99a50631a6ac23bf2ad2d401bf02de06099f0dfa402f170"
+    }
+  ]
+}

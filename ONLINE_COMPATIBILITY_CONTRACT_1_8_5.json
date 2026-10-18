@@ -1,0 +1,78 @@
+{
+  "contract": "AQUATRAIL_WEB_CONFORMANCE_1_8_5",
+  "version": "1.8.5",
+  "date": "2026-09-27",
+  "transport": {
+    "method": "POST",
+    "content_type": "text/plain;charset=utf-8",
+    "request": ["action", "payload", "request_id", "session_token", "client"],
+    "response_ok": {"ok": true, "data": "object"},
+    "response_error": {"ok": false, "error": {"code": "string", "message": "string"}}
+  },
+  "actions": ["health", "login", "logout", "public_bundle", "staff_bundle", "command", "commit_patch", "verify_secret"],
+  "session": {
+    "token": "opaque random token returned by login; client stores only in sessionStorage",
+    "server_storage": "hash only",
+    "required_for": ["logout", "staff_bundle", "command", "commit_patch", "verify_secret"],
+    "contains": ["user_id", "username", "role", "event_scope", "capabilities", "workspace_epoch", "expires_at"],
+    "global_errors": ["SESSION_EXPIRED", "SESSION_REVOKED", "SESSION_INVALID", "WORKSPACE_CHANGED"]
+  },
+  "workspace": {
+    "authoritative": "server",
+    "modes": ["DEMO", "REAL"],
+    "global": true,
+    "switch_role": "SUPERADMIN",
+    "switch_requires": ["PUK", "reason", "no RUNNING race"],
+    "switch_effect": "increment workspace_epoch and revoke all existing sessions",
+    "all_operational_reads_and_writes": "must be filtered/stamped server-side"
+  },
+  "single_writer": {
+    "scope": ["event_id", "competition_id", "day_id", "stage"],
+    "eligible_roles": ["GIUDICE", "ADMIN1", "ADMIN2", "SUPERADMIN", "FRONT_OFFICE with race_data_entry"],
+    "write_rule": "race mutations accepted only from the current official race operator",
+    "shift": "atomic command, ADMIN/SUPERADMIN authorized, reason + Safety Gate when race already started"
+  },
+  "domain_commands": [
+    "event_mutation",
+    "registration_mutation",
+    "start_order_mutation",
+    "race_operator_mutation",
+    "race_mutation",
+    "finance_mutation",
+    "publication_mutation",
+    "safety_mutation",
+    "workspace_switch",
+    "account_mutation"
+  ],
+  "concurrency": {
+    "request_id": "required for idempotency of mutations",
+    "expected_revision": "required where entity/list revision applies",
+    "server_lock": "LockService around mutating critical sections",
+    "record_ids": "generated server-side for online operational records"
+  },
+  "public_bundle": {
+    "anonymous": true,
+    "must_include": ["public_data", "workspace_config", "revisions"],
+    "must_not_include": ["password", "password_hash", "safety_pin", "puk", "session_token", "offline_accounts", "pair_private", "accounting", "event_security"]
+  },
+  "staff_bundle": {
+    "authenticated": true,
+    "role_minimized": true,
+    "must_include": ["session", "workspace_config", "revisions"],
+    "data_policy": "return only fields and event scope needed by role/page"
+  },
+  "safety": {
+    "password_pin_puk": "verified server-side only; never shipped in GitHub Pages bundles",
+    "generic_force_patch_online": false
+  },
+  "deferred_first_online": [
+    "browser gallery upload",
+    "browser poster/PDF/document upload",
+    "normal ADMIN bulk import/backup/recovery",
+    "generic SUPERADMIN force patch"
+  ],
+  "compatibility_bridge": {
+    "commit_patch": "temporary non-critical compatibility bridge only",
+    "rule": "critical race/checkin/finance/publication/security/workspace writes must migrate to domain commands before GO-LIVE"
+  }
+}
