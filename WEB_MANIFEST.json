@@ -513,7 +513,7 @@
     },
     {
       "path": "staff/assets/common.js",
-      "sha256": "cba5e8e49dbb7fe26b17eeeaaedfbddf25a175ceacb836ec0bd37fa85ee4ad7a"
+      "sha256": "82eeb68ab489094562a41badf3657918b8f5ce439e2e281d68c04a615a613980"
     },
     {
       "path": "staff/assets/content-utils.js",
@@ -973,7 +973,7 @@
     },
     {
       "path": "staff/assets/styles.css",
-      "sha256": "ee9dd60c49f5560b6815861ebb9bd11d3c87d3c15f1d094db1df7ffc712a1bfd"
+      "sha256": "d65dd52cc9129d0f087532a8ed6b29a8723296280a30260f280227d997b914ed"
     },
     {
       "path": "staff/assets/superadmin.js",

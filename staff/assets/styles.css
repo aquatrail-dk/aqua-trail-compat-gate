@@ -635,3 +635,29 @@ dialog.app-dialog .panel{box-shadow:0 24px 70px rgba(0,0,0,.28)}
 /* 1.8.4 — workspace globale DEMO / REAL */
 .workspace-global-banner{display:flex;gap:12px;align-items:center;justify-content:center;padding:8px 16px;font-size:13px;font-weight:600;position:relative;z-index:50;border-bottom:1px solid rgba(255,255,255,.12)}
 .workspace-global-banner.demo{background:#4b3510;color:#fff3c4}.workspace-global-banner.real{background:#163d2a;color:#dcffe9}.workspace-global-banner span{font-weight:500;opacity:.9}.workspace-control-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.workspace-control-panel .stat{min-width:0}.workspace-control-panel #saWorkspaceMode{font-size:1.35rem}.demo-mark{display:inline-flex;align-items:center;justify-content:center;margin-left:.35rem;font-size:.85em;vertical-align:middle} @media(max-width:760px){.workspace-global-banner{align-items:flex-start;flex-direction:column;gap:2px}.workspace-control-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+
+/* Toolbar area riservata: logout e accesso diretto al pubblico */
+body[data-admin="1"] .admin-header .admin-session{max-width:none}
+body[data-admin="1"] .admin-header .admin-session span{max-width:240px}
+body[data-admin="1"] .admin-header .admin-session #logoutBtn,
+body[data-admin="1"] .admin-header .admin-session .public-site-link{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 12px;border:2px solid #fff;border-radius:10px;background:#fff;color:#5e1422;font-size:13px;font-weight:950;line-height:1.1;white-space:nowrap}
+body[data-admin="1"] .admin-header .admin-session #logoutBtn{min-width:68px;cursor:pointer}
+body[data-admin="1"] .admin-header .admin-session .public-site-link{min-width:96px}
+body[data-judge="1"] .admin-header .admin-session .public-site-link{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 12px;border:2px solid #fff;border-radius:10px;background:#fff;color:#0b3564;font-size:13px;font-weight:950;line-height:1.1;white-space:nowrap}
+@media(min-width:681px) and (max-width:1050px){
+ body[data-admin="1"] .admin-header .admin-session{max-width:none;gap:6px}
+ body[data-admin="1"] .admin-header .admin-session span{max-width:130px}
+}
+@media(max-width:680px){
+ body[data-admin="1"] .admin-header .nav{flex-wrap:wrap;gap:8px 10px}
+ body[data-admin="1"] .admin-header .admin-session{order:4;width:100%;justify-content:flex-end;gap:8px;margin:0}
+ body[data-admin="1"] .admin-header .admin-session #logoutBtn,
+ body[data-admin="1"] .admin-header .admin-session .public-site-link{min-height:44px;padding:8px 12px;font-size:12px}
+ body[data-judge="1"] .admin-header .judge-session-host{display:flex;flex-wrap:wrap;gap:8px 10px}
+ body[data-judge="1"] .admin-header .judge-session-host>.brand-main{flex:1 1 100%}
+ body[data-judge="1"] .admin-header .admin-session{flex:1 1 100%;justify-content:space-between;margin:0;gap:6px}
+ body[data-judge="1"] .admin-header .admin-session span{max-width:calc(100vw - 210px);overflow:hidden;text-overflow:ellipsis}
+ body[data-judge="1"] .admin-header .admin-session button,
+ body[data-judge="1"] .admin-header .admin-session .public-site-link{min-height:44px;padding:8px 10px;font-size:12px}
+}
