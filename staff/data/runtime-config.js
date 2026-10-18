@@ -11,7 +11,7 @@ window.AQUATRAIL_RUNTIME={
   storage_adapter:'AT_DATA_API_V1_8_5',
   auth_adapter:'APPS_SCRIPT_OPAQUE_SESSION_V1',
   data_api_adapter:'ATDataAPI_V1_8_5',
-  api_base_url:'__SET_APPS_SCRIPT_WEB_APP_URL__',
+  api_base_url:'https://script.google.com/macros/s/AKfycbzy6Y38IfWQWoNXxLMWyvpsP9j-pzd15CxssWVr1bTS0fmxt_InGp0AVBtxCKJZR7lUow/exec',
   online_contract:'ONLINE_COMPATIBILITY_CONTRACT_1_8_5.json',
   staff_login_url:'login-admin.html',
   browser_uploads_enabled:false,

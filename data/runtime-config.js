@@ -7,6 +7,6 @@ window.AQUATRAIL_RUNTIME={
   allow_client_authority:false,
   backend_authoritative:true,
   preregistration_enabled:false,
-  api_base_url:'__SET_APPS_SCRIPT_WEB_APP_URL__',
+  api_base_url:'https://script.google.com/macros/s/AKfycbzy6Y38IfWQWoNXxLMWyvpsP9j-pzd15CxssWVr1bTS0fmxt_InGp0AVBtxCKJZR7lUow/exec',
   online_contract:'ONLINE_COMPATIBILITY_CONTRACT_1_8_5.json'
 };
