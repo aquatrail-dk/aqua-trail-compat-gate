@@ -1,7 +1,7 @@
 {
   "release": "Aqua Trail BETA blocco 1.8.5",
   "marker": "AQUA_TRAIL_BETA_BLOCCO_1_8_5_WEB_CONFORMANCE",
-  "generated_at": "2026-10-18T14:00:04.261Z",
+  "generated_at": "2026-10-18T14:17:56.921Z",
   "files": [
     {
       "path": "BUILD_INFO.env",
@@ -1065,7 +1065,7 @@
     },
     {
       "path": "staff/login-admin.html",
-      "sha256": "e640479b1a86a0221a2f6b42f049c8f3c70c48773fc96a14790fab52a022ed79"
+      "sha256": "fc0dbe26ed94c56b44a559567142a8ec3fb523e1dd2bf510d87a87abdd2e8f51"
     },
     {
       "path": "staff/membership-card-duplex-pdf.html",
