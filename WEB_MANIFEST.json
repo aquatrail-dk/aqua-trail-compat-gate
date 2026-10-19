@@ -1,7 +1,7 @@
 {
   "release": "Aqua Trail BETA blocco 1.8.5",
   "marker": "AQUA_TRAIL_BETA_BLOCCO_1_8_5_WEB_CONFORMANCE",
-  "generated_at": "2026-10-19T14:33:45.278Z",
+  "generated_at": "2026-10-19T20:32:01.491Z",
   "files": [
     {
       "path": "BUILD_INFO.env",
@@ -9,11 +9,11 @@
     },
     {
       "path": "DEPLOY_STATUS.json",
-      "sha256": "0b8d2d084f16e5666f98a952bb232ecba739cc5a3b5699285c3a0b4aef77cfa9"
+      "sha256": "76b8909c36631f8c682198d59caeec61f4f15e304149889474d9fc773d51b867"
     },
     {
       "path": "ONLINE_COMPATIBILITY_CONTRACT_1_8_5.json",
-      "sha256": "d53f9dfd112c82c1ca23885b51b603573307132362d36475891b6643d749d7ac"
+      "sha256": "18d31daddaa3b74782343a925dcb3bdda3d4969de7f7eb9d091a2fc1937ab7bf"
     },
     {
       "path": "accesso-riservato.html",
@@ -41,7 +41,7 @@
     },
     {
       "path": "assets/data-api-adapter.js",
-      "sha256": "82909f95f079a441a547b2bce81fe215b5b824f0320739415c41e1c4b64b2b6b"
+      "sha256": "d14ad44758d364037f352237b5c7f707295067cb66e1b2658f314d68e9d8e1f9"
     },
     {
       "path": "assets/event-demo/cane-giallo-bistrot-menu-ai.webp",
@@ -525,7 +525,7 @@
     },
     {
       "path": "staff/assets/data-api-adapter.js",
-      "sha256": "82909f95f079a441a547b2bce81fe215b5b824f0320739415c41e1c4b64b2b6b"
+      "sha256": "d14ad44758d364037f352237b5c7f707295067cb66e1b2658f314d68e9d8e1f9"
     },
     {
       "path": "staff/assets/event-admin.js",
