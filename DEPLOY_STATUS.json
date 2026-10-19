@@ -18,14 +18,13 @@
   "deferred": [
     "browser uploads",
     "bulk import/backup",
-    "generic force patch",
-    "atomic multi-record save flows"
+    "generic force patch"
   ],
-  "status": "TYPED_COMMAND_ADAPTER_PENDING_STAGING_VERIFICATION",
+  "status": "ATOMIC_BATCH_PENDING_STAGING_VERIFICATION",
   "write_adapter": {
-    "mode": "typed-domain-commands",
-    "max_records_per_request": 1,
-    "multi_record_writes": "rejected before network write",
+    "mode": "typed-domain-commands-with-atomic-batch",
+    "max_records_per_request": 50,
+    "multi_record_writes": "atomic_batch; prevalidated under lock with rollback on write failure",
     "deletions": "rejected",
     "verified": false
   }
