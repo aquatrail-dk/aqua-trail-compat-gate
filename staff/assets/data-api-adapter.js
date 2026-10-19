@@ -61,8 +61,129 @@
   const bootstrap=staffBootstrap;
   function requireCache(kind){const v=state[kind];if(v==null)throw err('AT_API_BOOTSTRAP_REQUIRED',`Cache ${kind} non inizializzata: attendere il bundle server.`);return clone(v)}
   function setCache(kind,value){state[kind]=clone(value);state.ready=true}
-  async function command(name,payload={},options={}){state.pending++;try{const data=await request('command',{name,payload,expected_revision:options.expected_revision??null,workspace_epoch:state.workspace?.epoch??null},{request_id:options.request_id});absorb(data);return data}finally{state.pending--}}
-  async function commitState(target,next,options={}){if(!['public','admin'].includes(target))throw err('AT_API_TARGET','Target dati non valido.');const prev=requireCache(target),patch=diff(prev,next,'');if(!patch.length)return clone(next);const expected=options.expected_revision!=null?Number(options.expected_revision):Number(state.revisions[target]||0),request_id=options.request_id||`AT-PATCH-${target}-${expected}-${hash(stable(patch))}`;state.pending++;state[target]=clone(next);window.dispatchEvent?.(new CustomEvent('aquatrail:write-pending',{detail:{target,request_id}}));try{const data=await request('commit_patch',{target,expected_revision:expected,patch,workspace_epoch:state.workspace?.epoch??null},{request_id});if(data?.[target+'_data']!==undefined)state[target]=clone(data[target+'_data']);if(data?.revisions)absorb(data);else state.revisions[target]=expected+1;window.dispatchEvent?.(new CustomEvent('aquatrail:write-committed',{detail:{target,request_id,revision:state.revisions[target]}}));return clone(state[target])}catch(e){state[target]=prev;state.last_error=e;window.dispatchEvent?.(new CustomEvent('aquatrail:write-error',{detail:{target,request_id,error:e}}));throw e}finally{state.pending--}}
-  async function verifySecret(kind,event_id,value){return request('verify_secret',{kind,event_id,value:String(value||'')})}
-  window.ATDataAPI={VERSION:'ATDataAPI_V1_8_5',TOKEN_KEY,isOnline,configured:validEndpoint,endpoint,request,health,login,logout,bootstrap,staffBootstrap,publicBootstrap,command,commitState,verifySecret,publicData:()=>requireCache('public'),adminData:()=>requireCache('admin'),sessionData:()=>clone(state.session),workspaceConfig:()=>clone(state.workspace),revision:k=>Number(state.revisions[k]||0),pending:()=>state.pending,ready:()=>state.ready,lastError:()=>state.last_error,sessionTokenPresent:()=>!!getToken(),clearSession,_diff:diff,_absorb:absorb,_state:state};
+  const COMMAND_COLLECTIONS=Object.freeze({
+    public:Object.freeze({
+      events:{name:'event_mutation',table:'EVENTI',key:'ID'},
+      event_days:{name:'event_mutation',table:'GIORNATE',key:'ID'},
+      judges:{name:'event_mutation',table:'GIUDICI',key:'ID'},
+      organizers:{name:'event_mutation',table:'CENTRI',key:'ID'},
+      pairs:{name:'registration_mutation',table:'BINOMI',key:'ID'},
+      entries:{name:'registration_mutation',table:'ISCRIZIONI',key:'ID'},
+      stage_config:{name:'start_order_mutation',table:'CONFIG_PROVE',key:'ID'},
+      results:{name:'race_mutation',table:'RISULTATI',key:'ID'},
+      gallery:{name:'publication_mutation',table:'GALLERY',key:'ID'},
+      event_news:{name:'publication_mutation',table:'EVENT_NEWS',key:'ID'}
+    }),
+    admin:Object.freeze({
+      pair_private:{name:'registration_mutation',table:'BINOMI',key:'ID'},
+      registrations:{name:'registration_mutation',table:'ISCRIZIONI',key:'ID'},
+      memberships:{name:'registration_mutation',table:'TESSERAMENTI',key:'MEMBERSHIP_ID'},
+      start_orders:{name:'start_order_mutation',table:'ORDINI_GARA',key:'ID'},
+      race_runs:{name:'race_mutation',table:'RACE_RUNS',key:'ID'},
+      race_events:{name:'race_mutation',table:'RACE_EVENTS',key:'ID'},
+      charges:{name:'finance_mutation',table:'ADDEBITI',key:'ID'},
+      payments:{name:'finance_mutation',table:'PAGAMENTI',key:'ID'},
+      payment_allocations:{name:'finance_mutation',table:'ALLOC_PAGAMENTI',key:'ID'},
+      accounting_reversals:{name:'finance_mutation',table:'STORNI',key:'ID'},
+      accounting_credits:{name:'finance_mutation',table:'CREDITI',key:'ID'},
+      preregistrations:{name:'registration_mutation',table:'PREREGISTRATIONS',key:'ID'},
+      prereg_verifications:{name:'registration_mutation',table:'PREREG_VERIFICATIONS',key:'VERIFICATION_ID'},
+      preflight_checks:{name:'start_order_mutation',table:'CHECK_PRE_GARA',key:'ID'},
+      publication_history:{name:'publication_mutation',table:'PUBBLICAZIONI',key:'ID'},
+      judges_admin:{name:'event_mutation',table:'GIUDICI',key:'ID'},
+      organizers_admin:{name:'event_mutation',table:'CENTRI',key:'ID'}
+    })
+  });
+  const COMMAND_SERVER_FIELDS=new Set(['workspace','created_at','created_by','updated_at','updated_by','deleted_by','arrived_by','requirements_checked_by','admitted_by','checkin_reset_by','confirmed_by','generated_by','published_by','operator_user_id','source_key','safety_pin_salt','safety_pin_hash','puk_salt','puk_hash','password_salt','password_hash','token_hash','email_key']);
+  function commandRecordId(row,mapping){const k=String(mapping.key||'ID').toLowerCase(),v=row&&row[k];return v==null||String(v)===''?null:String(v)}
+  function commandIndex(rows,mapping,collection){
+    const out=new Map();
+    (Array.isArray(rows)?rows:[]).forEach(row=>{
+      if(!row||typeof row!=='object'||Array.isArray(row))throw err('AT_API_RECORD_INVALID','Record non valido in '+collection+'.');
+      const id=commandRecordId(row,mapping);
+      if(!id)throw err('AT_API_RECORD_ID_REQUIRED','ID mancante in '+collection+'; nessuna modifica inviata.');
+      if(out.has(id))throw err('AT_API_DUPLICATE_RECORD_ID','ID duplicato in '+collection+'; nessuna modifica inviata.');
+      out.set(id,row);
+    });
+    return out;
+  }
+  function commandFields(row,previous,mapping,create){
+    const out={};
+    Object.keys(row||{}).forEach(k=>{
+      const lower=String(k).toLowerCase(),upper=String(k).toUpperCase();
+      if(COMMAND_SERVER_FIELDS.has(lower))return;
+      if(!create&&lower===String(mapping.key||'ID').toLowerCase())return;
+      if(!create&&previous&&stable(previous[k])===stable(row[k]))return;
+      out[upper]=clone(row[k]);
+    });
+    if(create&&out[mapping.key]===undefined)out[mapping.key]=commandRecordId(row,mapping);
+    return out;
+  }
+  function buildCommandPlan(target,previous,next){
+    if(!Object.prototype.hasOwnProperty.call(COMMAND_COLLECTIONS,target))throw err('AT_API_TARGET','Target dati non valido.');
+    const mappings=COMMAND_COLLECTIONS[target],before=previous||{},after=next||{},mutations=[];
+    const collections=new Set([...Object.keys(before),...Object.keys(after)]);
+    collections.forEach(collection=>{
+      if(stable(before[collection])===stable(after[collection])||collection==='audit'||collection==='meta')return;
+      const mapping=mappings[collection];
+      if(!mapping)throw err('AT_API_COLLECTION_UNSUPPORTED','Salvataggio online non supportato per "'+collection+'".');
+      const oldRows=Array.isArray(before[collection])?before[collection]:[],newRows=Array.isArray(after[collection])?after[collection]:[];
+      const oldById=commandIndex(oldRows,mapping,collection),newById=commandIndex(newRows,mapping,collection);
+      for(const id of oldById.keys())if(!newById.has(id))throw err('AT_API_DELETE_DISABLED','La cancellazione di record ('+collection+') è disabilitata online.');
+      newById.forEach((row,id)=>{
+        const old=oldById.get(id);
+        if(old&&stable(old)===stable(row))return;
+        const operation=old&&String(old.updated_at||'')?'update':'create';
+        const fields=commandFields(row,old,mapping,operation==='create');
+        if(!Object.keys(fields).length)return;
+        const payload={table:mapping.table,operation,id};
+        const eventId=String(row.event_id||old&&old.event_id||(mapping.table==='EVENTI'?id:''));
+        if(eventId)payload.event_id=eventId;
+        if(operation==='create')payload.record=fields;
+        else{
+          if(!old.updated_at)throw err('AT_API_VERSION_REQUIRED','Versione record mancante in '+collection+'; ricarica i dati.');
+          payload.expected_updated_at=String(old.updated_at);
+          payload.changes=fields;
+        }
+        mutations.push({name:mapping.name,payload,collection,id,operation,key:mapping.key});
+      });
+    });
+    if(mutations.length>1)throw err('AT_API_MULTI_RECORD_WRITE_UNSUPPORTED','Questa azione modifica più record. Il backend richiede una transazione tipizzata atomica; nessuna modifica è stata inviata.');
+    return mutations;
+  }
+  async function command(name,payload={},options={}){
+    const body=Object.assign({},payload,{name:String(name||''),expected_revision:options.expected_revision??payload.expected_revision??null,workspace_epoch:state.workspace?.epoch??null});
+    state.pending++;try{const data=await request('command',body,{request_id:options.request_id});absorb(data);return data}finally{state.pending--}
+  }
+  async function commitState(target,next,options={}){
+    if(!['public','admin'].includes(target))throw err('AT_API_TARGET','Target dati non valido.');
+    const prev=requireCache(target),patch=diff(prev,next,''),plan=buildCommandPlan(target,prev,next);
+    if(!patch.length)return clone(prev);
+    if(!plan.length){
+      const meaningful=patch.some(x=>{const p=String(x.path||'');return p!=='/audit'&&p.indexOf('/audit/')!==0&&p!=='/meta'&&p.indexOf('/meta/')!==0});
+      if(meaningful)throw err('AT_API_NO_DOMAIN_MUTATION','Nessuna modifica operativa supportata dal backend; dati non inviati.');
+      return clone(prev);
+    }
+    const expected=options.expected_revision!=null?Number(options.expected_revision):Number(state.revisions[target]||0);
+    const request_id=options.request_id||('AT-CMD-'+target+'-'+expected+'-'+hash(stable(plan[0])));
+    const optimistic=clone(next),mutation=plan[0];
+    state.pending++;state[target]=clone(optimistic);
+    window.dispatchEvent?.(new CustomEvent('aquatrail:write-pending',{detail:{target,request_id}}));
+    try{
+      const result=await command(mutation.name,mutation.payload,{expected_revision:expected,request_id});
+      const row=(state[target]?.[mutation.collection]||[]).find(x=>commandRecordId(x,{key:mutation.key})===mutation.id);
+      if(row){if(result?.updated_at)row.updated_at=result.updated_at;if(result?.workspace)row.workspace=result.workspace}
+      let refreshError=null;
+      try{if(getToken())await staffBootstrap();else await publicBootstrap()}
+      catch(e){refreshError=e;state[target]=clone(optimistic);state.last_error=e}
+      window.dispatchEvent?.(new CustomEvent('aquatrail:write-committed',{detail:{target,request_id,revision:state.revisions[target],refresh_error:refreshError?.code||null}}));
+      return clone(state[target]);
+    }catch(e){
+      state[target]=prev;state.last_error=e;
+      window.dispatchEvent?.(new CustomEvent('aquatrail:write-error',{detail:{target,request_id,error:e}}));
+      throw e
+    }finally{state.pending--}
+  }
+  async function verifySecret(kind,event_id,value){return request('verify_secret',{kind,event_id,secret:String(value||'')})}
+  window.ATDataAPI={VERSION:'ATDataAPI_V1_8_5',TOKEN_KEY,isOnline,configured:validEndpoint,endpoint,request,health,login,logout,bootstrap,staffBootstrap,publicBootstrap,command,commitState,verifySecret,_buildCommandPlan:buildCommandPlan,publicData:()=>requireCache('public'),adminData:()=>requireCache('admin'),sessionData:()=>clone(state.session),workspaceConfig:()=>clone(state.workspace),revision:k=>Number(state.revisions[k]||0),pending:()=>state.pending,ready:()=>state.ready,lastError:()=>state.last_error,sessionTokenPresent:()=>!!getToken(),clearSession,_diff:diff,_absorb:absorb,_state:state};
 })();
