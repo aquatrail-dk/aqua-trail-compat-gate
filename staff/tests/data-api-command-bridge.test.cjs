@@ -167,7 +167,7 @@ test('commitState sends multiple records in one atomic typed command', async () 
   assert.equal(calls[0].payload.operations[0].name, 'event_mutation');
   assert.equal(calls[0].payload.operations[1].payload.expected_updated_at, 'v2');
   assert.equal(Object.hasOwn(calls[0].payload, 'payload'), false);
-  assert.deepEqual(api.publicData().events.map(x => x.name), ['Dopo 1', 'Dopo 2']);
+  assert.deepEqual(plain(api.publicData().events.map(x => x.name)), ['Dopo 1', 'Dopo 2']);
 });
 
 test('commitState writes through command and refreshes the public bundle', async () => {
