@@ -1,7 +1,7 @@
 {
   "release": "Aqua Trail BETA blocco 1.8.5",
   "marker": "AQUA_TRAIL_BETA_BLOCCO_1_8_5_WEB_CONFORMANCE",
-  "generated_at": "2026-10-19T20:32:01.491Z",
+  "generated_at": "2026-10-19T21:12:00.000Z",
   "files": [
     {
       "path": "BUILD_INFO.env",
@@ -9,7 +9,7 @@
     },
     {
       "path": "DEPLOY_STATUS.json",
-      "sha256": "76b8909c36631f8c682198d59caeec61f4f15e304149889474d9fc773d51b867"
+      "sha256": "2f12b0d05a85931d9852b3b8d0f511c2ef0460bf5a0c77423528e0d884aeb783"
     },
     {
       "path": "ONLINE_COMPATIBILITY_CONTRACT_1_8_5.json",

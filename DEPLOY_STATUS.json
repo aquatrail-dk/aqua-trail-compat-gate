@@ -5,7 +5,7 @@
   "contains_private_seed_data": false,
   "web_conformance": true,
   "backend_versioned": true,
-  "operational": false,
+  "operational": true,
   "operational_when": [
     "Apps Script backend bound to definitive Sheets schema",
     "api_base_url configured",
@@ -20,12 +20,32 @@
     "bulk import/backup",
     "generic force patch"
   ],
-  "status": "ATOMIC_BATCH_PENDING_STAGING_VERIFICATION",
+  "status": "STAGING_ATOMIC_BATCH_VERIFIED",
   "write_adapter": {
     "mode": "typed-domain-commands-with-atomic-batch",
     "max_records_per_request": 50,
     "multi_record_writes": "atomic_batch; prevalidated under lock with rollback on write failure",
     "deletions": "rejected",
-    "verified": false
+    "verified": true,
+    "verification_mode": "authenticated integrated staging"
+  },
+  "operational_scope": "STAGING_DEMO",
+  "production_go_live_certified": false,
+  "verification": {
+    "completed_at": "2026-10-19T21:10:52Z",
+    "backend_commit": "0a65a52595ab02fd0eb1e2c4d434dbed11a54b71",
+    "deployment_version": 34,
+    "workflow_run": "https://github.com/aquatrail-dk/aquatrail-backend-staging/actions/runs/39325273293",
+    "workspace": "DEMO",
+    "batch_count": 2,
+    "checks": [
+      "real_login",
+      "single_atomic_batch",
+      "two_command_results",
+      "two_records_persisted",
+      "authenticated_actor_stamped"
+    ],
+    "cleanup": "PASS",
+    "fail_closed_after_cleanup": "PASS"
   }
 }
