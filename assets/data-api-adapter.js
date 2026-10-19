@@ -94,6 +94,7 @@
       organizers_admin:{name:'event_mutation',table:'CENTRI',key:'ID'}
     })
   });
+  const COMMAND_BATCH_MAX_OPERATIONS=50,COMMAND_BATCH_MAX_CHARS=100000;
   const COMMAND_SERVER_FIELDS=new Set(['workspace','created_at','created_by','updated_at','updated_by','deleted_by','arrived_by','requirements_checked_by','admitted_by','checkin_reset_by','confirmed_by','generated_by','published_by','operator_user_id','source_key','safety_pin_salt','safety_pin_hash','puk_salt','puk_hash','password_salt','password_hash','token_hash','email_key']);
   function commandRecordId(row,mapping){const k=String(mapping.key||'ID').toLowerCase(),v=row&&row[k];return v==null||String(v)===''?null:String(v)}
   function commandIndex(rows,mapping,collection){
@@ -121,7 +122,7 @@
   }
   function buildCommandPlan(target,previous,next){
     if(!Object.prototype.hasOwnProperty.call(COMMAND_COLLECTIONS,target))throw err('AT_API_TARGET','Target dati non valido.');
-    const mappings=COMMAND_COLLECTIONS[target],before=previous||{},after=next||{},mutations=[];
+    const mappings=COMMAND_COLLECTIONS[target],before=previous||{},after=next||{},mutations=[],mutationKeys=new Set();
     const collections=new Set([...Object.keys(before),...Object.keys(after)]);
     collections.forEach(collection=>{
       if(stable(before[collection])===stable(after[collection])||collection==='audit'||collection==='meta')return;
@@ -145,10 +146,14 @@
           payload.expected_updated_at=String(old.updated_at);
           payload.changes=fields;
         }
+        const mutationKey=mapping.table+':'+id;
+        if(mutationKeys.has(mutationKey))throw err('AT_API_DUPLICATE_RECORD_ID','Lo stesso record compare in più raccolte; nessuna modifica inviata.');
+        mutationKeys.add(mutationKey);
         mutations.push({name:mapping.name,payload,collection,id,operation,key:mapping.key});
       });
     });
-    if(mutations.length>1)throw err('AT_API_MULTI_RECORD_WRITE_UNSUPPORTED','Questa azione modifica più record. Il backend richiede una transazione tipizzata atomica; nessuna modifica è stata inviata.');
+    if(mutations.length>COMMAND_BATCH_MAX_OPERATIONS)throw err('AT_API_BATCH_SIZE_INVALID','La richiesta supera il limite di '+COMMAND_BATCH_MAX_OPERATIONS+' modifiche; nessuna modifica inviata.');
+    if(mutations.length>1&&stable(mutations.map(m=>({name:m.name,payload:m.payload}))).length>COMMAND_BATCH_MAX_CHARS)throw err('AT_API_BATCH_TOO_LARGE','La richiesta supera il limite di dimensione; nessuna modifica inviata.');
     return mutations;
   }
   async function command(name,payload={},options={}){
@@ -165,14 +170,20 @@
       return clone(prev);
     }
     const expected=options.expected_revision!=null?Number(options.expected_revision):Number(state.revisions[target]||0);
-    const request_id=options.request_id||('AT-CMD-'+target+'-'+expected+'-'+hash(stable(plan[0])));
-    const optimistic=clone(next),mutation=plan[0];
+    const request_id=options.request_id||('AT-CMD-'+target+'-'+expected+'-'+hash(stable(plan)));
+    const optimistic=clone(next);
+    const mutation=plan.length>1
+      ?{name:'atomic_batch',payload:{operations:plan.map(m=>({name:m.name,payload:m.payload}))}}
+      :plan[0];
     state.pending++;state[target]=clone(optimistic);
     window.dispatchEvent?.(new CustomEvent('aquatrail:write-pending',{detail:{target,request_id}}));
     try{
       const result=await command(mutation.name,mutation.payload,{expected_revision:expected,request_id});
-      const row=(state[target]?.[mutation.collection]||[]).find(x=>commandRecordId(x,{key:mutation.key})===mutation.id);
-      if(row){if(result?.updated_at)row.updated_at=result.updated_at;if(result?.workspace)row.workspace=result.workspace}
+      plan.forEach(m=>{
+        const row=(state[target]?.[m.collection]||[]).find(x=>commandRecordId(x,{key:m.key})===m.id);
+        const written=mutation.name==='atomic_batch'?(result?.results||[]).find(x=>x.table===m.payload.table&&String(x.id)===String(m.id)):result;
+        if(row&&written){if(written.updated_at)row.updated_at=written.updated_at;if(written.workspace)row.workspace=written.workspace}
+      });
       let refreshError=null;
       try{if(getToken())await staffBootstrap();else await publicBootstrap()}
       catch(e){refreshError=e;state[target]=clone(optimistic);state.last_error=e}
