@@ -72,19 +72,29 @@ test('fixture record becomes a create without client-owned workspace fields', ()
   assert.deepEqual(plan[0].payload.record, { ID: 'E-2', NAME: 'Nuovo' });
 });
 
-test('multi-record writes are rejected before transport', () => {
+test('multi-record changes are planned together and remain version-checked', () => {
   const api = createApi(async () => response({}));
-  assert.throws(() => api._buildCommandPlan(
+  const plan = plain(api._buildCommandPlan(
     'public',
     { events: [
       { id: 'E-1', name: 'Prima', updated_at: 'v1' },
-      { id: 'E-2', name: 'Seconda', updated_at: 'v1' }
+      { id: 'E-2', name: 'Seconda', updated_at: 'v2' }
     ] },
     { events: [
       { id: 'E-1', name: 'Nuova 1', updated_at: 'v1' },
-      { id: 'E-2', name: 'Nuova 2', updated_at: 'v1' }
+      { id: 'E-2', name: 'Nuova 2', updated_at: 'v2' }
     ] }
-  ), error => error.code === 'AT_API_MULTI_RECORD_WRITE_UNSUPPORTED');
+  ));
+  assert.equal(plan.length, 2);
+  assert.deepEqual(plan.map(x => x.payload.expected_updated_at), ['v1', 'v2']);
+  assert.deepEqual(plan.map(x => x.payload.changes.NAME), ['Nuova 1', 'Nuova 2']);
+});
+
+test('oversized multi-record plans fail before transport', () => {
+  const api = createApi(async () => response({}));
+  const before = { events: Array.from({ length: 51 }, (_, i) => ({ id: 'E-' + i, name: 'Prima', updated_at: 'v1' })) };
+  const after = { events: before.events.map((x, i) => ({ ...x, name: 'Dopo ' + i })) };
+  assert.throws(() => api._buildCommandPlan('public', before, after), error => error.code === 'AT_API_BATCH_SIZE_INVALID');
 });
 
 test('deletes and unsupported collections fail closed', () => {
@@ -112,6 +122,52 @@ test('command and PIN payloads match the backend contract', async () => {
   assert.equal(calls[1].action, 'verify_secret');
   assert.equal(calls[1].payload.secret, '1234');
   assert.equal(Object.hasOwn(calls[1].payload, 'value'), false);
+});
+
+test('commitState sends multiple records in one atomic typed command', async () => {
+  const calls = [];
+  const beforeEvents = [
+    { id: 'E-1', name: 'Prima 1', updated_at: 'v1', workspace: 'DEMO' },
+    { id: 'E-2', name: 'Prima 2', updated_at: 'v2', workspace: 'DEMO' }
+  ];
+  const api = createApi(async (_url, options) => {
+    const request = JSON.parse(options.body);
+    calls.push(request);
+    if (request.action === 'command') return response({
+      ok: true, command: 'atomic_batch', count: 2,
+      results: [
+        { table: 'EVENTI', id: 'E-1', updated_at: 'v3', workspace: 'DEMO' },
+        { table: 'EVENTI', id: 'E-2', updated_at: 'v4', workspace: 'DEMO' }
+      ],
+      revisions: { public: 2, admin: 1 }
+    });
+    return response({
+      public_data: {
+        events: [
+          { id: 'E-1', name: 'Dopo 1', updated_at: 'v3', workspace: 'DEMO' },
+          { id: 'E-2', name: 'Dopo 2', updated_at: 'v4', workspace: 'DEMO' }
+        ]
+      },
+      workspace_config: { mode: 'DEMO', epoch: 1 },
+      revisions: { public: 2, admin: 1 }
+    });
+  });
+  api._absorb({
+    public_data: { events: beforeEvents },
+    workspace_config: { mode: 'DEMO', epoch: 1 },
+    revisions: { public: 1, admin: 0 }
+  });
+  await api.commitState('public', { events: [
+    { ...beforeEvents[0], name: 'Dopo 1' },
+    { ...beforeEvents[1], name: 'Dopo 2' }
+  ] }, { expected_revision: 1 });
+  assert.deepEqual(calls.map(x => x.action), ['command', 'public_bundle']);
+  assert.equal(calls[0].payload.name, 'atomic_batch');
+  assert.equal(calls[0].payload.operations.length, 2);
+  assert.equal(calls[0].payload.operations[0].name, 'event_mutation');
+  assert.equal(calls[0].payload.operations[1].payload.expected_updated_at, 'v2');
+  assert.equal(Object.hasOwn(calls[0].payload, 'payload'), false);
+  assert.deepEqual(api.publicData().events.map(x => x.name), ['Dopo 1', 'Dopo 2']);
 });
 
 test('commitState writes through command and refreshes the public bundle', async () => {
