@@ -11,12 +11,22 @@
     "api_base_url configured",
     "login/public_bundle/staff_bundle verified",
     "critical domain commands verified multi-device",
-    "Safety Gate server-side verified"
+    "Safety Gate server-side verified",
+    "Single-record typed-command writes pass staging tests for role scope, idempotency, and concurrent updates",
+    "Every enabled multi-record critical save uses an atomic typed backend command"
   ],
   "deferred": [
     "browser uploads",
     "bulk import/backup",
-    "generic force patch"
+    "generic force patch",
+    "atomic multi-record save flows"
   ],
-  "status": "WEB_CONFORMANCE_READY_FOR_BACKEND_BINDING"
+  "status": "TYPED_COMMAND_ADAPTER_PENDING_STAGING_VERIFICATION",
+  "write_adapter": {
+    "mode": "typed-domain-commands",
+    "max_records_per_request": 1,
+    "multi_record_writes": "rejected before network write",
+    "deletions": "rejected",
+    "verified": false
+  }
 }
