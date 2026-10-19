@@ -1,0 +1,26 @@
+name: Staff typed-command adapter
+on:
+  pull_request:
+    branches: [staging-1.8.5]
+    paths:
+      - 'assets/data-api-adapter.js'
+      - 'staff/assets/data-api-adapter.js'
+      - 'staff/tests/**'
+      - '.github/workflows/staff-command-bridge.yml'
+  push:
+    branches: [staging-1.8.5]
+    paths:
+      - 'assets/data-api-adapter.js'
+      - 'staff/assets/data-api-adapter.js'
+      - 'staff/tests/**'
+      - '.github/workflows/staff-command-bridge.yml'
+permissions:
+  contents: read
+jobs:
+  adapter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node --check assets/data-api-adapter.js
+      - run: node --check staff/assets/data-api-adapter.js
+      - run: node --test staff/tests/data-api-command-bridge.test.cjs
