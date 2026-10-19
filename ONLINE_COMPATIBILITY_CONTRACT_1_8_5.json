@@ -101,7 +101,8 @@
     "publication_mutation",
     "safety_mutation",
     "workspace_switch",
-    "account_mutation"
+    "account_mutation",
+    "atomic_batch"
   ],
   "concurrency": {
     "request_id": "required for idempotency of mutations",
@@ -150,13 +151,14 @@
   ],
   "compatibility_bridge": {
     "commit_patch": "disabled server-side; the web client must not call it",
-    "rule": "Every operational write uses a typed domain command. Multi-record writes, deletions, and unsupported collections are rejected before any request is sent."
+    "rule": "Operational writes use typed domain commands. Multi-record writes use atomic_batch; deletions and unsupported collections are rejected before transport."
   },
   "typed_snapshot_adapter": {
     "transport": "command",
-    "max_records_per_request": 1,
+    "max_records_per_request": 50,
     "update_version": "expected_updated_at",
-    "multi_record_policy": "reject until an atomic backend command is available",
-    "deletion_policy": "disabled"
+    "multi_record_policy": "atomic_batch; all operations are validated before any write; write failures trigger rollback; bundle reads share the script lock",
+    "deletion_policy": "disabled",
+    "max_payload_chars": 100000
   }
 }
