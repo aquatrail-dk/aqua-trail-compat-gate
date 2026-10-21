@@ -1,5 +1,19 @@
 ATApp.onReady(()=>{
  const $=s=>document.querySelector(s);let P=ATStore.public(),A=ATStore.admin(),session=ATStore.session(),isSA=session?.role==='SUPERADMIN';
+ const online=!!window.ATDataAPI?.isOnline?.();
+ // This legacy settings page has local-only writers. Never let an online Superadmin
+ // land here: Workspace and PUK are server-side and live only in superadmin.html.
+ if(online&&isSA){location.replace('superadmin.html');return;}
+ if(online){
+   const hero=document.querySelector('main');
+   const notice=document.createElement('div');
+   notice.className='notice warn';
+   notice.innerHTML='<strong>CONFIGURAZIONE ONLINE GESTITA DAL SERVER.</strong> Questa pagina non può salvare né archiviare dati nello staging online.';
+   hero?.prepend(notice);
+   ['saveSeason','closeSeason','saveTechnical','resetOffline'].forEach(id=>{const button=$('#'+id);if(button){button.disabled=true;button.title='Funzione locale non disponibile online';}});
+   ['superadminToolsPanel','superadminSecurityPanel','superadminBuildPanel'].forEach(id=>$('#'+id)?.remove());
+   return;
+ }
  $('#seasonName').value=A.settings?.season_name||P.season?.name||P.season?.id||'';$('#seasonStart').value=A.settings?.season_start||P.season?.start_date||'';$('#seasonEnd').value=A.settings?.season_end||P.season?.end_date||'';
  const b=$('#pendingRules');if(b)b.innerHTML=(A.pending_rules||[]).length?(A.pending_rules||[]).map((x,i)=>`<div class="pending-row"><span>${i+1}</span><div>${x}</div><b>NON AUTOMATIZZATA</b></div>`).join(''):'<div class="notice ok">Nessuna regola sportiva attualmente sospesa nel gestionale.</div>';
  $('#saveSeason').onclick=()=>{A=ATStore.admin();P=ATStore.public();A.settings=A.settings||{};P.season=P.season||{};const before=JSON.stringify({settings:A.settings,season:P.season});A.settings.season_name=$('#seasonName').value.trim();A.settings.season_start=$('#seasonStart').value;A.settings.season_end=$('#seasonEnd').value;Object.assign(P.season,{id:A.settings.season_name||'STAGIONE_CORRENTE',name:A.settings.season_name||'Stagione corrente',start_date:A.settings.season_start,end_date:A.settings.season_end,status:'CONFIGURATA'});(P.season_standings||[]).forEach(x=>x.season_id=P.season.id);if(window.ATRace?.syncSeasonPoints)(P.events||[]).forEach(e=>ATRace.syncSeasonPoints(P,e.id));ATStore.saveAdmin(A);ATStore.savePublic(P);ATStore.audit('MODIFICA STAGIONE','Stagione',before,JSON.stringify(P.season),'Nome e date stagione impostati da ADMIN');$('#seasonStatus').textContent='Stagione salvata.'};
