@@ -107,6 +107,15 @@ test('deletes and unsupported collections fail closed', () => {
   ), error => error.code === 'AT_API_COLLECTION_UNSUPPORTED');
 });
 
+test('race-only client state is rejected instead of being silently persisted', () => {
+  const api = createApi(async () => response({}));
+  assert.throws(() => api._buildCommandPlan(
+    'admin',
+    { race_pair_states: { 'E-1|P-1': { status: 'IN GARA', penalties: 0 } } },
+    { race_pair_states: { 'E-1|P-1': { status: 'ELIMINATO', penalties: 4 } } }
+  ), error => error.code === 'AT_API_COLLECTION_UNSUPPORTED');
+});
+
 test('command and PIN payloads match the backend contract', async () => {
   const calls = [];
   const api = createApi(async (_url, options) => {
