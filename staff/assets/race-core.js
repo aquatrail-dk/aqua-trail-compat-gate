@@ -13,7 +13,7 @@
   function ctx(){return {P:ATStore.public(),A:ATStore.admin()}}
   function allowed(eventId){return !window.ATStore||ATStore.canAccessEvent(eventId)}
   function assertAccess(eventId){if(!allowed(eventId))throw new Error('ACCESSO NEGATO: evento non assegnato a questo account.')}
-  function raceOperatorPolicy(P,eventId){return String((P.events||[]).find(e=>String(e.id)===String(eventId))?.race_operator_policy||'LEGACY').toUpperCase()}
+  function raceOperatorPolicy(P,eventId){const declared=String((P.events||[]).find(e=>String(e.id)===String(eventId))?.race_operator_policy||'LEGACY').toUpperCase();return window.ATDataAPI?.isOnline?.()?'SINGLE_WRITER':declared}
   function raceOperator(A,eventId,dayId,stage){return (A.race_operator_assignments||[]).find(x=>String(x.event_id)===String(eventId)&&String(x.day_id)===String(dayId)&&String(x.stage)===String(stage))||null}
   function raceStageHasActivity(A,eventId,dayId,stage){
     if((A.race_runs||[]).some(x=>String(x.event_id)===String(eventId)&&String(x.day_id||'')===String(dayId||'')&&String(x.stage)===String(stage)&&(x.updated_at||x.completed||x.time_cs!=null||x.time_s!=null||String(x.status||'IN GARA')!=='IN GARA')))return true;
@@ -21,7 +21,7 @@
     const prefix=[eventId,dayId,stage].join('|')+'|';return Object.entries(A.timer_states||{}).some(([k,t])=>String(k).startsWith(prefix)&&(Number(t?.elapsed_ms||0)>0||t?.running||t?.started_at||t?.finished));
   }
   function eligibleRaceOperators(P,A,eventId){
-    const ev=(P.events||[]).find(e=>String(e.id)===String(eventId))||{},accounts=(A.offline_accounts||[]).filter(a=>a.enabled!==false),rows=[];
+    const ev=(P.events||[]).find(e=>String(e.id)===String(eventId))||{},accounts=(A.race_operator_candidates||A.offline_accounts||[]).filter(a=>a.enabled!==false),rows=[];
     for(const a of accounts){const role=String(a.role||'').toUpperCase();let ok=false;if(['ADMIN1','ADMIN2','SUPERADMIN'].includes(role))ok=true;else if(role==='GIUDICE'&&String(a.judge_id||'')===String(ev.judge_id||''))ok=true;else if(role==='FRONT_OFFICE'&&String(a.event_id||'')===String(eventId)&&a.capabilities?.race_data_entry===true)ok=true;if(!ok)continue;rows.push({username:String(a.username||''),role,owner:a.owner||a.username||role,judge_id:a.judge_id||null,event_id:a.event_id||null,capabilities:a.capabilities||{}})}return rows;
   }
   function raceWriterStatus(A,eventId,dayId,stage,requiredMode=''){
@@ -92,7 +92,7 @@
     if(!A.race_pair_states[k]){const mode=competitionMode(P,eventId),legacy=A.race_pair_states[dayLegacyKey]||(mode==='SINGLE_SERIES'?A.race_pair_states[legacyKey]:null);A.race_pair_states[k]=legacy?JSON.parse(JSON.stringify(legacy)):{event_id:eventId,pair_id:pid,recall_used:false,recall_type:null,recall_stage:null,recall_day_id:null,bonuses:{},bonuses_cs:{},stages:{},status:'IN GARA'}}
     const s=A.race_pair_states[k];s.event_id=eventId;s.pair_id=pid;s.competition_id=comp;if(dayId)s.day_id=dayId;s.bonuses=s.bonuses||{};s.bonuses_cs=s.bonuses_cs||{};s.stages=s.stages||{};
     Object.keys(s.bonuses).forEach(st=>{if(s.bonuses_cs[st]==null)s.bonuses_cs[st]=secToCs(s.bonuses[st])});Object.keys(s.bonuses_cs).forEach(st=>{s.bonuses[st]=csToSec(s.bonuses_cs[st])});
-    if(s.recall_used&&!s.recall_stage){const rev=[...(A.race_events||[])].reverse().find(e=>e.event_id===eventId&&e.pair_id===pid&&competitionId(P,eventId,e.day_id)===comp&&['RECALL_COMPLETO','RECALL_TECNICO'].includes(e.type));if(rev){s.recall_stage=rev.stage||null;s.recall_day_id=rev.day_id||dayId||null;s.recall_type=s.recall_type||(rev.type==='RECALL_TECNICO'?'TECNICO':'COMPLETO')}}
+    if(s.recall_used&&!s.recall_stage){const rev=[...(A.race_events||[])].reverse().find(e=>e.event_id===eventId&&e.pair_id===pid&&competitionId(P,eventId,e.day_id)===comp&&['RECALL_COMPLETO','RECALL_TECNICO','RECALL_FULL','RECALL_TECHNICAL'].includes(e.type));if(rev){s.recall_stage=rev.stage||null;s.recall_day_id=rev.day_id||dayId||null;s.recall_type=s.recall_type||(rev.type==='RECALL_TECNICO'?'TECNICO':'COMPLETO')}}
     return s;
   }
   function stageState(A,eventId,stage,pid,dayId=''){
@@ -100,7 +100,7 @@
     s.stages=s.stages||{};let st=s.stages[stage];
     if(!st){
       const P=ATStore.public(),comp=competitionId(P,eventId,dayId),res=(P.results||[]).find(x=>x.event_id===eventId&&competitionId(P,eventId,x.day_id)===comp&&x.pair_id===pid&&x.stage===stage),rr=(A.race_runs||[]).find(x=>x.event_id===eventId&&competitionId(P,eventId,x.day_id)===comp&&x.pair_id===pid&&x.stage===stage);
-      const evs=(A.race_events||[]).filter(e=>e.event_id===eventId&&competitionId(P,eventId,e.day_id)===comp&&e.pair_id===pid&&e.stage===stage),pens=evs.filter(e=>e.type==='PENALTY'),rec=evs.find(e=>['RECALL_COMPLETO','RECALL_TECNICO'].includes(e.type));
+      const evs=(A.race_events||[]).filter(e=>e.event_id===eventId&&competitionId(P,eventId,e.day_id)===comp&&e.pair_id===pid&&e.stage===stage),pens=evs.filter(e=>e.type==='PENALTY'),rec=evs.find(e=>['RECALL_COMPLETO','RECALL_TECNICO','RECALL_FULL','RECALL_TECHNICAL'].includes(e.type));
       const explicit=res?.stage_penalties!=null?Number(res.stage_penalties):null,pairResults=(P.results||[]).filter(x=>x.event_id===eventId&&competitionId(P,eventId,x.day_id)===comp&&x.pair_id===pid),legacyOnly=explicit==null&&pairResults.length===1?Number(res?.event_penalties||res?.series_penalties||0):0,penalties=pens.length?pens.length:Math.max(0,Number.isFinite(explicit)?explicit:legacyOnly);
       const history=pens.map((e,i)=>({n:i+1,time_cs:e.time_cs??null,time_s:e.time_s??null,timestamp:e.timestamp||null,source:e.source||'MIGRATED_EVENT'}));
       st={stage,day_id:dayId||null,penalties,penalty_history:history,post_recall:!!rec,recall_pending:false,status:rr?.status||res?.state||'IN GARA'};s.stages[stage]=st;
