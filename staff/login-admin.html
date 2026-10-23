@@ -37,7 +37,7 @@
       const session=await ATDataAPI.login(user.value.trim(),pass.value);
       if(!session)throw new Error('Credenziali non valide.');
       window.clearInterval(timer);
-      location.href=session.force_password_change?'cambio-password.html':session.role==='SUPERADMIN'?'admin.html':session.role==='GIUDICE'?'gara-giudice.html':session.role==='CENTRO_ASSOCIATO'?'centro-evento.html':session.role==='FRONT_OFFICE'?'frontoffice.html':'admin.html';
+      location.href=session.force_password_change?'cambio-password.html':session.role==='SUPERADMIN'?'superadmin.html':session.role==='GIUDICE'?'gara-giudice.html':session.role==='CENTRO_ASSOCIATO'?'centro-evento.html':session.role==='FRONT_OFFICE'?'frontoffice.html':'admin.html';
     }catch(err){
       window.clearInterval(timer);
       busy=false;
