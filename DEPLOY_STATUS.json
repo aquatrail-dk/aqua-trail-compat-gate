@@ -5,7 +5,7 @@
   "contains_private_seed_data": false,
   "web_conformance": true,
   "backend_versioned": true,
-  "operational": true,
+  "operational": false,
   "operational_when": [
     "Apps Script backend bound to definitive Sheets schema",
     "api_base_url configured",
@@ -13,14 +13,19 @@
     "critical domain commands verified multi-device",
     "Safety Gate server-side verified",
     "Single-record typed-command writes pass staging tests for role scope, idempotency, and concurrent updates",
-    "Every enabled multi-record critical save uses an atomic typed backend command"
+    "Every enabled multi-record critical save uses an atomic typed backend command",
+    "Race Control UI uses only server-authoritative commands",
+    "Single Writer and shift pass multi-device staging tests",
+    "Superadmin recovery and snapshots use server-authoritative commands"
   ],
   "deferred": [
     "browser uploads",
     "bulk import/backup",
-    "generic force patch"
+    "generic force patch",
+    "Race Control UI/server binding",
+    "Superadmin recovery and browser snapshot exports"
   ],
-  "status": "STAGING_ATOMIC_BATCH_VERIFIED",
+  "status": "STAGING_FAIL_CLOSED_PENDING_AUTHORITATIVE_RACE_UI",
   "write_adapter": {
     "mode": "typed-domain-commands-with-atomic-batch",
     "max_records_per_request": 50,
