@@ -29,4 +29,7 @@ test('audit: online Superadmin render must not invoke offline event PUK generati
   context.ATStore = context.window.ATStore;
   assert.doesNotThrow(() => vm.runInContext(fs.readFileSync(path.join(__dirname, '../assets/superadmin.js'), 'utf8'), context));
   assert.deepEqual(calls, [], 'render must be read-only');
+  assert.equal(nodes.get('#saAccountCount').textContent, 'Non disponibile online');
+  assert.match(nodes.get('#saAccounts').innerHTML, /Elenco account non disponibile/);
+  assert.equal(nodes.get('#saDeletedCount').textContent, 'Non disponibile online');
 });
