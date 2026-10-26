@@ -184,10 +184,9 @@
         const written=mutation.name==='atomic_batch'?(result?.results||[]).find(x=>x.table===m.payload.table&&String(x.id)===String(m.id)):result;
         if(row&&written){if(written.updated_at)row.updated_at=written.updated_at;if(written.workspace)row.workspace=written.workspace}
       });
-      let refreshError=null;
       try{if(getToken())await staffBootstrap();else await publicBootstrap()}
-      catch(e){refreshError=e;state[target]=clone(optimistic);state.last_error=e}
-      window.dispatchEvent?.(new CustomEvent('aquatrail:write-committed',{detail:{target,request_id,revision:state.revisions[target],refresh_error:refreshError?.code||null}}));
+      catch(e){throw err('AT_API_COMMIT_UNVERIFIED','Il comando è stato accettato, ma la rilettura dei dati è fallita. Ricarica e verifica lo stato prima di riprovare.',e?.code||null)}
+      window.dispatchEvent?.(new CustomEvent('aquatrail:write-committed',{detail:{target,request_id,revision:state.revisions[target]}}));
       return clone(state[target]);
     }catch(e){
       state[target]=prev;state.last_error=e;

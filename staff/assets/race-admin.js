@@ -1,4 +1,5 @@
 ATApp.onReady(()=>{
+ if(window.ATDataAPI?.isOnline?.())return;
  const $=s=>document.querySelector(s),STANDARDS={OPEN:10,ADVANCE:15,MASTER:20,SPEED:25},session=ATStore.session();let P=ATStore.public(),A=ATStore.admin(),eventId=ATStore.qs('event')||A.settings?.default_event_id||P.events?.[0]?.id,dayId='',stage=ATStore.qs('stage')||'OPEN',tpsFilter=1,pid='',pinAction=null;
  if(!session||session.role==='CENTRO_ASSOCIATO'||(session.role==='FRONT_OFFICE'&&!session.capabilities?.race_data_entry)){location.href=session?.role==='FRONT_OFFICE'?'frontoffice.html':'admin.html';return}
  const eventSel=$('#raceEvent'),daySel=$('#raceDay'),stageSel=$('#raceStageSelect'),pairSel=$('#racePairSelect');

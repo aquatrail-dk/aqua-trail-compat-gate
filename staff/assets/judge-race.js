@@ -1,4 +1,5 @@
 ATApp.onReady(()=>{
+ if(window.ATDataAPI?.isOnline?.())return;
  const $=s=>document.querySelector(s),session=ATStore.session(),STANDARDS={OPEN:10,ADVANCE:15,MASTER:20,SPEED:25};let P=ATStore.public(),A=ATStore.admin();
  const allowedEvents=()=>session?.role==='GIUDICE'?ATStore.assignedEvents(P):(P.events||[]);
  const requestedEvent=ATStore.qs('event');let eventId=session?.role==='GIUDICE'?(allowedEvents().some(e=>e.id===requestedEvent)?requestedEvent:(allowedEvents()[0]?.id||'')):(A.settings?.default_event_id||P.events?.[0]?.id||''),dayId='',stage=ATStore.qs('stage')||'OPEN',pid='',pinAction=null,tick=null;

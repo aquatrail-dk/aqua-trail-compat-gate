@@ -12,14 +12,14 @@ function response(data) {
   return { ok: true, async json() { return { ok: true, data }; } };
 }
 
-function createApi(fetchImpl) {
+function createApi(fetchImpl, events = []) {
   const window = {
     AQUATRAIL_RUNTIME: {
       mode: 'ONLINE_STAFF',
       api_base_url: 'https://example.invalid/exec',
       staff_login_url: 'login-admin.html'
     },
-    dispatchEvent() {}
+    dispatchEvent(event) { events.push(event); }
   };
   const context = {
     window,
@@ -198,4 +198,26 @@ test('commitState writes through command and refreshes the public bundle', async
   assert.deepEqual(calls.map(x => x.action), ['command', 'public_bundle']);
   assert.equal(calls[0].payload.name, 'event_mutation');
   assert.equal(api.publicData().events[0].updated_at, '2026-10-19T00:00:00Z');
+});
+
+test('a failed bundle refresh never reports a confirmed save', async () => {
+  const events = [], calls = [];
+  const api = createApi(async (_url, options) => {
+    const request = JSON.parse(options.body);
+    calls.push(request.action);
+    if (request.action === 'command') return response({ ok: true, id: 'E-4', updated_at: 'v2' });
+    throw new Error('network unavailable');
+  }, events);
+  api._absorb({
+    public_data: { events: [] },
+    workspace_config: { mode: 'DEMO', epoch: 1 },
+    revisions: { public: 1, admin: 0 }
+  });
+  await assert.rejects(
+    api.commitState('public', { events: [{ id: 'E-4', name: 'Nuovo', workspace: 'DEMO' }] }),
+    { code: 'AT_API_COMMIT_UNVERIFIED' }
+  );
+  assert.deepEqual(calls, ['command', 'public_bundle']);
+  assert.deepEqual(events.map(event => event.type), ['aquatrail:write-pending', 'aquatrail:write-error']);
+  assert.equal(api.publicData().events.length, 0);
 });
