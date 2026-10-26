@@ -8,7 +8,7 @@ ATApp.onReady(()=>{
   const fmt=ms=>ATTime.formatCs(Math.round(Math.max(0,ms)/10));
   const context=()=>bridge.scope(eventId,dayId,stage,pairId);
   function selectedRun(s){return bridge.existingRun(s)}
-  function timer(s){const id=selectedRun(s)?.id;return id?data().admin.timer_states_server?.[id]||null:null}
+  function timer(s){const run=selectedRun(s),time=Number(run?.time_cs);if(run?.completed===true||String(run?.completed).toUpperCase()==='TRUE')return Number.isFinite(time)?{elapsed_ms:time*10,running:false}:null;return run?.id?data().admin.timer_states_server?.[run.id]||null:null}
   function elapsed(t){return Math.max(0,Number(t?.elapsed_ms||0)+(t?.running&&t.started_at_ms?Date.now()-Number(t.started_at_ms):0))}
   function pairIds(){if(!eventId||!dayId||!stage)return[];return bridge.orderedPairs(bridge.scope(eventId,dayId,stage,''))}
   function render(){
@@ -43,7 +43,7 @@ ATApp.onReady(()=>{
   function reason(label){const value=prompt(label+' · indica la motivazione ufficiale:');return value===null?null:value.trim()}
   $('clockStart').onclick=()=>act(s=>bridge.execute(s,'timer_start'));
   $('clockPause').onclick=()=>act(s=>bridge.execute(s,'timer_pause'));
-  $('clockFinish').onclick=()=>act(async s=>{await bridge.execute(s,'timer_pause');const t=timer(s),time_cs=Math.round(Number(t?.elapsed_ms||0)/10);if(time_cs<=0)throw new Error('Tempo server non disponibile: nessun risultato salvato.');await bridge.execute(s,'record_time',{time_cs,status:'SUPERATO',time_kind:'OFFICIAL'})});
+  $('clockFinish').onclick=()=>act(s=>bridge.execute(s,'finish_time'));
   $('judgePenalty').onclick=()=>{const why=reason('Penalità');if(why!==null)act(async s=>{const t=timer(s),at=Math.round(elapsed(t)/10);await bridge.execute(s,'apply_penalty',{reason:why,penalty_at_cs:at});const count=list(data().admin.race_events).filter(e=>e.event_id===s.event_id&&e.competition_id===s.competition_id&&e.pair_id===s.pair_id&&e.type==='PENALTY').length;if(count===3&&timer(s)?.running){try{await bridge.execute(s,'timer_pause')}catch(e){throw new Error('Penalità confermata sul server; pausa timer non confermata: '+e.message)}}})};
   $('judgeRecallFull').onclick=()=>{const why=reason('Recall completo');if(why!==null)act(s=>bridge.execute(s,'recall',{reason:why,recall_type:'FULL'}))};
   $('judgeRecallTech').onclick=()=>{const why=reason('Recall tecnico');if(why!==null)act(async s=>{if(timer(s)?.running)await bridge.execute(s,'timer_pause');await bridge.execute(s,'recall',{reason:why,recall_type:'TECHNICAL'})})};
