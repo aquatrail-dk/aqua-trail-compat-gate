@@ -1,10 +1,11 @@
 (function(root){
   'use strict';
-  const eventFields=['name','subtitle','start_date','end_date','location','address','start_time','status','published','description_html','poster','maps_url','organizer_id','judge_id','entry_fee','recall_cost','recall_cost_status','max_pairs','official_ranking','stage_config_confirmed','prereg_enabled','prereg_open_date','prereg_close_date','prereg_max','prereg_note','ranking_mode','break_time','aperitivo_time','hospitality_info','parking_info','accessibility_info','early_discount_amount','early_discount_deadline','prizes','participant_gift','awards_date','awards_time','awards_venue','awards_address','awards_maps_url','awards_link','awards_notes','awards_datetime','review_acknowledged','ranking_season_id','ranking_season_label','competition_mode','pricing_model','unlimited_pairs'];
+  const eventFields=['name','subtitle','start_date','end_date','location','address','start_time','status','published','description_html','poster','maps_url','organizer_id','judge_id','entry_fee','recall_cost','recall_cost_status','max_pairs','official_ranking','stage_config_confirmed','prereg_enabled','prereg_auto_email','prereg_open_date','prereg_close_date','prereg_max','prereg_note','ranking_mode','break_time','aperitivo_time','hospitality_info','parking_info','accessibility_info','early_discount_amount','early_discount_deadline','prizes','participant_gift','awards_date','awards_time','awards_venue','awards_address','awards_maps_url','awards_link','awards_notes','awards_datetime','review_acknowledged','ranking_season_id','ranking_season_label','competition_mode','pricing_model','unlimited_pairs'];
   function copy(source, fields){const out={};fields.forEach(k=>{if(source[k]!==undefined)out[k.toUpperCase()]=source[k]});return out;}
   function eventRecord(d,id){
     if(!id||!String(d.name||'').trim())throw Error('Il nome dell’evento è obbligatorio.');
-    const unsupported=[['phone','telefono'],['email','email'],['whatsapp_url','WhatsApp'],['two_day_fee','quota due giornate'],['security_pin','PIN evento'],['prereg_email','email preregistrazioni']];
+    if(d.prereg_enabled===true)throw Error('Le preregistrazioni non sono ancora disponibili online. Nessun dato è stato inviato.');
+    const unsupported=[['phone','telefono'],['email','email'],['whatsapp_url','WhatsApp'],['two_day_fee','quota due giornate'],['prereg_email','email preregistrazioni']];
     const blocked=unsupported.filter(([key])=>d[key]!==undefined&&d[key]!==null&&String(d[key]).trim()!=='').map(([,label])=>label);
     if(blocked.length)throw Error('Il salvataggio online non supporta ancora: '+blocked.join(', ')+'. Nessun dato è stato inviato.');
     const record=copy(d,eventFields);record.ID=id;

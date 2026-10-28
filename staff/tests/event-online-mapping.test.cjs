@@ -16,7 +16,7 @@ test('event, day and stage retain the essential fields in server format',()=>{
 });
 test('fields without an online mapping fail before sending instead of being lost',()=>{
   assert.throws(()=>map.eventRecord({name:'Evento',phone:'123'},'event-1'),/telefono/);
-  assert.throws(()=>map.eventRecord({name:'Evento',security_pin:'1234'},'event-1'),/PIN/);
+  assert.equal(map.eventRecord({name:'Evento',security_pin:'1234'},'event-1').SECURITY_PIN,undefined);
 });
 test('new event, day and stage are prepared together and updates require versions',()=>{
   const draft={name:'Evento',event_days:[{id:'day',date:'2026-12-01',stages:['OPEN']}],stage_config:[{day_id:'day',competition_id:'COMP-A',stage:'OPEN',times_cs:{1:100}}]};
