@@ -20,7 +20,7 @@
     ['savePoster','pairPhotoChoose'].forEach(id=>{const b=document.getElementById(id);if(b)b.dataset.webDeferred='upload';});
     raceSelectors.forEach(sel=>document.querySelectorAll(sel).forEach(el=>defer(el,'race-control',raceMsg)));
     if(raceSelectors.some(sel=>document.querySelector(sel)))warnRace();
-    superadminSelectors.forEach(sel=>document.querySelectorAll(sel).forEach(el=>defer(el,'superadmin-server-required',superadminMsg)));
+    superadminSelectors.forEach(sel=>document.querySelectorAll(sel).forEach(el=>{if(sel==='#saveDraft'&&window.ATEventOnlineMapping&&String(location.pathname).endsWith('/nuovo-evento-admin.html'))return;defer(el,'superadmin-server-required',superadminMsg)}));
   }
   document.addEventListener('click',e=>{
     const deferred=e.target.closest?.('[data-web-deferred]');
@@ -37,3 +37,4 @@
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
   window.ATWebConformance={VERSION:'1.8.5',showDeferred:show,apply};
 })();
+
