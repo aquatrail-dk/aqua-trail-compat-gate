@@ -15,7 +15,25 @@
     if(!storage)storage=drive?'GOOGLE_DRIVE':(DATA_RE.test(url)?'OFFLINE_DATA_URL':(HTTP_RE.test(url)?'REMOTE_URL':(url?'STATIC_ASSET':'METADATA_ONLY')));
     return {storage,url,public_url:clean(ref.public_url||url),drive_file_id:drive||null,name:clean(ref.name),mime:clean(ref.mime),size:Number.isFinite(Number(ref.size))?Number(ref.size):null,updated_at:clean(ref.updated_at)||null,key:clean(ref.key)||null};
   }
-  function url(ref,fallback=''){const r=normalize(ref);return clean(r?.public_url||r?.url||fallback)}
+  function url(ref,fallback=''){
+    const raw=typeof ref==='string'?ref:'';
+    if(raw.startsWith('ATMEDIA:')){const parts=raw.slice(8).split('|');if(parts.length>=2){queueMediaScan();return (fallback||'assets/logo-aquatrail.jpg')+'#atmedia='+encodeURIComponent(parts[0]+'|'+parts[1]);}}
+    const r=normalize(ref);return clean(r?.public_url||r?.url||fallback);
+  }
+  const mediaCache=new Map();let scanQueued=false;
+  async function loadPrivateMedia(ref){
+    const key=[ref.event_id,ref.type,ref.day_id||''].join('|');if(!mediaCache.has(key))mediaCache.set(key,(async()=>{
+      if(!window.ATDataAPI?.request)throw Error('Servizio allegati non disponibile.');
+      const data=await window.ATDataAPI.request('event_media_read',{event_id:ref.event_id,type:ref.type,day_id:ref.day_id||''});
+      const binary=atob(data.base64),bytes=new Uint8Array(binary.length);for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+      return URL.createObjectURL(new Blob([bytes],{type:data.mime||'application/octet-stream'}));
+    })().catch(e=>{mediaCache.delete(key);throw e}));return mediaCache.get(key);
+  }
+  function queueMediaScan(){if(scanQueued)return;scanQueued=true;setTimeout(()=>{scanQueued=false;document.querySelectorAll('img[src*="#atmedia="]').forEach(img=>{
+    const mark=(img.getAttribute('src')||'').split('#atmedia=')[1];if(!mark||img.dataset.mediaLoading===mark)return;img.dataset.mediaLoading=mark;
+    try{const [encodedEvent,type]=decodeURIComponent(mark).split('|');loadPrivateMedia({event_id:decodeURIComponent(encodedEvent),type}).then(src=>{if(img.isConnected)img.src=src}).catch(()=>{img.removeAttribute('data-media-loading')});}catch(_){img.removeAttribute('data-media-loading')}
+  })},0)}
+
   function isInline(ref){const r=normalize(ref);return !!r&&(r.storage==='OFFLINE_DATA_URL'||DATA_RE.test(r.url||''))}
   function isOnlineSafe(ref){const r=normalize(ref);if(!r)return true;if(isInline(r))return false;if(['INDEXEDDB','LOCALSTORAGE'].includes(r.storage))return false;return !!(r.url||r.drive_file_id)}
   function offlineImage(dataUrl,name='immagine.webp',mime='image/webp',size=null){
@@ -44,5 +62,5 @@
     for(const d of days||[])if(d?.program_pdf&&!isOnlineSafe(d.program_pdf))issues.push(`${d.label||d.id}: PDF locale`);
     return issues;
   }
-  root.ATMedia={normalize,url,isInline,isOnlineSafe,offlineImage,driveRef,remoteRef,forApi,describe,eventOnlineIssues,clone};
+  root.ATMedia={normalize,url,loadPrivateMedia,isInline,isOnlineSafe,offlineImage,driveRef,remoteRef,forApi,describe,eventOnlineIssues,clone};
 })(typeof window!=='undefined'?window:globalThis);

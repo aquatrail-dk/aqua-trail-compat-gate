@@ -14,7 +14,7 @@
   function warnRace(){if(document.querySelector('#raceAuthoritativeNotice'))return;const host=document.querySelector('main');if(!host)return;const n=document.createElement('div');n.id='raceAuthoritativeNotice';n.className='notice warn';n.style.cssText='margin:12px auto;max-width:1120px';n.innerHTML='<strong>RACE CONTROL ONLINE BLOCCATO IN SICUREZZA.</strong> L’assegnazione dell’operatore ufficiale è già server-autorevole; tempi, penalità e Recall saranno riattivati solo dopo il binding completo e i test multi-dispositivo.';host.prepend(n);}
   function apply(){
     document.querySelectorAll('a[href="importa-dati.html"]').forEach(a=>{a.href='#';a.dataset.webDeferred='import';a.title='Import/Backup non disponibile nella prima online';});
-    for(const sel of deferredInputs)document.querySelectorAll(sel).forEach(el=>{el.disabled=true;el.title='Upload browser disabilitato nella prima online';});
+    for(const sel of deferredInputs)document.querySelectorAll(sel).forEach(el=>{if(location.pathname.endsWith('/nuovo-evento-admin.html')&&['#wPoster','#wProgramImage','#wMenuImage','.wDayProgramPdf'].includes(sel))return;el.disabled=true;el.title='Upload browser disabilitato nella prima online';});
     const force=document.querySelector('#saForceApply');if(force){const panel=force.closest('.panel');if(panel)panel.style.display='none';}
     const gallery=document.querySelector('#uploadGallery');if(gallery){gallery.disabled=false;gallery.dataset.webDeferred='gallery-upload';gallery.textContent='UPLOAD — WORKING IN PROGRESS';}
     ['savePoster','pairPhotoChoose'].forEach(id=>{const b=document.getElementById(id);if(b)b.dataset.webDeferred='upload';});
@@ -37,4 +37,3 @@
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply,{once:true});else apply();
   window.ATWebConformance={VERSION:'1.8.5',showDeferred:show,apply};
 })();
-

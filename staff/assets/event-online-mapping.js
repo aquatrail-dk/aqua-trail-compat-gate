@@ -5,13 +5,13 @@
   function eventRecord(d,id){
     if(!id||!String(d.name||'').trim())throw Error('Il nome dell’evento è obbligatorio.');
     if(d.prereg_enabled===true)throw Error('Le preregistrazioni non sono ancora disponibili online. Nessun dato è stato inviato.');
-    const unsupported=[['phone','telefono'],['email','email'],['whatsapp_url','WhatsApp'],['two_day_fee','quota due giornate'],['prereg_email','email preregistrazioni']];
+    const unsupported=[['prereg_email','email preregistrazioni']];
     const blocked=unsupported.filter(([key])=>d[key]!==undefined&&d[key]!==null&&String(d[key]).trim()!=='').map(([,label])=>label);
     if(blocked.length)throw Error('Il salvataggio online non supporta ancora: '+blocked.join(', ')+'. Nessun dato è stato inviato.');
     const record=copy(d,eventFields);record.ID=id;
     if(d.stages!==undefined)record.STAGES_JSON=d.stages;
     if(d.stage_config!==undefined)record.STAGE_CONFIG_JSON=d.stage_config;
-    if(d.participation_rules!==undefined)record.PARTICIPATION_RULES_JSON=d.participation_rules;
+    if(d.participation_rules!==undefined)record.PARTICIPATION_RULES_JSON=Object.assign({},d.participation_rules,{public_contact:{email:d.email||'',phone:d.phone||'',whatsapp_url:d.whatsapp_url||'',two_day_fee:d.two_day_fee??null}});
     return record;
   }
   function dayRecord(d,eventId){
@@ -54,4 +54,3 @@
   }
   root.ATEventOnlineMapping={eventRecord,dayRecord,stageRecord,operations,hydrate};
 })(typeof window==='undefined'?globalThis:window);
-

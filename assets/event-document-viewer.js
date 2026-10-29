@@ -12,6 +12,7 @@ ATApp.onReady(async()=>{
   $('#docBackTop').onclick=back;$('#docBackBottom').onclick=back;
   if(!e||!meta){$('#docLoading').classList.add('hidden');$('#docError').textContent='Questo documento non è disponibile per l’evento selezionato.';$('#docError').classList.remove('hidden');return}
   try{
+    if(meta.storage==='PRIVATE_DRIVE'){const localUrl=await ATMedia.loadPrivateMedia(meta);const frame=$('#pdfFrame'),dl=$('#docDownload');frame.src=localUrl;frame.classList.remove('hidden');$('#docLoading').classList.add('hidden');dl.disabled=false;dl.onclick=()=>{const a=document.createElement('a');a.href=localUrl;a.download=meta.name||'programma.pdf';document.body.append(a);a.click();a.remove()};return;}
     const remoteUrl=ATMedia.url(meta,'');
     const frame=$('#pdfFrame'),dl=$('#docDownload');
     if(remoteUrl&&!ATMedia.isInline(meta)&&!['INDEXEDDB','LOCALSTORAGE'].includes(ATMedia.normalize(meta)?.storage||'')){
