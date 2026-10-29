@@ -62,4 +62,3 @@ ATApp.onReady(()=>{
   $('#saExportFull').onclick=()=>{if(online()){alert('Backup completo disponibile solo negli strumenti offline SUPERADMIN.');return;}download('AquaTrail_SNAPSHOT_COMPLETO_'+ATStore.today()+'.json',ATStore.exportStorageSnapshot());};
   render();
 });
-

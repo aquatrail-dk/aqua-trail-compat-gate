@@ -36,4 +36,3 @@ test('audit: online Superadmin render must not invoke offline event PUK generati
   assert.equal((nodes.get('#saAccounts').innerHTML.match(/RESET PASSWORD/g)||[]).length,1);
   assert.equal(nodes.get('#saDeletedCount').textContent, 'Non disponibile online');
 });
-
