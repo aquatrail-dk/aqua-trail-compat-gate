@@ -29,9 +29,9 @@
       return URL.createObjectURL(new Blob([bytes],{type:data.mime||'application/octet-stream'}));
     })().catch(e=>{mediaCache.delete(key);throw e}));return mediaCache.get(key);
   }
-  function queueMediaScan(){if(scanQueued)return;scanQueued=true;setTimeout(()=>{scanQueued=false;document.querySelectorAll('img[src*="#atmedia="]').forEach(img=>{
-    const mark=(img.getAttribute('src')||'').split('#atmedia=')[1];if(!mark||img.dataset.mediaLoading===mark)return;img.dataset.mediaLoading=mark;
-    try{const [encodedEvent,type]=decodeURIComponent(mark).split('|');loadPrivateMedia({event_id:decodeURIComponent(encodedEvent),type}).then(src=>{if(img.isConnected)img.src=src}).catch(()=>{img.removeAttribute('data-media-loading')});}catch(_){img.removeAttribute('data-media-loading')}
+  function queueMediaScan(){if(scanQueued)return;scanQueued=true;setTimeout(()=>{scanQueued=false;document.querySelectorAll('img[src*="#atmedia="],a[href*="#atmedia="]').forEach(img=>{
+    const attr=img.tagName==='A'?'href':'src',mark=(img.getAttribute(attr)||'').split('#atmedia=')[1];if(!mark||img.dataset.mediaLoading===mark)return;img.dataset.mediaLoading=mark;
+    try{const [encodedEvent,type]=decodeURIComponent(mark).split('|');loadPrivateMedia({event_id:decodeURIComponent(encodedEvent),type}).then(src=>{if(img.isConnected)img.setAttribute(attr,src)}).catch(()=>{img.removeAttribute('data-media-loading')});}catch(_){img.removeAttribute('data-media-loading')}
   })},0)}
 
   function isInline(ref){const r=normalize(ref);return !!r&&(r.storage==='OFFLINE_DATA_URL'||DATA_RE.test(r.url||''))}
