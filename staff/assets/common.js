@@ -11,9 +11,9 @@ ATApp.onReady(()=>{
   const adminPage=document.body.dataset.admin==='1',judgePage=document.body.dataset.judge==='1',currentPage=(location.pathname.split('/').pop()||'').toLowerCase();let s=null;
   if((adminPage||judgePage)&&window.ATStore){
     s=ATStore.requireSession();if(!s)return;
-    const judgeAllowed=new Set(['gara-giudice.html','ordine-gara-admin.html','news-evento-admin.html','race-control-admin.html']);
+    const judgeAllowed=new Set(['gara-giudice.html','ordine-gara-admin.html','news-evento-admin.html','race-control-admin.html','cambio-password.html']);
     if(s.role==='GIUDICE'&&!judgeAllowed.has(currentPage)){location.href='gara-giudice.html';return;}
-    if(s.role==='CENTRO_ASSOCIATO'&&currentPage!=='centro-evento.html'){location.href='centro-evento.html';return;}
+    if(s.role==='CENTRO_ASSOCIATO'&&!['centro-evento.html','cambio-password.html'].includes(currentPage)){location.href='centro-evento.html';return;}
     const frontOfficeAllowed=new Set(['frontoffice.html','checkin-admin.html','preregistrazioni-admin.html','iscrizioni-admin.html','binomi-admin.html','binomio-admin.html','contabilita-admin.html','membership-card.html','cambio-password.html']);
     if(s.role==='FRONT_OFFICE'){const caps=s.capabilities||{};if(caps.race_control)frontOfficeAllowed.add('race-control-admin.html');if(caps.start_order)frontOfficeAllowed.add('ordine-gara-admin.html');if(caps.race_data_entry)frontOfficeAllowed.add('gara-admin.html');if(caps.live_news)frontOfficeAllowed.add('news-evento-admin.html');if(caps.results_print)frontOfficeAllowed.add('risultati-gara-pdf.html');}
     if(s.role==='FRONT_OFFICE'&&!frontOfficeAllowed.has(currentPage)){location.href='frontoffice.html';return;}
