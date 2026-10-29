@@ -29,13 +29,15 @@ ATApp.onReady(()=>{
           accountOperationPending=true;
           const result=await ATDataAPI.command('account_mutation',{operation:'reset_password',user_id:acc.user_id});
           const temporary=String(result.temporary_password||'').trim();if(!temporary)throw new Error('Il reset è stato eseguito, ma la password non è disponibile. Se necessario genera una nuova password provvisoria.');
-          $('#saRecoveryLog').textContent='Password provvisoria per '+user+': '+temporary+'. Mostrata una sola volta. Comunicala in modo sicuro: al primo accesso sarà richiesto di cambiarla.';
+          const log=$('#saRecoveryLog'),password=document.createElement('strong');
+          log.style.fontWeight='400';password.id='saTemporaryPassword';password.textContent=temporary;password.style.fontSize='1.25rem';password.style.fontWeight='700';password.style.overflowWrap='anywhere';password.style.userSelect='all';
+          log.replaceChildren(document.createTextNode('Password provvisoria per '+user+':\u00a0\u00a0'),password,document.createTextNode('\u00a0\u00a0Mostrata una sola volta. Comunicala in modo sicuro: al primo accesso sarà richiesto di cambiarla.'));
         }else if(act==='toggleenabled'){
           const enabled=acc.enabled===false;if(!confirm((enabled?'Abilitare ':'Disabilitare ')+user+'?'))return;
           await ATDataAPI.command('account_mutation',{operation:'set_enabled',user_id:acc.user_id,enabled:enabled});
           $('#saRecoveryLog').textContent='Account '+user+' '+(enabled?'abilitato.':'disabilitato e sessioni revocate.');
         }else{alert('Questa funzione non è disponibile online.');return;}
-        try{await ATDataAPI.staffBootstrap();render();}catch(e){$('#saRecoveryLog').textContent+=' Non è stato possibile aggiornare l’elenco: ricarica la pagina dopo aver annotato la password provvisoria.';}
+        try{await ATDataAPI.staffBootstrap();render();}catch(e){$('#saRecoveryLog').append(document.createTextNode(' Non è stato possibile aggiornare l’elenco: ricarica la pagina dopo aver annotato la password provvisoria.'));}
         return;
       }catch(e){if(act==='resetpwd'&&['AT_API_NETWORK','AT_API_BAD_JSON','AT_API_HTTP','PASSWORD_RESET_ALREADY_COMPLETED'].includes(String(e?.code||'')))alert('Non è stato possibile confermare il reset. La password precedente potrebbe essere stata invalidata: se la password provvisoria non è visibile, genera un nuovo reset.');else alert(e.message||e);return;}finally{accountOperationPending=false;}
     }
