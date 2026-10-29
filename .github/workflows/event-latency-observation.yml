@@ -1,0 +1,24 @@
+name: Observe event loading
+on:
+  push:
+    branches: [event-latency-observation-20261029]
+permissions:
+  contents: read
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Measure public data and poster
+        run: |
+          node <<'NODE'
+          const api='https://script.google.com/macros/s/AKfycbzy6Y38IfWQWoNXxLMWyvpsP9j-pzd15CxssWVr1bTS0fmxt_InGp0AVBtxCKJZR7lUow/exec';
+          async function measure(action,payload){
+            const t=Date.now(),r=await fetch(api,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action,request_id:'LATENCY-READ-'+Date.now(),payload}),signal:AbortSignal.timeout(90000)});
+            const headers=Date.now()-t;const str=await r.text(),finished=Date.now()-t;let e;try{e=JSON.parse(str)}catch{};console.log(JSON.stringify({action,http:r.status,ok:e?.ok===true,headers_ms:headers,total_ms:finished,response_bytes:Buffer.byteLength(str),error:e?.ok===false?e.error?.code:undefined}));
+          }
+          (async()=>{await measure('public_bundle',{page:'evento.html',event_id:'DK-1793288213781-c3medy',view:'public'});await measure('event_media_read',{event_id:'DK-1793288213781-c3medy',type:'POSTER'});})().catch(e=>{console.error(e.message);process.exit(1)});
+          NODE
