@@ -102,7 +102,7 @@ ATApp.onReady(()=>{
      const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=()=>reject(Error('Impossibile leggere '+file.name));reader.readAsDataURL(file)});
      $('#publishMsg').textContent='Caricamento allegato: '+file.name+'…';
      try{await ATDataAPI.request('event_media_upload',{event_id:id,day_id:item.day_id||'',type:item.type,name:file.name,mime:file.type,base64:data});item.input.value='';}
-     catch(e){throw Error('La bozza è salvata, ma l’allegato '+file.name+' non è stato caricato: '+String(e?.message||e));}
+     catch(e){throw Error('L’evento è stato mantenuto, ma l’allegato '+file.name+' non è stato caricato: '+String(e?.message||e));}
    }
  }
  async function saveOnlineDraft(){
@@ -110,6 +110,13 @@ ATApp.onReady(()=>{
    try{
      const session=ATStore.session(),role=String(session?.role||'');if(!['ADMIN1','ADMIN2','SUPERADMIN'].includes(role))throw Error('La creazione di eventi è riservata agli amministratori.');if(session?.read_only)throw Error('Questo ambiente è in sola lettura.');
      if(!guardClosedEdit('salvare modifiche'))return null;
+     const published=existingEvent();
+     if(published?.published===true){
+       if(![...document.querySelectorAll('input[type="file"]')].some(input=>input.files?.length))throw Error('Per un evento già pubblicato seleziona prima un allegato da sostituire. La modifica degli altri dati non è ancora disponibile qui.');
+       buttons.forEach(b=>{if(b)b.disabled=true});await uploadOnlineAssets(eventId);await ATDataAPI.staffBootstrap();P=ATEventOnlineMapping.hydrate(ATStore.public());A=ATStore.admin();
+       const saved=(P.events||[]).find(x=>String(x.id)===String(eventId));if(!saved||saved.published!==true)throw Error('Allegati caricati, ma non è stato possibile verificare lo stato dell’evento.');
+       $('#publishMsg').textContent='Stato: PUBBLICATO · allegati aggiornati. Gli altri dati non sono stati modificati.';$('#wizardTitle').textContent=saved.name+' · PUBBLICATO';return saved;
+     }
      const d=collect();if(!d.name)throw Error('Inserisci il nome dell’evento.');const pin=String(d.security_pin||'');if(pin&&!/^\d{4}$/.test(pin))throw Error('Il PIN evento deve contenere 4 cifre.');
      if(txt('#wOrgName')&&!d.organizer_id)throw Error('Seleziona un centro già esistente prima di salvare.');
      if(!validateObstacleVariations(d.stage_config))return null;
@@ -142,6 +149,7 @@ ATApp.onReady(()=>{
    let publishSent=false;
    const buttons=['#saveDraft','#previewDraft','#publishDraft'].map(x=>$(x));
    try{
+     if(existingEvent()?.published===true){await saveOnlineDraft();return;}
      const review=reviewState(),d=review.d;
      if(review.missing.length)throw Error('Completa i dati principali: '+review.missing.join(', ')+'.');
      if(!d.ranking_mode)throw Error('Scegli la validità sportiva dell’evento.');
