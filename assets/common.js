@@ -1,10 +1,21 @@
 window.AQUATRAIL_BUILD=window.AQUATRAIL_BUILD||Object.freeze({product:'AQUA TRAIL',release:'Aqua Trail BETA blocco 1.7',version:'BETA blocco 1.7',phase:'DEBUG BLOCKS',checkpoint:'BLOCCO 1.7',label:'BETA blocco 1.7',marker:'AQUA_TRAIL_BETA_BLOCCO_1_7_RELEASE',full:'AQUA_TRAIL_BETA_BLOCCO_1_7',parent:'Aqua Trail BETA blocco 1.6',date:'2026-09-19'});
 
+function initPublicNavigation(){
+  const b=document.querySelector('.menu'),n=document.querySelector('.navlinks');
+  if(!b||!n||b.dataset.navInitialized==='1')return;
+  const publicNav=document.body?.dataset?.admin!=='1'&&document.body?.dataset?.judge!=='1';
+  if(publicNav){if(!n.id)n.id='public-navigation';const isOpen=n.classList.contains('open');b.setAttribute('aria-controls',n.id);b.setAttribute('aria-expanded',String(isOpen));b.setAttribute('aria-label',isOpen?'Chiudi menu':'Apri menu')}
+  b.addEventListener('click',()=>{const open=n.classList.toggle('open');if(publicNav){b.setAttribute('aria-expanded',String(open));b.setAttribute('aria-label',open?'Chiudi menu':'Apri menu')}});
+  b.dataset.navInitialized='1';
+}
+if((location.pathname.split('/').pop()||'').toLowerCase()==='regolamento.html'){
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initPublicNavigation,{once:true});else initPublicNavigation();
+}
+
 ATApp.onReady(()=>{
   if(window.ATStore){try{const wc=ATStore.workspace();document.documentElement.dataset.workspace=wc.mode;document.body.dataset.workspace=wc.mode;let bar=document.querySelector('.workspace-global-banner');if(!bar){bar=document.createElement('div');bar.className='workspace-global-banner';document.body.prepend(bar)}bar.classList.toggle('demo',wc.mode==='DEMO');bar.classList.toggle('real',wc.mode==='REAL');bar.innerHTML=wc.mode==='DEMO'?'<strong>🧪 AMBIENTE DEMO</strong><span>Dati di simulazione, formazione e debug. Nessun dato ufficiale REAL è visibile.</span>':'<strong>AMBIENTE REAL</strong><span>Dati ufficiali Aqua Trail. I dati DEMO sono completamente esclusi.</span>';}catch(_){}}
   if(location.protocol==='file:'){const w=document.createElement('div');w.className='file-protocol-warning';w.innerHTML='<b>ATTENZIONE · apertura diretta file://</b> — Chiudi questa pagina e usa <b>AVVIA_WINDOWS.bat</b> oppure <b>AVVIA_MAC.command</b>.';document.body.prepend(w);}
-  const b=document.querySelector('.menu'),n=document.querySelector('.navlinks');
-  if(b&&n){const publicNav=document.body?.dataset?.admin!=='1'&&document.body?.dataset?.judge!=='1';if(publicNav){if(!n.id)n.id='public-navigation';const isOpen=n.classList.contains('open');b.setAttribute('aria-controls',n.id);b.setAttribute('aria-expanded',String(isOpen));b.setAttribute('aria-label',isOpen?'Chiudi menu':'Apri menu')}b.addEventListener('click',()=>{const open=n.classList.toggle('open');if(publicNav){b.setAttribute('aria-expanded',String(open));b.setAttribute('aria-label',open?'Chiudi menu':'Apri menu')}})}
+  initPublicNavigation();
   document.querySelectorAll('.admin-header .brand-copy>span:not(.build-badge)').forEach(el=>{el.textContent='Aqua Trail® · '+window.AQUATRAIL_BUILD.label;});
   document.querySelectorAll('.build-kicker').forEach(el=>{el.textContent=window.AQUATRAIL_BUILD.label;});
   document.querySelectorAll('.header .brand-copy').forEach(host=>{if(host.querySelector('.build-badge'))return;const b=document.createElement('span');b.className='build-badge';b.textContent=window.AQUATRAIL_BUILD.label;b.title=`Build: ${window.AQUATRAIL_BUILD.full} · ${window.AQUATRAIL_BUILD.date}`;b.setAttribute('aria-label',`Versione ${window.AQUATRAIL_BUILD.label}`);host.appendChild(b);});
@@ -181,3 +192,4 @@ ATApp.onReady(()=>{
     try{document.querySelectorAll(r.selector).forEach(el=>el.classList.toggle('sa-field-hidden',!!r.hidden));}catch(e){/* selettore non valido: non bloccare la pagina */}
   }
 });
+

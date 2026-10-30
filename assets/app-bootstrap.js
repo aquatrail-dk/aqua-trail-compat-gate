@@ -11,7 +11,8 @@
     if(!window.ATDataAPI?.isOnline?.())return {mode:'OFFLINE'};
     if(audience()==='STAFF'&&page()==='login-admin.html')return {mode:'ONLINE_LOGIN'};
     if(audience()==='PUBLIC'){
-      const hideLoading=showPublicLoading();
+      // The guide is static: keep it usable while the workspace loads in the background.
+      const hideLoading=page()==='regolamento.html'?()=>{}:showPublicLoading();
       try{await ATDataAPI.publicBootstrap({page:page()});return {mode:'ONLINE_PUBLIC',workspace:ATDataAPI.workspaceConfig()}}
       catch(e){showBlocker(e);throw e}
       finally{hideLoading()}
@@ -23,3 +24,4 @@
   window.addEventListener?.('aquatrail:public-refresh-required',()=>{if(audience()==='PUBLIC')location.reload()});
   window.ATApp={VERSION:'ATAppBootstrap_V1_8_5',ready,onReady,showBlocker,page,audience};
 })();
+
